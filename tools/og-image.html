@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Asset generator — og-image.png &amp; apple-touch-icon.png</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{color-scheme:dark}
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:#0E1011;color:#EDEAE4;
+    font:15px/1.6 'Instrument Sans',system-ui,-apple-system,sans-serif;
+    padding:40px 28px 72px;display:flex;flex-direction:column;align-items:center;gap:26px
+  }
+  h1{font-size:1.3rem;font-weight:600;letter-spacing:-.02em}
+  p{color:#B4B7B3;max-width:64ch;text-align:center}
+  code{font-family:'IBM Plex Mono',monospace;font-size:.86em;color:#E5A244}
+  canvas{max-width:100%;height:auto;border:1px solid #252A2E;border-radius:4px;display:block}
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  button{
+    font:500 14px/1 'Instrument Sans',sans-serif;color:#0E1011;background:#E5A244;
+    border:0;border-radius:3px;padding:13px 20px;cursor:pointer
+  }
+  button.sec{background:transparent;color:#EDEAE4;border:1px solid #333A3E}
+  button:hover{opacity:.9}
+  .ok{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#83888A;min-height:20px}
+  section{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:1000px}
+</style>
+</head>
+<body>
+
+<h1>Portfolio asset generator</h1>
+<p>Both files are referenced by <code>index.html</code>. Click each button, then move the
+downloaded files into the same folder as <code>index.html</code>. Nothing is uploaded — the
+images are drawn locally in your browser.</p>
+
+<section>
+  <canvas id="og" width="1200" height="630" aria-label="Open Graph share card preview"></canvas>
+  <div class="row">
+    <button id="dlOg">Download og-image.png (1200×630)</button>
+    <button class="sec" id="dlTw">Download twitter-card.png (same art)</button>
+  </div>
+  <p class="ok" id="okOg"></p>
+</section>
+
+<section>
+  <canvas id="ico" width="180" height="180" style="max-width:180px" aria-label="Apple touch icon preview"></canvas>
+  <div class="row">
+    <button id="dlIco">Download apple-touch-icon.png (180×180)</button>
+  </div>
+  <p class="ok" id="okIco"></p>
+</section>
+
+<script>
+const C = {
+  base:'#0E1011', surface:'#14171A', line:'#252A2E', lineSoft:'#1C2023',
+  text:'#EDEAE4', text2:'#B4B7B3', muted:'#83888A', faint:'#5D6265',
+  accent:'#E5A244', accentHi:'#F0B865'
+};
+const SANS = "'Instrument Sans', system-ui, -apple-system, sans-serif";
+const MONO = "'IBM Plex Mono', ui-monospace, monospace";
+
+/* ---------- Open Graph card ------------------------------------------------ */
+function drawOG(cv){
+  const g = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+
+  g.fillStyle = C.base; g.fillRect(0,0,W,H);
+
+  // inset hairline frame
+  g.strokeStyle = C.line; g.lineWidth = 1;
+  g.strokeRect(40.5, 40.5, W-81, H-81);
+
+  // the "spine" — same vertical rule the site uses
+  const rail = 40 + 132;
+  g.strokeStyle = C.lineSoft;
+  g.beginPath(); g.moveTo(rail+.5, 41); g.lineTo(rail+.5, H-41); g.stroke();
+
+  // rail index
+  g.fillStyle = C.faint;
+  g.font = '500 15px ' + MONO;
+  g.fillText('01', 74, 112);
+  g.fillStyle = C.faint;
+  g.font = '400 14px ' + MONO;
+  g.fillText('lagos', 74, 138);
+  g.fillText('remote', 74, 160);
+
+  const x = rail + 44;
+
+  // eyebrow: amber dot + role
+  g.fillStyle = C.accent;
+  g.beginPath(); g.arc(x+4, 106, 4, 0, Math.PI*2); g.fill();
+  g.fillStyle = C.accent;
+  g.font = '500 17px ' + MONO;
+  g.fillText('PRODUCT MANAGER  ·  PRODUCT BUILDER', x+20, 112);
+
+  // headline
+  g.fillStyle = C.text;
+  g.font = '600 71px ' + SANS;
+  g.fillText('I build products', x, 236);
+  g.fillText('from ambiguity to impact.', x, 316);
+
+  // supporting line
+  g.fillStyle = C.text2;
+  g.font = '400 23px ' + SANS;
+  g.fillText('4+ years product management  ·  7+ years broader experience', x, 372);
+
+  // axis motif: ambiguity -> impact
+  const ax = x, ay = 470, aw = W - x - 96, rise = 54;
+  g.strokeStyle = C.line; g.lineWidth = 1;
+  g.beginPath(); g.moveTo(ax, ay+34); g.lineTo(ax+aw, ay+34); g.stroke();
+
+  const nodes = 5;
+  const pts = [];
+  for (let i=0;i<nodes;i++){
+    const px = ax + (aw/(nodes-1))*i;
+    const py = ay - (rise/(nodes-1))*i + 8;
+    pts.push([px,py]);
+  }
+  // connecting edges
+  g.strokeStyle = C.accent; g.lineWidth = 1.4; g.globalAlpha = .55;
+  g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+  for (let i=1;i<pts.length;i++) g.lineTo(pts[i][0], pts[i][1]);
+  g.stroke(); g.globalAlpha = 1;
+
+  // nodes
+  const labels = ['Business','Product','Technology','Data','Growth'];
+  pts.forEach(([px,py],i)=>{
+    g.fillStyle = C.base;
+    g.beginPath(); g.arc(px,py,6.5,0,Math.PI*2); g.fill();
+    g.strokeStyle = i===pts.length-1 ? C.accentHi : C.accent;
+    g.lineWidth = 1.6;
+    g.beginPath(); g.arc(px,py,6.5,0,Math.PI*2); g.stroke();
+    if (i===pts.length-1){ g.fillStyle = C.accentHi; g.beginPath(); g.arc(px,py,3,0,Math.PI*2); g.fill(); }
+
+    g.fillStyle = C.muted;
+    g.font = '400 14px ' + MONO;
+    const w = g.measureText(labels[i]).width;
+    g.fillText(labels[i], px - w/2, py + 30);
+  });
+
+  // endpoints
+  g.fillStyle = C.faint; g.font = '400 15px ' + MONO;
+  g.fillText('ambiguity', ax, ay + 78);
+  g.fillStyle = C.accent;
+  const impact = 'impact';
+  g.fillText(impact, ax + aw - g.measureText(impact).width, ay + 78);
+
+  // footer: name, then alias set off in mono
+  g.fillStyle = C.text;
+  g.font = '500 22px ' + SANS;
+  const nm = 'Olamide Olanipekun';
+  g.fillText(nm, x, H - 74);
+  const nmW = g.measureText(nm).width;
+  g.fillStyle = C.faint;
+  g.font = '400 15px ' + MONO;
+  g.fillText('Flux', x + nmW + 18, H - 74);
+
+  // monogram, bottom right
+  drawMark(g, W - 148, H - 148, 64, false);
+}
+
+/* ---------- monogram: two offset brackets (site favicon language) --------- */
+function drawMark(g, x, y, s, filledBg){
+  if (filledBg){
+    g.fillStyle = C.surface;
+    const r = s*0.22;
+    g.beginPath();
+    g.moveTo(x+r,y); g.arcTo(x+s,y,x+s,y+s,r); g.arcTo(x+s,y+s,x,y+s,r);
+    g.arcTo(x,y+s,x,y,r); g.arcTo(x,y,x+s,y,r); g.closePath(); g.fill();
+  }
+  const t = Math.max(2, s*0.085);      // stroke weight
+  const off = s*0.13;                   // offset between layers
+  const bx = x + s*0.26, by = y + s*0.22;
+  const bw = s*0.40, bh = s*0.56;
+
+  // back bracket, amber
+  g.strokeStyle = C.accent; g.lineWidth = t; g.lineCap = 'square';
+  g.beginPath();
+  g.moveTo(bx+off+bw, by+off); g.lineTo(bx+off, by+off); g.lineTo(bx+off, by+off+bh);
+  g.stroke();
+  g.beginPath();
+  g.moveTo(bx+off, by+off+bh*0.52); g.lineTo(bx+off+bw*0.72, by+off+bh*0.52);
+  g.stroke();
+
+  // front bracket, off-white
+  g.strokeStyle = C.text;
+  g.beginPath();
+  g.moveTo(bx+bw, by); g.lineTo(bx, by); g.lineTo(bx, by+bh);
+  g.stroke();
+  g.beginPath();
+  g.moveTo(bx, by+bh*0.52); g.lineTo(bx+bw*0.72, by+bh*0.52);
+  g.stroke();
+}
+
+/* ---------- apple touch icon --------------------------------------------- */
+function drawIcon(cv){
+  const g = cv.getContext('2d');
+  const S = cv.width;
+  g.fillStyle = C.base; g.fillRect(0,0,S,S);
+  g.strokeStyle = C.line; g.lineWidth = 1;
+  g.strokeRect(.5,.5,S-1,S-1);
+  drawMark(g, S*0.13, S*0.13, S*0.74, false);
+}
+
+/* ---------- wiring -------------------------------------------------------- */
+function save(cv, name, okEl){
+  cv.toBlob(b=>{
+    const u = URL.createObjectURL(b);
+    const a = document.createElement('a');
+    a.href = u; a.download = name; a.click();
+    setTimeout(()=>URL.revokeObjectURL(u), 4000);
+    okEl.textContent = 'Saved ' + name + ' — move it next to index.html';
+  }, 'image/png');
+}
+
+const og = document.getElementById('og');
+const ico = document.getElementById('ico');
+
+async function boot(){
+  try {
+    await document.fonts.load('600 71px "Instrument Sans"');
+    await document.fonts.load('400 15px "IBM Plex Mono"');
+    await document.fonts.ready;
+  } catch (e) { /* offline: system fallbacks are fine */ }
+  drawOG(og);
+  drawIcon(ico);
+}
+boot();
+
+document.getElementById('dlOg').onclick  = () => save(og,  'og-image.png',        document.getElementById('okOg'));
+document.getElementById('dlTw').onclick  = () => save(og,  'twitter-card.png',    document.getElementById('okOg'));
+document.getElementById('dlIco').onclick = () => save(ico, 'apple-touch-icon.png',document.getElementById('okIco'));
+</script>
+</body>
+</html>

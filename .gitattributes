@@ -1,0 +1,15 @@
+# The résumé and share images are binary. Without this, git tries to diff the
+# PDF as text and a one-byte change reports thousands of altered lines.
+*.pdf  binary
+*.png  binary
+
+# Keep line endings sane if this is ever cloned on Windows.
+*.html text eol=lf
+*.js   text eol=lf
+*.py   text eol=lf
+*.sh   text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.svg  text eol=lf
+*.xml  text eol=lf
+*.txt  text eol=lf

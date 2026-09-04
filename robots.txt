@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://olamide-olanipekun.vercel.app/sitemap.xml
