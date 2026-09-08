@@ -162,19 +162,34 @@ well as in comments at each site.
    after it starts a new line. `.tl-meta`'s `border-left` is a separator meant to sit inline after
    the role; pushed onto its own line it reads as a stray indented tick.
 
-### ⚠ The one thing you must not skip
+### ⚠ The origin: done, but here is the trap
 
-`index.html`, `robots.txt` and `sitemap.xml` ship with a **placeholder origin**
-(`https://olamide-olanipekun.vercel.app`). Until it matches the live domain, the `canonical` tag
-tells Google the real page lives at a URL that does not exist, and LinkedIn, X, Facebook and Slack
-cannot fetch the share image — the card renders blank.
+**Live at https://portfolio-site-kappa-ashy.vercel.app** (Vercel project `portfolio-site`, scope
+`forta-flow`). `index.html`, `robots.txt` and `sitemap.xml` all carry that origin, so the canonical
+tag, `og:image`, `twitter:image` and the sitemap are correct as of 2026-09-08. It previously shipped
+with a placeholder that resolved to nothing, which makes the `canonical` tag tell Google the real
+page lives at a URL that does not exist and leaves LinkedIn, X, Facebook and Slack unable to fetch
+the share image — the card renders blank.
+
+**The trap, if you ever re-point it:** `vercel --prod` prints two `https://…vercel.app` URLs and they
+are not interchangeable.
+
+| Vercel calls it | Example | Use it for |
+|---|---|---|
+| `Production` | `portfolio-site-hjwym4ui7-forta-flow.vercel.app` | nothing durable — the middle segment is regenerated on **every** deploy |
+| `Aliased` | `portfolio-site-kappa-ashy.vercel.app` | the canonical origin, sharing, your CV — it survives deploys |
+
+Canonicalising the `Production` URL is a slow-acting bug: correct on the day you ship, pointing at a
+dead build from then on, with the sitemap and both share images inheriting the rot. `deploy.sh` now
+reads both and always prefers the alias.
 
 ```bash
-bash tools/set-site-url.sh https://your-real-domain
+bash tools/set-site-url.sh https://your-real-domain   # the ALIAS, or a custom domain
 git commit -am "Point canonical, og:image and sitemap at the live domain" && git push
+vercel --prod   # the push alone does NOT redeploy: this project has no git integration
 ```
 
-`deploy.sh` offers to do this for you. `tools/check.js` fails if the three files ever disagree.
+`deploy.sh` offers to do all of this for you. `tools/check.js` fails if the three files ever disagree.
 
 Afterwards, re-scrape the card so the platforms drop their cached copy:
 [LinkedIn](https://www.linkedin.com/post-inspector/) ·

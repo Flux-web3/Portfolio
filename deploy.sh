@@ -38,7 +38,10 @@ if [[ -d .git ]]; then
   # A .git can arrive half-built — this project was assembled on a filesystem
   # that refused unlink(), so an empty repo with a stale lockfile may be sitting
   # here. Clear the locks, and re-init if there is no commit to build on.
-  find .git -name '*.lock' -maxdepth 2 -delete 2>/dev/null || true
+  # -maxdepth before -name, or GNU find prints "warning: you have specified the
+  # -maxdepth option after a non-option argument" — it still works, but the warning
+  # is the first thing you see on an otherwise clean run and reads like a fault.
+  find .git -maxdepth 2 -name '*.lock' -delete 2>/dev/null || true
   if git rev-parse --git-dir >/dev/null 2>&1 && git rev-parse HEAD >/dev/null 2>&1; then
     ok "already a git repo"
   else
@@ -199,6 +202,33 @@ else
 fi
 ok "pushed '$BRANCH' to $REMOTE_URL ('$TARGET')"
 
+# The repo is meant to be public: everything in it — the email, the links, the
+# résumé PDF — is already published on the website itself, so a private repo
+# protects nothing and costs the "view source" credibility a portfolio repo buys.
+# There is no .env, key or token in the tree; .vercel is gitignored and holds only
+# project/org IDs, which are identifiers rather than credentials.
+#
+# This only reports and offers. It never flips visibility silently, because going
+# public is irreversible in the sense that matters — anything exposed for even a
+# minute should be assumed scraped.
+if command -v gh >/dev/null && [[ "$REMOTE_URL" == *github.com* ]]; then
+  VIS="$(gh repo view "$(sed -E 's#.*github\.com[:/]##; s#\.git$##' <<<"$REMOTE_URL")" \
+         --json visibility --jq .visibility 2>/dev/null || true)"
+  case "$VIS" in
+    PUBLIC)  ok "repo is public" ;;
+    "")      warn "could not read the repo's visibility (gh not logged in?) — check it by hand" ;;
+    *)       warn "repo is $VIS. A portfolio repo is usually worth having public."
+             read -r -p "  Make it public now? [y/N] " reply
+             if [[ "$reply" =~ ^[Yy] ]]; then
+               gh repo edit "$(sed -E 's#.*github\.com[:/]##; s#\.git$##' <<<"$REMOTE_URL")" \
+                 --visibility public --accept-visibility-change-consequences \
+                 && ok "now public" || warn "gh could not change it — do it in Settings"
+             else
+               ok "left $VIS"
+             fi ;;
+  esac
+fi
+
 # ---------------------------------------------------------------- 4. Vercel --
 say "4/5  Vercel"
 if ! command -v vercel >/dev/null; then
@@ -211,10 +241,35 @@ if ! command -v vercel >/dev/null; then
   echo
   warn "then finish with step 5 below."
   DEPLOY_URL=""
+  CANON_URL=""
 else
   vercel link --yes >/dev/null 2>&1 || true
-  DEPLOY_URL="$(vercel deploy --prod --yes 2>/dev/null | tail -1)"
-  [[ "$DEPLOY_URL" == https://* ]] && ok "live at $DEPLOY_URL" || warn "could not read the deploy URL from the CLI output"
+
+  # Vercel prints TWO different https URLs and they are not interchangeable:
+  #
+  #   Production   https://portfolio-site-hjwym4ui7-forta-flow.vercel.app   <- stdout
+  #   Aliased      https://portfolio-site-kappa-ashy.vercel.app             <- stderr
+  #
+  # The first is immutable and unique to THIS deployment — the random middle
+  # segment changes every single time you ship. The second is the project's
+  # production alias and stays put across deploys. Putting the deployment URL in
+  # <link rel="canonical"> is a silent, slow-acting SEO bug: it is correct on the
+  # day you deploy and points at a stale build forever after, and every share card
+  # and sitemap entry inherits the same rot. So capture both, and canonicalise the
+  # alias whenever there is one.
+  _vout="$(mktemp)"
+  vercel deploy --prod --yes >"$_vout" 2>&1 || warn "the vercel CLI reported a problem — output below"
+  DEPLOY_URL="$(grep -oE 'https://[a-z0-9._-]+\.vercel\.app' "$_vout" | tail -1)"
+  ALIAS_URL="$(grep -iE 'alias' "$_vout" | grep -oE 'https://[a-z0-9._-]+\.vercel\.app' | head -1)"
+  rm -f "$_vout"
+
+  CANON_URL="${ALIAS_URL:-$DEPLOY_URL}"
+  if [[ "$DEPLOY_URL" == https://* ]]; then
+    ok "deployed  $DEPLOY_URL"
+    [[ -n "$ALIAS_URL" ]] && ok "stable alias  $ALIAS_URL  (this is the one to share)"
+  else
+    warn "could not read a deploy URL from the CLI output"
+  fi
 fi
 
 # ------------------------------------------------------------------- 5. URL --
@@ -225,15 +280,39 @@ cat <<'NOTE'
   that does not exist, and LinkedIn/X/Facebook cannot fetch the share image.
 NOTE
 
-if [[ -n "${DEPLOY_URL:-}" ]]; then
-  ORIGIN="$(printf '%s' "$DEPLOY_URL" | sed -E 's#(https://[^/]+).*#\1#')"
+if [[ -n "${CANON_URL:-}" ]]; then
+  ORIGIN="$(printf '%s' "$CANON_URL" | sed -E 's#(https://[^/]+).*#\1#')"
   echo
   read -r -p "  Set the origin to $ORIGIN now? [Y/n] " reply
   if [[ ! "$reply" =~ ^[Nn] ]]; then
-    bash tools/set-site-url.sh "$ORIGIN" \
-      && git commit -qam "Point canonical, og:image and sitemap at the live domain" \
-      && git push -q \
-      && ok "origin updated and redeployed by the git push"
+    if ! bash tools/set-site-url.sh "$ORIGIN"; then
+      warn "could not rewrite the origin — do it by hand:"
+      echo  "      bash tools/set-site-url.sh $ORIGIN"
+      echo  "      git commit -am 'Point canonical at the live domain' && git push && vercel --prod"
+    else
+      # set-site-url.sh exits 0 and changes nothing when the origin already matches,
+      # which is the normal case on every re-run. Treat "nothing to commit" as
+      # success, not failure — chaining && straight into git commit reports a false
+      # error the one time everything is actually fine.
+      git add -A
+      if git diff --cached --quiet; then
+        ok "origin already correct — nothing to commit, no redeploy needed"
+      elif git commit -q -m "Point canonical, og:image and sitemap at the live domain" && git push -q; then
+        ok "origin updated and pushed"
+        # Do NOT assume the push redeploys. That only happens if the Vercel project
+        # was imported from GitHub; a project created by `vercel deploy` from this
+        # folder has no git integration, and then the pushed fix would sit in the
+        # repo while the live site kept serving the old placeholder origin.
+        if command -v vercel >/dev/null; then
+          vercel deploy --prod --yes >/dev/null 2>&1 \
+            && ok "redeployed with the corrected origin" \
+            || warn "redeploy failed — run 'vercel --prod' yourself"
+        fi
+      else
+        warn "the origin was rewritten but could not be committed or pushed:"
+        echo  "      git commit -am 'Point canonical at the live domain' && git push && vercel --prod"
+      fi
+    fi
   fi
 else
   echo
