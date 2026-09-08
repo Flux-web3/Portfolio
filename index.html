@@ -94,29 +94,45 @@
    ============================================================ */
 :root{
   /* surfaces */
+  /* Two surfaces, not three. There used to be a --raised:#1A1E21 here (and a
+     white one in the light palette) sitting one step above --surface. It was
+     declared in all three palettes and consumed by exactly zero rules — nothing
+     on the site ever painted it. Because several contrast decisions below were
+     taken against it as the "worst case", the figures they quote are more
+     conservative than the two real surfaces require, which is harmless and has
+     been left alone. Deleted rather than assigned to a card, because picking an
+     element to elevate at this stage would be a visual change dressed up as a
+     cleanup. */
   --base:#0E1011;
   --surface:#14171A;
-  --raised:#1A1E21;
   --line:#252A2E;
   --line-soft:#1C2023;
   --line-strong:#333A3E;
+  /* Interactive-control borders. WCAG 1.4.11 wants 3:1 for the boundary of any
+     control you need to see to identify it; --line-soft was 1.16:1 and
+     --line-strong 1.65:1, so the theme toggle, the burger, the project cards and
+     both conversion buttons had no perceptible edge. This clears 3:1 on both
+     surfaces (3.96 base / 3.73 surface).
+     Deliberately NOT applied to chips, .arch-b pills or .tl-when date pills:
+     those are static labels, not controls, so 1.4.11 does not reach them and
+     putting a 3:1 edge on 216 chips would shout. */
+  --line-ctl:#66747C;
 
   /* type colours
      Four tiers, and each one has to earn its place. The rule: every tier must
-     clear 4.5:1 against the *worst* surface it can land on, which is --raised,
-     not --base. The old --muted/--faint pair failed that (4.68 and 4.03 on
-     --raised) and they were only 4% apart in lightness, so they read as one
-     colour that happened to be slightly broken. Both were lifted and separated:
-     muted is ~6:1 and faint ~5:1 on every surface in both themes. */
+     clear 4.5:1 against the *worst* surface it can land on, not just --base.
+     The old --muted/--faint pair failed that (4.68 and 4.03) and they were only
+     4% apart in lightness, so they read as one colour that happened to be
+     slightly broken. Both were lifted and separated: muted is ~6:1 and faint
+     ~5:1 on every surface in both themes. */
   --text:#EDEAE4;    /* 15.9 : 1 on base */
   --text-2:#B4B7B3;  /*  9.4 : 1 */
-  --muted:#969B9D;   /*  6.8 : 1 base · 6.0 : 1 on raised */
-  --faint:#8A8F92;   /*  5.8 : 1 base · 5.1 : 1 on raised */
+  --muted:#969B9D;   /*  6.8 : 1 base · 6.4 : 1 on surface */
+  --faint:#8A8F92;   /*  5.8 : 1 base · 5.5 : 1 on surface */
 
   /* accent */
   --accent:#E5A244;
   --accent-hi:#F0B865;
-  --accent-lo:#B87C22;
   --accent-wash:rgba(229,162,68,.12);
   --accent-line:rgba(229,162,68,.34);
 
@@ -144,6 +160,11 @@
 
   /* layout */
   --pad:clamp(20px,5vw,56px);
+  /* Header height. The mobile sheet is offset by exactly this much, so the two
+     must never drift apart — it was 64px hardcoded in both .topbar-in and
+     .sheet, which is how a gap showing page content behind the sheet gets
+     introduced by an unrelated header tweak. */
+  --topbar-h:64px;
   --rail:158px;
   --gutter:clamp(24px,3vw,40px);
   --maxw:1200px;
@@ -159,17 +180,16 @@
 html[data-theme="light"]{
   --base:#FAFAF8;
   --surface:#F2F2EF;
-  --raised:#FFFFFF;
   --line:#DCDCD6;
   --line-soft:#E6E6E1;
   --line-strong:#C4C4BD;
+  --line-ctl:#898984;   /* 3.36 base / 3.13 surface / 3.51 raised */
   --text:#16181A;
   --text-2:#3E4245;
   --muted:#55595C;
   --faint:#63686B;
   --accent:#96601A;
   --accent-hi:#7C4E12;
-  --accent-lo:#B87C22;
   --accent-wash:rgba(150,96,26,.09);
   --accent-line:rgba(150,96,26,.3);
   --ff:#5B3FD6;
@@ -197,6 +217,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 h1,h2,h3,h4,p,ul,ol,figure,blockquote{margin:0}
 ul,ol{padding:0;list-style:none}
 ::selection{background:var(--accent);color:#0E1011}
+/* Light --accent is #96601A; #0E1011 on it is 3.62:1, under the 4.5 needed at
+   these sizes. White is 5.27:1. Same bug .btn-p already had fixed; .skip and
+   ::selection were missed, and .skip is the first focusable thing on the page. */
+html[data-theme="light"] ::selection{color:#fff}
+html[data-theme="light"] .skip{color:#fff}
 html[data-theme="light"] ::selection{background:var(--accent);color:#fff}
 
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
@@ -225,10 +250,13 @@ html[data-theme="light"] ::selection{background:var(--accent);color:#fff}
    so vertical rhythm drifted from section to section with no rule behind it.
 
    Six steps. The scale is 8 / 14 / 22 / 26 / 34 rather than a clean geometric
-   ratio because 26px was by far the most common inline value in use (11 of the
-   61) and snapping all of those to 22 or 34 would have visibly moved layout that
-   already reads correctly. An honest note: this migration is partial, so inline
-   margins still exist alongside these classes. Prefer these for anything new. */
+   ratio because 26px was by far the most common inline value in use and snapping
+   all of those to 22 or 34 would have visibly moved layout that already reads
+   correctly. All nine inline 26px margins now use .mt-ml; the smaller one-off
+   values (3, 4, 6, 10, 11, 12, 15, 16, 18, 20, 24, 28, 30px) are still inline,
+   so this migration is partial by design — collapsing every one of them onto a
+   six-step scale would move layout that nobody has complained about. Prefer
+   these classes for anything new. */
 .mt-xs{margin-top:8px}
 .mt-s{margin-top:14px}
 .mt-m{margin-top:22px}
@@ -259,7 +287,6 @@ em{font-style:italic;color:var(--text)}
 .idx{font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.06em;color:var(--faint)}
 .idx b{color:var(--accent);font-weight:400}
 
-.rule{height:1px;background:var(--line);border:0;margin:0}
 .rule-accent{height:1px;background:var(--accent-line);border:0;width:40px;margin:0}
 
 .pull{
@@ -291,7 +318,7 @@ em{font-style:italic;color:var(--text)}
 .btn-p{background:var(--accent);color:#0E1011;border-color:var(--accent)}
 .btn-p:hover{background:var(--accent-hi);border-color:var(--accent-hi)}
 html[data-theme="light"] .btn-p{color:#fff}
-.btn-s{border-color:var(--line-strong);color:var(--text);background:transparent}
+.btn-s{border-color:var(--line-ctl);color:var(--text);background:transparent}
 .btn-s:hover{border-color:var(--text);background:var(--surface)}
 .btn-q{padding:10px 0;color:var(--muted);font-weight:500}
 .btn-q:hover{color:var(--accent)}
@@ -317,7 +344,7 @@ html[data-theme="light"] .btn-p{color:#fff}
   border-bottom:1px solid var(--line-soft);
 }
 @supports not (backdrop-filter:blur(2px)){.topbar{background:var(--base)}}
-.topbar-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:64px}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:var(--topbar-h)}
 .brand{display:flex;align-items:center;gap:11px;flex-shrink:0;padding:6px 0}
 .brand-mark{width:22px;height:22px;flex-shrink:0}
 .brand-txt{display:flex;flex-direction:column;line-height:1.05}
@@ -338,21 +365,21 @@ html[data-theme="light"] .btn-p{color:#fff}
   content:"";position:absolute;left:11px;right:11px;bottom:1px;height:1px;background:var(--accent);
 }
 .nav-end{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.nav-cta{padding:9px 16px;border:1px solid var(--line-strong);border-radius:var(--r);font-size:.875rem;font-weight:600;transition:border-color var(--t-fast),background var(--t-fast)}
+.nav-cta{padding:9px 16px;border:1px solid var(--line-ctl);border-radius:var(--r);font-size:.875rem;font-weight:600;transition:border-color var(--t-fast),background var(--t-fast)}
 .nav-cta:hover{border-color:var(--accent);background:var(--accent-wash)}
 .nav-cta[aria-current="page"]{border-color:var(--accent);color:var(--accent)}
 
 .icbtn{
   width:36px;height:36px;display:grid;place-items:center;border-radius:var(--r);
-  border:1px solid var(--line-soft);color:var(--muted);
+  border:1px solid var(--line-ctl);color:var(--muted);
   transition:color var(--t-fast),border-color var(--t-fast),background var(--t-fast);
 }
-.icbtn:hover{color:var(--text);border-color:var(--line-strong);background:var(--surface)}
+.icbtn:hover{color:var(--text);border-color:var(--text-2);background:var(--surface)}
 .burger{display:none}
 
 /* mobile sheet */
 .sheet{
-  position:fixed;inset:64px 0 0;z-index:80;
+  position:fixed;inset:var(--topbar-h) 0 0;z-index:80;
   background:var(--base);
   display:flex;flex-direction:column;
   padding:8px var(--pad) calc(24px + env(safe-area-inset-bottom));
@@ -360,6 +387,11 @@ html[data-theme="light"] .btn-p{color:#fff}
   opacity:0;visibility:hidden;transform:translateY(-8px);
   transition:opacity var(--t-mid),transform var(--t-mid),visibility var(--t-mid);
 }
+/* `display:flex` above outranks the UA's `[hidden]{display:none}` (a class beats
+   an attribute selector on an unqualified element), so the hidden attribute the
+   JS toggles was being ignored and only opacity/visibility were doing the work.
+   Restate it at matching specificity. */
+.sheet[hidden]{display:none}
 .sheet.on{opacity:1;visibility:visible;transform:none}
 .sheet-a{
   display:flex;align-items:baseline;justify-content:space-between;gap:16px;
@@ -447,6 +479,9 @@ html[data-theme="light"] .btn-p{color:#fff}
 .chip:hover{border-color:var(--line-strong);color:var(--text)}
 .chip-m{font-family:var(--mono);font-size:.6875rem;letter-spacing:.04em}
 .chip-a{border-color:var(--accent-line);color:var(--accent);background:var(--accent-wash)}
+/* 11px type, so it needs the full 4.5:1. Light --accent over the wash was
+   4.48:1 on base and 4.20:1 on surface; --accent-hi is 6.04 / 5.66. */
+html[data-theme="light"] .chip-a{color:var(--accent-hi)}
 .chip-ff{border-color:rgba(124,92,255,.35);color:var(--ff-hi);background:var(--ff-wash)}
 html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
 
@@ -454,18 +489,19 @@ html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
 .note{
   display:flex;gap:11px;align-items:flex-start;
   border-left:2px solid var(--accent-line);padding:2px 0 2px 14px;
-  font-size:var(--fs-xs);color:var(--muted);line-height:1.6;
+  font-size:var(--fs-sm);color:var(--muted);line-height:1.6;
 }
+/* This was --fs-xs (13px), and the inner <p class="body"> inherited it. That put
+   CONCURRENCY — the three-concurrent-roles paragraph, which is the most credible
+   thing on the Experience page because it names its own cost — and TERSE_NOTE in
+   the smallest type on the page, behind an accent bar that reads "footnote".
+   14px now. The bar and the muted colour already signal "aside"; the size was
+   doing the same job a third time, at the cost of legibility. */
 .note-k{flex:none;min-width:94px;padding-top:3px;color:var(--faint)}
 .tl + .note{margin-top:clamp(26px,3vw,38px)}
 @media (max-width:560px){
   .note{flex-direction:column;gap:7px}
   .note-k{min-width:0;padding-top:0}
-}
-.ph{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px dashed var(--line-strong);border-radius:var(--r);
-  padding:9px 13px;font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint);
 }
 
 /* ---------- timeline ---------- */
@@ -492,10 +528,10 @@ html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
 .tl-toggle{
   margin-top:15px;display:inline-flex;align-items:center;gap:8px;
   font-family:var(--mono);font-size:var(--fs-label);letter-spacing:.06em;color:var(--muted);
-  padding:7px 12px;border:1px solid var(--line-soft);border-radius:100px;
+  padding:7px 12px;border:1px solid var(--line-ctl);border-radius:100px;
   transition:color var(--t-fast),border-color var(--t-fast);
 }
-.tl-toggle:hover{color:var(--text);border-color:var(--line-strong)}
+.tl-toggle:hover{color:var(--text);border-color:var(--text-2)}
 .tl-toggle .cv{transition:transform var(--t-mid)}
 .tl-toggle[aria-expanded="true"] .cv{transform:rotate(180deg)}
 .tl-drawer{overflow:hidden;height:0;transition:height var(--t-mid)}
@@ -552,7 +588,7 @@ html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
 .pcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .pcard{
   display:block;position:relative;
-  border:1px solid var(--line-soft);border-radius:var(--r-lg);
+  border:1px solid var(--line-ctl);border-radius:var(--r-lg);
   padding:clamp(20px,2.4vw,28px);background:var(--base);
   transition:border-color var(--t-fast),background var(--t-fast),transform var(--t-fast);
   overflow:hidden;
@@ -562,7 +598,7 @@ html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
   background:var(--accent);transform:scaleY(0);transform-origin:top;
   transition:transform var(--t-mid);
 }
-.pcard:hover{border-color:var(--line-strong);background:var(--surface);transform:translateY(-2px)}
+.pcard:hover{border-color:var(--text-2);background:var(--surface);transform:translateY(-2px)}
 .pcard:hover::before{transform:scaleY(1)}
 .pcard-ff::before{background:var(--ff)}
 .pcard-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
@@ -658,7 +694,7 @@ a.ct-i:hover .ct-x{color:var(--accent);transform:translate(2px,-2px)}
 .socials{display:flex;gap:8px;flex-wrap:wrap}
 .soc{
   display:inline-flex;align-items:center;gap:8px;padding:9px 13px;
-  border:1px solid var(--line-soft);border-radius:100px;
+  border:1px solid var(--line-ctl);border-radius:100px;
   font-size:var(--fs-xs);color:var(--text-2);font-weight:500;
   transition:border-color var(--t-fast),color var(--t-fast),background var(--t-fast);
 }
@@ -753,7 +789,27 @@ html.no-motion .page,html.no-motion [data-reveal],html.no-motion .hero-h1 .ln > 
   /* the sticky-footer min-height would otherwise pad the printed page out */
   #app{display:block;min-height:0}
   html,body{background:#fff!important;color:#111!important}
-  html{--text:#111;--text-2:#333;--muted:#555;--faint:#6B6B6B;--line:#ccc;--line-soft:#ddd;--accent:#8A5A12}
+  /* Two bugs lived in this one rule.
+
+     1. The selector was bare `html`, specificity (0,0,1). A media query adds no
+        specificity, so it lost to `html[data-theme="light"]` at (0,1,1) — anyone
+        printing while in light mode got no print palette at all. Both selectors
+        are now listed.
+
+     2. It reset the type tokens but never the SURFACE tokens, so --base and
+        --surface stayed at their dark values. Printers do not paint backgrounds,
+        so every element that paints a token background over a token foreground
+        collapsed onto white paper: client names printed #111 on #0E1011 (1.01:1,
+        invisible), all 49 résumé chips printed at 1.51:1, .arch-k at 2.41:1.
+        Plain body copy was fine, which is why this survived so long — the
+        printed résumé looks correct right up to the skills chips, which vanish. */
+  html,html[data-theme="light"]{
+    --text:#111;--text-2:#333;--muted:#555;--faint:#6B6B6B;
+    --line:#ccc;--line-soft:#ddd;--line-strong:#bbb;--line-ctl:#bbb;
+    --base:#fff;--surface:#fff;
+    --accent:#8A5A12;--accent-hi:#7C4E12;--accent-wash:transparent;
+    --ff:#3B2A8F;--ff-hi:#3B2A8F;--ff-wash:transparent;
+  }
   .col{border-left:0;padding-left:0}
   .grid{grid-template-columns:minmax(0,1fr)}
   .sect{padding-block:0}
@@ -782,7 +838,10 @@ html.no-motion .page,html.no-motion [data-reveal],html.no-motion .hero-h1 .ln > 
 
 const PROFILE = {
   name:'Olamide Olanipekun',
-  alias:'Flux',
+  /* No `alias` field here any more: it held 'Flux' and nothing ever read it,
+     because the one place that name is published is "alternateName" in the
+     JSON-LD block in <head>, which is static markup this object cannot reach.
+     Change it there. */
   /* POSITIONING vs EMPLOYMENT TITLE — keep these two separate.
      "Technical Product Manager" is how he positions himself, and it is what the
      evidence on this site actually supports: product architecture, APIs and
@@ -793,7 +852,6 @@ const PROFILE = {
      positioning; printing a title you were not given next to an employer's name
      is invention. Do not let the second one creep in. */
   title:'Technical Product Manager · Growth & Operations',
-  shortTitle:'Technical Product Manager & Product Builder',
   location:'Lagos, Nigeria',
   /* Split deliberately. Relocation belongs to where he is; work mode belongs to
      how he works. The old single line said "open to" twice, which reads as
@@ -807,7 +865,6 @@ const PROFILE = {
   brandSecondary:"I don't just manage products. I build them.",
   philosophy:['Build.','Measure.','Learn.','Evolve.'],
   arc:'Product Management → Technical Product Management → Product Leadership',
-  bridge:['Business','Product','Technology','Data','Growth'],
   resumeFile:'Olamide-Olanipekun-Product-Manager.pdf',
   /* The PDF ships alongside index.html. If it is ever removed, flip this to false
      and every résumé button routes to the résumé page — which prints cleanly —
@@ -870,7 +927,7 @@ const NAV = [
    which is honest anyway: in practice they are one continuous job. */
 const WHAT_I_DO = [
   { n:'01', h:'Technical Product',    p:'Working with engineering on systems, APIs, integrations, product architecture, and the technical trade-offs behind a decision.' },
-  { n:'02', h:'Strategy & Execution', p:'Discovery, roadmaps, PRDs, prioritization, agile delivery, backlog management, stakeholder alignment.' },
+  { n:'02', h:'Strategy & Execution', p:'Discovery, roadmaps, PRDs, prioritisation, agile delivery, backlog management, stakeholder alignment.' },
   { n:'03', h:'Growth',               p:'Onboarding, activation, retention, user journeys, lifecycle, community and ecosystem growth.' },
   { n:'04', h:'Operations',           p:'Product and ecosystem operations, process design, operational systems, workflow automation, clearing delivery bottlenecks.' },
   { n:'05', h:'Analytics',            p:'SQL, product analytics, experimentation, behavioural analysis, success metrics.' },
@@ -882,7 +939,7 @@ const WHAT_I_DO = [
    and is described there too, so the number is traceable to work rather than
    floating free of it. */
 const METRICS = [
-  { v:'4',   suffix:'+',  l:'Years in Product Management' },
+  { v:'4',   suffix:'+',  l:'Years in product management' },
   { v:'7',   suffix:'+',  l:'Years broader professional experience' },
   { v:'30',  prefix:'$', suffix:'M', l:'Web3 transaction volume, first six months' },
   { v:'40',  suffix:'%', l:'Onboarding and activation improvement' },
@@ -915,7 +972,7 @@ const EXPERIENCE = [
   {
     org:'FortaFlow', role:'Founder', when:'Jul 2026 – Present', current:true,
     engagement:'Part-time', mode:'Remote',
-    summary:'Building an AI-assisted trading research and strategy platform that helps traders analyze, test, and evolve their strategies — leading product discovery, UX, architecture, and MVP development.',
+    summary:'Building an AI-assisted trading research and strategy platform that helps traders analyse, test, and evolve their strategies — leading product discovery, UX, architecture, and MVP development.',
     detail:[
       'There was no team to inherit, no spec to receive, and no existing product to maintain. The problem had to be found, framed, designed, architected, and built.',
       'I own product discovery, the UX, the system architecture, and the MVP build. That means making the trade-offs personally: what the first version refuses to do, which integrations earn their complexity, and where AI genuinely helps versus where it would just be decoration.'
@@ -924,15 +981,24 @@ const EXPERIENCE = [
     link:'/projects'
   },
   {
-    org:'YNX', role:'Product Manager', when:'Apr 2025 – May 2026',
+    /* His correction: he was also VP Operations and Marketing Lead here, not only
+       Product Manager. Same treatment as Limitless Prop below — `also` carries the
+       additional titles in lower emphasis on the same line, so a reader sees every
+       title he held and can tell they were concurrent rather than sequential.
+       Worth knowing when editing: his public LinkedIn lists this engagement as
+       "Product Manager · Part-time" only, with the description collapsed, so these
+       two titles are sourced from him directly and are not corroborated there. If
+       the profile is ever the reference a reader checks against, add them there. */
+    org:'YNX', role:'Product Manager', also:'VP Operations & Marketing Lead',
+    when:'Apr 2025 – May 2026',
     engagement:'Part-time', mode:'United Kingdom · Remote',
     summary:'Built and launched an MVP while running product execution across digital products — managing the lifecycle, coordinating engineering, design and growth, and supporting grant and fundraising efforts.',
     detail:[
       'The work sat where product direction meets delivery. I took an MVP from concept to launch and managed the lifecycle around it, partnering with engineering to move concepts through development while keeping product, operations, and growth pointed at the same outcome.',
-      'Sprint planning and backlog prioritization ran in Notion and Trello, which improved delivery coordination across the team. Market and competitor research fed the roadmap, and data-informed process changes cut workflow bottlenecks — improving operational efficiency by around 30%.',
+      'Sprint planning and backlog prioritisation ran in Notion and Trello, which improved delivery coordination across the team. Market and competitor research fed the roadmap, and data-informed process changes cut workflow bottlenecks — improving operational efficiency by around 30%.',
       'Because the company was early-stage, product work and fundraising were not separable. I partnered with leadership on growth strategy and supported grant and fundraising efforts, which is a useful discipline: it forces you to explain the product to people who will not read the PRD.'
     ],
-    focus:['Product execution','MVP launch','Product lifecycle','Roadmaps','Sprint planning','Cross-functional collaboration','Market research','Growth','Fundraising support']
+    focus:['Product execution','MVP launch','Product lifecycle','Roadmaps','Sprint planning','Cross-functional collaboration','Market research','Operations','Marketing','Growth','Fundraising support']
   },
   {
     /* Scope used to be pinned to the title as "Product Manager | Growth &
@@ -964,10 +1030,10 @@ const EXPERIENCE = [
     detail:[
       'This is where the $30M figure on this site comes from. I led product and ecosystem operations for a Web3 platform through the period it processed over $30M in transaction volume — its first six months. That number belongs to a team and a market, not to me alone, but the onboarding and activation work behind it was mine to own.',
       'The role was never one lane. Product, operations, and growth were on my desk at the same time, so the person who wrote the requirement also ran the process around it and watched the number it was supposed to move. Wide remit, small company — and useful, because the handoffs where work usually goes missing were internal to one person.',
-      'Most of the leverage was in activation. I rebuilt onboarding and activation workflows to hold on to the users the platform was already attracting, and worked with engineering to prioritize features against that number rather than against whoever asked loudest.',
+      'Most of the leverage was in activation. I rebuilt onboarding and activation workflows to hold on to the users the platform was already attracting, and worked with engineering to prioritise features against that number rather than against whoever asked loudest.',
       'The evidence loop mattered more than the roadmap document — user behaviour, operational feedback, and engagement trends reviewed continuously and fed back into what got built next.'
     ],
-    focus:['Product operations','Ecosystem operations','Growth','Onboarding & activation','Feature prioritization','Retention','Behavioural analysis','Web3']
+    focus:['Product operations','Ecosystem operations','Growth','Onboarding & activation','Feature prioritisation','Retention','Behavioural analysis','Web3']
   },
   {
     /* His correction: this was a product management role too, not only community
@@ -990,6 +1056,40 @@ const EXPERIENCE = [
       'Operational systems were the other half of the job — building repeatable process so product, engagement, and growth work did not depend on any single person being available.'
     ],
     focus:['Product management','Community','Growth operations','User engagement','Operational systems','Ecosystem management','Trading']
+  },
+  {
+    /* Added at his request. Three things about this entry are deliberate.
+
+       1. NO DATES. He said the range was in the LinkedIn screenshots he sent, but
+          those captures stop at Deserialize and contain no Debonk entry, so there
+          was nothing to read. `when:null` renders a visible "dates not listed"
+          pill rather than a guessed range. Fill it in here and it appears on both
+          the timeline and the résumé.
+       2. POSITION IS NOT A DATE CLAIM. Every other entry is ordered newest-first,
+          so an undated one placed last would normally read as the oldest. It sits
+          here because it has to sit somewhere; the placeholder pill is what tells
+          the reader the truth. Move it once real dates exist.
+       3. He described the remit as "Product Manager + Growth". The title stays
+          "Product Manager" and growth lives in the summary and focus tags — the
+          same decision taken for delabz and Deserialize above, and for the same
+          reason: a scope phrase welded onto a title reads as a title the employer
+          awarded.
+       4. NO NUMBERS IN THE DETAIL BULLETS, on purpose. He asked for "metrics" and
+          then listed simplified onboarding, removed rookie friction, a demo trading
+          feature, gamification, and sign-off on the final mini-app design — which
+          are contributions, not measurements. They are written as contributions.
+          Do not later dress any of them up with a percentage that was never
+          supplied; that is the one thing this file is not allowed to do. */
+    org:'Debonk', role:'Product Manager', when:null,
+    engagement:'Part-time', mode:null,
+    summary:'Product management for a Telegram-native trading bot in the same category as BonkBot, with one deliberate difference — a demo trading mode. Onboarding, beginner friction, gamification, and the final mini-app design.',
+    detail:[
+      'Debonk is a Telegram-native trading bot of the BonkBot kind, with a demo trading mode the comparable products did not offer. Defining that feature was the part of this job I would defend hardest: in this category the first thing a new user does is usually an irreversible trade with real money, and there was nowhere to practise first.',
+      'Most of the product work was onboarding. The flow assumed you already understood what a Telegram trading bot was and how to operate one, which is fine for the people who built it and useless for everyone else. I simplified it and took out the beginner friction that was losing people before they ever placed a trade.',
+      'Gamification was the retention half of the same problem — giving a new trader a reason to come back that did not depend on having won money, because a product whose only reward is profit only retains the people who are already winning.',
+      'I worked through the final mini-app design and signed it off, so that the interface a user actually touched matched the flow the product decisions had described rather than drifting from it in build.'
+    ],
+    focus:['Product management','Onboarding','Demo trading','Gamification','Mini-app design','Growth','Telegram','Trading UX']
   }
 ];
 
@@ -1010,7 +1110,12 @@ const EXPERIENCE = [
    timeline finds a gap. It is closed by the contract and freelance product work
    in CLIENTS below, which has run alongside these roles since 2019 — so the note
    there names the figure explicitly instead of leaving the two to disagree. Do
-   not raise this number without extending one of those two date ranges. */
+   not raise this number without extending one of those two date ranges.
+
+   Debonk is a seventh product-titled role and contributes NOTHING to the union
+   above, because its dates were deliberately left out at his instruction. That is
+   the correct handling — but it also means the entry cannot be pointed at as
+   support for the 4+ figure. If real dates ever arrive, redo this sum. */
 const CONCURRENCY = 'Some of these ran in parallel. From June 2025 to February 2026 I held three product roles at once — delabz full-time, YNX and Dextopus part-time — across different products, stacks, and stakeholder sets. It is where my practice at context-switching comes from, and it also taught me what that switching costs. I would rather go deep on one product now than keep three afloat.';
 
 /* Three roles carry no descriptive detail because I have not written it up yet,
@@ -1028,7 +1133,11 @@ const CLIENTS = {
   items:[
     { org:'Betboom' },
     { org:'ChainPeak Global' },
-    { org:'Debonk', note:'Telegram-based trading product' },
+    /* Debonk used to sit here. It moved to EXPERIENCE above when he asked for it
+       in the timeline, and listing one org as both an employer and a client invites
+       the reader to wonder which it was. Its project card in PROJECTS.others stays
+       — a role plus a project card is the normal pairing here, as YNX already
+       demonstrates. */
     { org:'Gotabit' },
     { org:'Dorum' },
     { org:'Proprietary trading firms', note:'several, including Limitless Prop above' }
@@ -1098,10 +1207,19 @@ const PROJECTS = {
       p:'Product opportunities translated into executable roadmaps, with cross-functional delivery and growth objectives kept on the same thread.',
       more:'Roadmapping, user research, product analytics, and stakeholder alignment across product and growth.',
       tags:['Roadmapping','User research','Product analytics','Growth'] },
-    { name:'Debonk', cat:'Trading + Automation',
-      p:'A Telegram-based trading product where product thinking, automation, user behaviour, and trading workflows intersect.',
-      more:'Chat-native trading workflows, automation, and the user experience of executing trades inside a conversation.',
-      tags:['Telegram','Automation','Trading UX','Product development'] },
+    /* Deserialize, added at his request. Every claim here is lifted from the
+       EXPERIENCE entry and the About page copy already in this file — the $30M
+       volume, the six-month window, the activation-not-arrivals framing, and the
+       product/ecosystem-operations remit. Nothing new is asserted. The $30M carries
+       the same team-attribution caveat as everywhere else it appears. */
+    { name:'Deserialize', cat:'Web3 + Ecosystem Operations',
+      p:'A Web3 platform that processed over $30M in transaction volume in its first six months. It was never short of arrivals — it was short of activation.',
+      more:'Product and ecosystem operations: rebuilding onboarding and activation to hold on to users the platform already attracted, and prioritising features against that number rather than against whoever asked loudest.',
+      tags:['Web3','Onboarding & activation','Retention','Ecosystem operations','Feature prioritisation','Behavioural analysis'] },
+    { name:'Debonk', cat:'Telegram Bot + Trading',
+      p:'A Telegram-native trading bot of the BonkBot kind, with a demo trading mode the comparable products did not offer — somewhere to practise before risking real money.',
+      more:'Simplified onboarding and stripped-out beginner friction, the demo trading feature itself, gamification aimed at retention, and the final mini-app design carried through sign-off.',
+      tags:['Telegram','Demo trading','Onboarding','Gamification','Mini-app design','Automation','Trading UX'] },
     { name:'Prototypes & internal automation', cat:'Prototyping + AI-assisted development',
       p:'Prototype building, workflow automation, and AI-assisted development — taking repetitive operational problems and turning them into systems.',
       more:'Prototypes that make a product idea testable, and automation that removes recurring manual work from a team.',
@@ -1116,7 +1234,7 @@ const PROCESS = [
   { n:'02', h:'Frame', p:'Turn ambiguity into a clearly defined problem.',
     note:'Ambiguity is not a blocker, it is the input. I break it into smaller problems, separate assumption from fact, and write the problem down in a form a team can disagree with.',
     tools:['Problem statements','Assumption mapping','User journey mapping','PRDs'] },
-  { n:'03', h:'Prioritize', p:'Use RICE, MoSCoW, Value vs. Risk, impact, effort, and strategic importance.',
+  { n:'03', h:'Prioritise', p:'Use RICE, MoSCoW, Value vs. Risk, impact, effort, and strategic importance.',
     note:'A framework is a way to make a trade-off visible, not a way to outsource judgement. The output I care about is a decision someone can challenge on its reasoning.',
     tools:['RICE','MoSCoW','Value vs. Risk','Effort and impact sizing'] },
   { n:'04', h:'Align', p:'Make assumptions and trade-offs explicit and create shared direction across stakeholders.',
@@ -1141,9 +1259,9 @@ const PROCESS = [
    repeating one block shape before the reader stops reading. */
 const SKILLS = [
   { g:'Technical',  note:'Working inside the system, not beside it',
-    items:['AI-assisted development','Product architecture','API concepts','Integrations','Automation','Technical trade-offs','Product prototyping','UX thinking','Supabase','Vercel'] },
+    items:['AI-assisted development','Product architecture','REST APIs','Third-party integrations','Automation','Technical trade-offs','Product prototyping','UX thinking','Supabase','Vercel'] },
   { g:'Product',    note:'Strategy through delivery',
-    items:['Product Strategy','Product Discovery','Roadmapping','PRDs','User Research','Prioritization','Agile','Product Lifecycle','Stakeholder Management'] },
+    items:['Product Strategy','Product Discovery','Roadmapping','PRDs','User Research','Prioritisation','Agile','Product Lifecycle','Stakeholder Management'] },
   { g:'Growth',     note:'Adoption, activation, retention',
     items:['Growth Marketing','Onboarding','Activation','Retention','Lifecycle','Community','Go-to-Market'] },
   { g:'Operations', note:'Making the process repeatable',
@@ -1273,7 +1391,12 @@ const ExperienceTimeline = (items=EXPERIENCE) => `
             ? `<span class="tl-when">${e.when}</span>`
             : `<span class="tl-when" title="No dates supplied for this engagement">dates not listed</span>`}
         </div>
-        <p class="tl-role">${e.role}${e.also?`<span class="tl-also">also ${e.also}</span>`:''}${meta?`<span class="tl-meta">${meta}</span>`:''}</p>
+        ${/* Order matters here and is not cosmetic: .tl-also is display:block, so
+             whatever follows it starts a new line. .tl-meta's border-left and
+             11px margin are a separator designed to sit INLINE after the role —
+             rendered after the block it landed on its own line as a stray tick
+             with nothing to separate. Meta first, `also` last. */''}
+        <p class="tl-role">${e.role}${meta?`<span class="tl-meta">${meta}</span>`:''}${e.also?`<span class="tl-also">also ${e.also}</span>`:''}</p>
         <div class="tl-body"><p class="body">${e.summary}</p></div>
         ${hasDetail ? `
         <button class="tl-toggle" type="button" aria-expanded="false" aria-controls="tld-${i}">
@@ -1354,7 +1477,7 @@ const CTA = () => `
         <div class="col">
           <p class="pull measure-narrow">Let's build something meaningful.</p>
           <p class="body measure" style="margin-top:16px">Hiring for a product role, building something ambitious, or want to exchange ideas — either way, I'd like to hear about it.</p>
-          <div class="btns" style="margin-top:26px">
+          <div class="btns mt-ml">
             <a class="btn btn-p" href="#/contact">Get in touch</a>
             <a class="btn btn-s" href="${resumeHref()}"${resumeAttr()}>${resumeLabel()}${resumeIcon()}</a>
           </div>
@@ -1388,19 +1511,26 @@ const Navbar = path => `
         <button class="icbtn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet">${ICON.burger()}</button>
       </div>
     </div>
-    <div class="sheet" id="sheet" hidden>
-      <nav aria-label="Mobile">
-        ${NAV.map(n=>`
-          <a class="sheet-a" href="#${n.path}"${path===n.path?' aria-current="page"':''}>
-            <span>${n.label}</span><span class="n">${n.n}</span>
-          </a>`).join('')}
-      </nav>
-      <div class="sheet-foot">
-        <a class="btn btn-p" href="${resumeHref()}"${resumeAttr()} style="justify-content:center">${resumeLabel()}${resumeIcon()}</a>
-        ${SocialLinks()}
-      </div>
+  </header>
+  ${/* The sheet MUST be a sibling of <header>, not a child of it. .topbar carries
+       backdrop-filter, and an element with a backdrop-filter becomes a containing
+       block for its fixed-position descendants — same rule as transform and
+       filter. Nested inside, the sheet's `inset:64px 0 0` resolved against the
+       64px-tall header instead of the viewport, so it opened at zero height and
+       nothing appeared on mobile. It was not a JS bug: the class was toggling
+       correctly the whole time. Do not move this back inside the header. */''}
+  <div class="sheet" id="sheet" hidden>
+    <nav aria-label="Mobile">
+      ${NAV.map(n=>`
+        <a class="sheet-a" href="#${n.path}"${path===n.path?' aria-current="page"':''}>
+          <span>${n.label}</span><span class="n">${n.n}</span>
+        </a>`).join('')}
+    </nav>
+    <div class="sheet-foot">
+      <a class="btn btn-p" href="${resumeHref()}"${resumeAttr()} style="justify-content:center">${resumeLabel()}${resumeIcon()}</a>
+      ${SocialLinks()}
     </div>
-  </header>`;
+  </div>`;
 
 /* -- Footer --------------------------------------------------------------- */
 /* The CTA block is suppressed on /contact — inviting someone to get in touch
@@ -1455,7 +1585,7 @@ const TOOLS = [
 const TOOLKIT_GROUPS = [
   { g:'Discovery', items:['Product discovery','User research','User journey mapping'] },
   { g:'Strategy',  items:['Product strategy','Roadmapping'] },
-  { g:'Decisions', items:['Prioritization','RICE','MoSCoW','Value vs. Risk'] },
+  { g:'Decisions', items:['Prioritisation','RICE','MoSCoW','Value vs. Risk'] },
   { g:'Delivery',  items:['PRDs and product documentation','Agile product development','Backlog management','Stakeholder management','Cross-functional collaboration'] },
   { g:'Evidence',  items:['Product analytics','Growth experimentation'] },
   { g:'Building',  items:['MVP development','Product prototyping','AI-assisted development','Workflow automation'] }
@@ -1524,18 +1654,20 @@ const Home = () => `
           <span class="ln"><span>I build products</span></span>
           <span class="ln"><span>from ambiguity to impact.</span></span>
         </h1>
-        <p class="lede hero-lede">Technical Product Manager and product builder. ${PROFILE.pmYears} years in product management, ${PROFILE.totalYears} across growth, operations and analytics — in fintech, trading, and Web3. I work close enough to the engineering to build the thing myself.</p>
+        ${/* The years figure is in the eyebrow directly above this, so repeating
+             it here spent the most valuable line on the site restating a fact the
+             reader had just read. This says what the eyebrow cannot. */''}
+        <p class="lede hero-lede">Technical Product Manager and product builder, working in fintech, trading, and Web3. I take products from ambiguity to clarity — and I work close enough to the engineering to build the thing myself.</p>
         <div class="btns">
           <a class="btn btn-p" href="#/projects">View my work</a>
           <a class="btn btn-s" href="${resumeHref()}"${resumeAttr()}>${resumeLabel()}${resumeIcon()}</a>
-          <a class="btn btn-q" href="#/contact">Let’s connect${ICON.ar()}</a>
+          <a class="btn btn-q" href="#/contact">Let's connect${ICON.ar()}</a>
         </div>
         <dl class="hero-meta">
           <div><dt>Based in</dt><dd>${PROFILE.location} · ${PROFILE.relocation.replace('Open','open')}</dd></div>
           <div><dt>Currently</dt><dd>Founder — <a href="#/projects">FortaFlow</a> (part-time, in build)</dd></div>
           <div><dt>Open to</dt><dd>Full-time product roles · remote or hybrid</dd></div>
         </dl>
-        ${Axis()}
       </div>
     </div>
   </section>
@@ -1561,6 +1693,18 @@ const Home = () => `
     </div>
   </section>
 
+  ${/* The axis diagram used to close the hero column, which put it between the
+       headline and the metric strip — so the twenty-second reader met a
+       decorative SVG before meeting the three numbers that carry every
+       operational claim on the site. It is a good diagram and it earns a place;
+       it does not earn that place. */''}
+  <section class="shell sect-tight">
+    <div class="grid">
+      ${Rail('—','bridge')}
+      <div class="col">${Axis()}</div>
+    </div>
+  </section>
+
   <section class="shell sect">
     <div class="grid">
       ${Rail('02','about')}
@@ -1579,7 +1723,7 @@ const Home = () => `
     <div class="grid">
       ${Rail('03','capability')}
       <div class="col">
-        ${SectionHeader({label:'What I do',h:'Six areas of the work.',sub:'Strategy and execution, plus the analytics and hands-on building that usually sit outside a product manager’s remit.'})}
+        ${SectionHeader({label:'What I do',h:'Six areas of the work.',sub:'Strategy and execution, plus the analytics and hands-on building that usually sit outside a product manager\'s remit.'})}
         <div class="mx" style="margin-top:28px">
           ${WHAT_I_DO.map(c=>`
             <article class="mx-i">
@@ -1607,7 +1751,7 @@ const Home = () => `
         <div class="pcards" style="margin-top:16px">
           ${PROJECTS.others.slice(0,2).map(p=>ProjectCard({...p,cta:'See projects'})).join('')}
         </div>
-        <div style="margin-top:26px"><a class="tlink" href="#/projects">All projects${ICON.ar()}</a></div>
+        <div class="mt-ml"><a class="tlink" href="#/projects">All projects${ICON.ar()}</a></div>
       </div>
     </div>
   </section>
@@ -1653,8 +1797,8 @@ const About = () => `
       <div class="col">
         ${SectionHeader({label:'Who I am',h:'I take products from ambiguity to clarity.'})}
         <div class="measure mt-m">
-          <p class="body">I enjoy turning ideas into structured product requirements, working with engineering on the systems underneath them, and building the operational process that makes products and teams work better. Across my experience I have worked the full product lifecycle — discovery and user research, product strategy, roadmapping, PRDs, prioritization, execution, experimentation, analytics, launch, and iteration.</p>
-          <p class="body">I use frameworks like RICE, MoSCoW, and Value vs. Risk to prioritize opportunities while balancing user value, business impact, technical complexity, and risk. But I am most comfortable where the problem is not fully defined. Rather than waiting for perfect requirements, I break the ambiguity into smaller problems, validate assumptions, align stakeholders, and create a path from idea to execution.</p>
+          <p class="body">I enjoy turning ideas into structured product requirements, working with engineering on the systems underneath them, and building the operational process that makes products and teams work better.</p>
+          <p class="body">I use frameworks like RICE, MoSCoW, and Value vs. Risk to prioritise opportunities while balancing user value, business impact, technical complexity, and risk. But I am most comfortable where the problem is not fully defined. Rather than waiting for perfect requirements, I break the ambiguity into smaller problems, validate assumptions, align stakeholders, and create a path from idea to execution.</p>
         </div>
         <div class="mt-l">
           <p class="mono" style="margin-bottom:12px">Where my ${PROFILE.totalYears} years have been spent</p>
@@ -1709,11 +1853,11 @@ const About = () => `
       <div class="col">
         ${SectionHeader({label:'Analytics & data',h:'Good product decisions should be informed by evidence.'})}
         <div class="measure" style="margin-top:22px">
-          <p class="body">I work with SQL, Mixpanel, Amplitude, Google Sheets, and product analytics frameworks to understand user behaviour, identify friction, evaluate performance, and support prioritization. The SQL side is certificated rather than asserted — completed coursework through joins, data manipulation, window functions, and PostgreSQL, alongside data literacy and communicating data insights. Power BI and Python are where I am still building depth.</p>
+          <p class="body">I work with SQL, Mixpanel, Amplitude, Google Sheets, and product analytics frameworks to understand user behaviour, identify friction, evaluate performance, and support prioritisation. The SQL side is certificated rather than asserted — completed coursework through joins, data manipulation, window functions, and PostgreSQL, alongside data literacy and communicating data insights. Power BI and Python are where I am still building depth.</p>
           <p class="body">Analytics is not about producing dashboards for their own sake. It is about answering better product questions.</p>
         </div>
-        <div class="arch" style="margin-top:26px">
-          ${[['What is happening?','Instrumentation, funnels, cohorts'],['Why is it happening?','Behavioural and qualitative analysis'],['What should we change?','Prioritization against impact and risk'],['How do we know it worked?','Success metrics and experiments']].map(([q,a])=>`
+        <div class="arch mt-ml">
+          ${[['What is happening?','Instrumentation, funnels, cohorts'],['Why is it happening?','Behavioural and qualitative analysis'],['What should we change?','Prioritisation against impact and risk'],['How do we know it worked?','Success metrics and experiments']].map(([q,a])=>`
             <div class="arch-row"><div class="arch-k">${q}</div><div class="arch-v"><span class="sm">${a}</span></div></div>`).join('')}
         </div>
         <div style="margin-top:20px"><p class="mono" style="margin-bottom:10px">Currently deepening</p><ul class="chips">${GROWING.map(t=>`<li class="chip chip-a chip-m">${t}</li>`).join('')}</ul></div>
@@ -1752,7 +1896,7 @@ const About = () => `
         <div class="measure mt-m">
           <p class="body">At Deserialize I led product and ecosystem operations for a Web3 platform through the six months it processed over $30M in transaction volume. The platform was not short of arrivals; it was short of activation.</p>
           <p class="body">So the work was not a bigger roadmap. It was rebuilding onboarding and activation around where people were actually dropping out, then prioritising features with engineering against that one number rather than against whoever asked loudest.</p>
-          <p class="body">That is the pattern I would bring: find the number that matters, find where the product loses it, and be technical enough to work on the fix rather than only describe it. At YNX the same instinct went the other way — the constraint was delivery, not activation, so the work became sprint planning, backlog prioritisation, and process changes that cut workflow bottlenecks by around 30%.</p>
+          <p class="body">That is the pattern I would bring: find the number that matters, find where the product loses it, and be technical enough to work on the fix rather than only describe it.</p>
           <p class="body">I ask difficult questions when assumptions do not hold, which is not always comfortable to be in a room with. I would rather have that conversation before a quarter of engineering time is spent than after.</p>
         </div>
       </div>
@@ -1892,7 +2036,7 @@ const Projects = () => {
       ${Rail('02','reasoning')}
       <div class="col">
         ${SectionHeader({label:'How I think about it',h:'The four decisions that shaped the product.'})}
-        <div class="proc" style="margin-top:26px;border-top:0">
+        <div class="proc mt-ml" style="border-top:0">
           ${f.thinking.map((t,i)=>`
             <div class="proc-i" data-reveal>
               <div class="proc-n">${String(i+1).padStart(2,'0')}</div>
@@ -1911,7 +2055,7 @@ const Projects = () => {
       ${Rail('03','architecture')}
       <div class="col">
         ${SectionHeader({label:'Architecture',h:'How the system is laid out.',sub:'Product architecture as designed. Integrations and platform choices are planned and in progress, not shipped infrastructure.'})}
-        <div class="arch" style="margin-top:26px">
+        <div class="arch mt-ml">
           ${f.architecture.map(r=>`
             <div class="arch-row">
               <div class="arch-k">${r.k}</div>
@@ -1934,7 +2078,7 @@ const Projects = () => {
       ${Rail('04','experience')}
       <div class="col">
         ${SectionHeader({label:'Product experience',h:'The surfaces I designed.',sub:'Seven product areas, designed as one connected workspace rather than separate tools.'})}
-        <div class="smap" style="margin-top:26px">
+        <div class="smap mt-ml">
           ${f.surfaces.map((s,i)=>`
             <div class="smap-i">
               <div class="smap-n">${String(i+1).padStart(2,'0')}</div>
@@ -1963,7 +2107,7 @@ const Projects = () => {
       ${Rail('06','learning')}
       <div class="col">
         ${SectionHeader({label:'What I learned',h:'Four things this project taught me.'})}
-        <div class="mx" style="margin-top:26px">
+        <div class="mx mt-ml">
           ${f.learned.map(l=>`
             <article class="mx-i"><h3 class="h3 mx-h" style="margin-top:0">${l.h}</h3><p class="mx-p">${l.p}</p></article>`).join('')}
           <article class="mx-i" style="background:var(--surface)"><h3 class="h3 mx-h" style="margin-top:0;color:var(--accent)">What's next</h3>
@@ -1978,14 +2122,16 @@ const Projects = () => {
       ${Rail('07','other work')}
       <div class="col">
         ${SectionHeader({label:'Other projects',h:'Product, growth, and automation work.'})}
-        <div class="pcards" style="margin-top:26px">
+        <div class="pcards mt-ml">
           ${PROJECTS.others.map(p=>ProjectCard({...p,cta:'Ask me about this',href:'/contact'})).join('')}
-          ${ProjectCard({name:'FortaFlow',cat:'AI + Trading + Product Infrastructure',ff:true,
-            p:'Trading research and strategy platform — the flagship build above.',
-            more:'AI-assisted strategy building, backtesting, strategy analytics, live conditions, automated journaling.',
-            tags:['AI','Backtesting','Supabase','Vercel'],cta:'Back to case study',href:'/projects'})}
+          ${/* A FortaFlow card used to sit here, inside "Other projects", on the
+               same page as the FortaFlow case study — with a CTA reading "Back to
+               case study" that linked to the page you were already on, and a
+               category string ("AI + Trading + Product Infrastructure") that
+               contradicted the one in PROJECTS.fortaflow ("AI × Trading × Product
+               Analytics"). Two labels for one product, 1500px apart. Deleted:
+               three real cards beat four with one no-op. */''}
         </div>
-        <div class="note" style="margin-top:26px"><span>Descriptions are kept deliberately concise where public detail is limited. Happy to walk through any of these in depth.</span></div>
       </div>
     </div>
   </section>`;
@@ -2076,7 +2222,7 @@ const Skills = () => `
     <div class="grid">
       ${Rail('03','credentials')}
       <div class="col">
-        ${SectionHeader({label:'Certifications',h:'The data work, verifiable rather than asserted.',sub:'Each one links to the issuer’s own verification page — none of it has to be taken on trust.'})}
+        ${SectionHeader({label:'Certifications',h:'The data work, verifiable rather than asserted.',sub:'Each one links to the issuer\'s own verification page — none of it has to be taken on trust.'})}
         <div class="mt-l">${CertList()}</div>
       </div>
     </div>
@@ -2142,11 +2288,23 @@ const Resume = () => `
                 <div class="cv-item">
                   <div class="tl-top" style="margin-bottom:2px">
                     <h2 class="h3">${e.org}</h2>
-                    ${e.when?`<span class="tl-when">${e.when}</span>`:''}
+                    ${/* Matches the timeline instead of rendering nothing. An
+                         undated entry with no date element at all reads as an
+                         oversight on a printed résumé; the placeholder reads as
+                         a fact that was not supplied. */''}
+                    ${e.when
+                      ? `<span class="tl-when">${e.when}</span>`
+                      : `<span class="tl-when" title="No dates supplied for this engagement">dates not listed</span>`}
                   </div>
-                  <p class="tl-role mb-xs">${e.role}${e.also?`<span class="tl-also">also ${e.also}</span>`:''}${[e.engagement,e.mode].filter(Boolean).length?`<span class="tl-meta">${[e.engagement,e.mode].filter(Boolean).join(' · ')}</span>`:''}</p>
+                  ${/* Meta before `also` — see the note in ExperienceTimeline. */''}
+                  <p class="tl-role mb-xs">${e.role}${[e.engagement,e.mode].filter(Boolean).length?`<span class="tl-meta">${[e.engagement,e.mode].filter(Boolean).join(' · ')}</span>`:''}${e.also?`<span class="tl-also">also ${e.also}</span>`:''}</p>
                   <p class="body" style="font-size:var(--fs-sm)">${e.summary}</p>
-                  <ul>${e.focus.map(f=>`<li class="cv-li">${f}</li>`).join('')}</ul>
+                  ${/* These were <li class="cv-li"> — full accent-dashed bullets.
+                       But `focus` holds one-to-three-word tags ("Retention",
+                       "Web3"), not achievements, so 41 of the résumé's 59 bullets
+                       were tags dressed as accomplishments and the page read as a
+                       wall of dashes. Chips say "tag" without claiming more. */''}
+                  <ul class="chips mt-xs">${e.focus.map(f=>`<li class="chip chip-m">${f}</li>`).join('')}</ul>
                 </div>`).join('')}
               <p class="sm mt-s" style="max-width:66ch">${CONCURRENCY}</p>
             </div>
@@ -2168,10 +2326,15 @@ const Resume = () => `
             <div class="cv-when">Experience highlights</div>
             <div>
               <ul>
-                <li class="cv-li">Contributed to $30M transaction volume in the first six months of one product experience.</li>
-                <li class="cv-li">Contributed to a 40% improvement in onboarding.</li>
-                <li class="cv-li">Contributed to a 50% reduction in bottlenecks.</li>
-                <li class="cv-li">Worked the full product lifecycle: discovery, strategy, roadmapping, PRDs, prioritization, execution, experimentation, analytics, launch, and iteration.</li>
+                ${/* Each of these used to open "Contributed to…", with a footnote
+                     below also saying the outcomes were team outcomes. Hedging in
+                     both places reads as pre-emptive apology and buries the
+                     figure behind two words of qualifier. One caveat, kept below,
+                     covers all three. */''}
+                <li class="cv-li">$30M transaction volume in a Web3 product's first six months.</li>
+                <li class="cv-li">40% improvement in onboarding and activation.</li>
+                <li class="cv-li">50% reduction in operational bottlenecks.</li>
+                <li class="cv-li">Full product lifecycle: discovery, strategy, roadmapping, PRDs, prioritisation, execution, experimentation, analytics, launch, and iteration.</li>
               </ul>
               <p class="sm mt-s">Figures reflect outcomes contributed to as part of a team, not sole attribution.</p>
             </div>
@@ -2287,7 +2450,11 @@ const Contact = () => `
           </div>
           <div class="ct-i">
             <span class="ct-k">Work mode</span>
-            <span class="ct-v">Remote or hybrid <span class="ct-n">· open to global opportunities</span></span>
+            ${/* Was hardcoded here while PROFILE.workMode held the identical
+                 string and went unused — two copies of one fact, one of which
+                 nobody would remember to update. Split on the middot so the
+                 qualifier keeps its lower emphasis. */''}
+            <span class="ct-v">${PROFILE.workMode.split(' · ')[0]} <span class="ct-n">· ${PROFILE.workMode.split(' · ')[1]}</span></span>
           </div>
         </div>
         <div class="btns mt-l">
@@ -2305,7 +2472,7 @@ const Contact = () => `
       ${Rail('02','what to send')}
       <div class="col">
         ${SectionHeader({label:'Useful context',h:'What helps me reply well.'})}
-        <div class="mx" style="margin-top:26px">
+        <div class="mx mt-ml">
           <article class="mx-i"><span class="mx-n">If you are hiring</span><h3 class="h3 mx-h">The problem, not the spec</h3><p class="mx-p">What the product needs to solve and where it currently gets stuck tells me more than a list of requirements.</p></article>
           <article class="mx-i"><span class="mx-n">If you are building</span><h3 class="h3 mx-h">Stage and constraints</h3><p class="mx-p">Where the product is, what you have already tried, and what is actually fixed versus assumed.</p></article>
           <article class="mx-i"><span class="mx-n">If you are curious</span><h3 class="h3 mx-h">Just say hello</h3><p class="mx-p">Product, trading, analytics, AI tooling — happy to trade notes with people thinking about the same things.</p></article>
@@ -2370,8 +2537,18 @@ function bind(path){
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     burger.innerHTML = open ? ICON.close() : ICON.burger();
-    if (open) { sheet.hidden = false; requestAnimationFrame(()=>sheet.classList.add('on')); }
-    else { sheet.classList.remove('on'); setTimeout(()=>{ sheet.hidden = true; }, 200); }
+    if (open) {
+      sheet.hidden = false;
+      /* Two frames, not one. Now that .sheet[hidden] really does set display:none,
+         the element has no computed layout in the frame where it is unhidden, and
+         a single rAF is not reliably enough for the browser to have a "from"
+         state to transition out of — the sheet would sometimes snap in with no
+         animation. The second frame guarantees one. */
+      requestAnimationFrame(()=>requestAnimationFrame(()=>sheet.classList.add('on')));
+    } else {
+      sheet.classList.remove('on');
+      setTimeout(()=>{ sheet.hidden = true; }, 200);
+    }
     document.body.style.overflow = open ? 'hidden' : '';
   };
   burger.addEventListener('click', () => setSheet(burger.getAttribute('aria-expanded') !== 'true'));
@@ -2379,6 +2556,12 @@ function bind(path){
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setSheet(false); burger.focus(); }
   });
+  /* Crossing to desktop width hides the burger via media query, which would strand
+     an open sheet and — worse — leave body{overflow:hidden} with no visible way to
+     undo it. Close on the way past the breakpoint. */
+  const wide = window.matchMedia('(min-width:981px)');
+  const onWide = e => { if (e.matches && burger.getAttribute('aria-expanded') === 'true') setSheet(false); };
+  wide.addEventListener ? wide.addEventListener('change', onWide) : wide.addListener(onWide);
 
   /* --- reveal on scroll (only where it earns its place) ------------------ */
   const revealables = document.querySelectorAll('[data-reveal]');

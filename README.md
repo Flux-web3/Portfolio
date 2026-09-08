@@ -1,8 +1,10 @@
 # Olamide Olanipekun — Portfolio
 
-Personal portfolio site for **Olamide Olanipekun** (Flux) — Product Manager · Product Builder · Growth & Analytics.
+Personal portfolio site for **Olamide Olanipekun** (Flux) — Technical Product Manager · Product Builder · Growth & Operations.
 
-Live: _add your Vercel URL here after the first deploy_
+Live: <https://github.com/Flux-web3/Portfolio> — replace this with the Vercel URL, then run
+`bash tools/set-site-url.sh <that-url>` so `index.html`, `robots.txt` and `sitemap.xml` agree.
+`check.js` fails while they disagree.
 
 ## What this is
 
@@ -19,7 +21,7 @@ moved, and stay editable years from now without archaeology.
 | Block | What it holds |
 | --- | --- |
 | `1. DATA` | All content: profile, socials, navigation, metrics, experience, projects, process, skills |
-| `2. COMPONENTS` | Pure functions returning HTML — `Navbar`, `Footer`, `Hero`/`Axis`, `SectionHeader`, `ProjectCard`, `ExperienceTimeline`, `SkillGroup`, `MetricCard`, `SocialLinks`, `CTA` |
+| `2. COMPONENTS` | Pure functions returning HTML — `Navbar`, `Footer`, `Rail`, `PageHead`, `Axis`, `SectionHeader`, `ProjectCard`, `ExperienceTimeline`, `ArchRows`, `ClientList`, `CertList`, `Metrics`, `SocialLinks`, `CTA` |
 | `3. PAGES` | The eight pages, composed from components |
 | `4. ROUTER` | Hash router, per-page `<title>` |
 | `5. BEHAVIOUR` | Theme, mobile nav, scroll reveal, count-up, timeline drawers, hero animation |
@@ -42,8 +44,13 @@ const SOCIALS = {
 Entries with `url: null` are skipped everywhere rather than guessed. Set a `url` and add
 `primary: true` and it appears in the nav sheet, contact page, résumé, and footer at once.
 
-**Add a role** — push to `EXPERIENCE`. `when: null` renders as "dates not listed" instead of
-inventing a date range.
+**Add a role** — push to `EXPERIENCE`. `when: null` renders a visible "dates not listed" pill on
+both the timeline and the résumé instead of inventing a date range.
+
+**Concurrent titles in one engagement** — use `also`. It renders on the same line in lower emphasis,
+so a reader sees every title held and can tell they ran at once rather than as promotions. Used by
+YNX and Limitless Prop. Deliberately *not* accent-coloured and not 600 weight: accent is what marks
+"this is the job title", so a second title in the same treatment reads as one long invented title.
 
 **Add a project** — push to `PROJECTS.others`. The flagship case study is `PROJECTS.fortaflow`.
 
@@ -96,7 +103,9 @@ Renders all eight pages in Node against a small DOM shim and asserts: no page th
 every internal `#/` link resolves to a real route, every external link is https with
 `rel="noopener"`, résumé links agree with the `PROFILE.resumeReady` flag, every referenced local
 asset exists, share images are absolute URLs, one site origin across `index.html` + `robots.txt` +
-`sitemap.xml`, and `vercel.json` contains only keys Vercel accepts.
+`sitemap.xml`, and `vercel.json` contains only keys Vercel accepts. It also enforces the rule that
+the phone number may only ever render inside a `wa.me` anchor — never as a `tel:` link and never as
+bare text a scraper can lift.
 
 It needs no dependencies and takes about a second. Run it after any content edit.
 
@@ -136,6 +145,23 @@ it — `gh auth login`, a personal access token pasted as the password, or an SS
 Configuration lives in `vercel.json` — static, `cleanUrls`, security headers, immutable asset
 caching, and `must-revalidate` on the HTML so edits appear immediately.
 
+### Three couplings that will bite you
+
+These are all one-line changes that break something 1500 lines away, so they are written here as
+well as in comments at each site.
+
+1. **`.sheet` must stay a sibling of `<header>`, never a child.** `.topbar` carries a
+   `backdrop-filter`, and an element with a backdrop-filter becomes a containing block for its
+   fixed-position descendants — the same rule as `transform` and `filter`. Nested inside, the
+   sheet's `inset` resolved against the 64px header rather than the viewport, so it opened at zero
+   height and the mobile menu appeared to do nothing. The JS was never at fault.
+2. **`--topbar-h` must equal the header height.** The sheet is offset by exactly this token. It used
+   to be `64px` hardcoded in both `.topbar-in` and `.sheet`, which is how an unrelated header tweak
+   leaves a strip of page content showing above the open menu.
+3. **In `.tl-role`, render `.tl-meta` before `.tl-also`.** `.tl-also` is `display:block`, so anything
+   after it starts a new line. `.tl-meta`'s `border-left` is a separator meant to sit inline after
+   the role; pushed onto its own line it reads as a stray indented tick.
+
 ### ⚠ The one thing you must not skip
 
 `index.html`, `robots.txt` and `sitemap.xml` ship with a **placeholder origin**
@@ -167,11 +193,33 @@ and everything referencing it disappears.
 
 ## A note on content accuracy
 
-Nothing in this site is invented. Where a fact was not supplied it is either omitted or rendered as a
-visible placeholder — Debonk shows "dates not listed" rather than a guessed range, and the metrics
-carry an explicit note that they are outcomes contributed to as part of a team, not sole attribution.
-FortaFlow is labelled as in active development rather than shipped. Please keep that discipline when
-editing.
+Nothing in this site is invented. Specifics worth knowing before you edit:
+
+- **Debonk carries no dates, on purpose.** He asked for them to be left out, so it renders the
+  "dates not listed" placeholder. Its detail bullets — simplified onboarding, removed beginner
+  friction, the demo trading feature, gamification, sign-off on the final mini-app design — are
+  *contributions*, not measurements, because that is how they were supplied. Do not later attach a
+  percentage to any of them.
+- **YNX's `also` titles (VP Operations, Marketing Lead) came from him directly.** His public LinkedIn
+  lists that engagement as "Product Manager · Part-time" only, so a reader checking the profile will
+  not find them. Worth adding there if the profile is the reference anyone checks.
+- **delabz, Dextopus, Deserialize, YNX and FortaFlow dates were verified** against screenshots of the
+  LinkedIn profile and match. Limitless Prop and Debonk were not visible in those captures.
+
+ Where a fact was not supplied it is either omitted or rendered as a
+visible placeholder, and the metrics carry an explicit note that they are outcomes contributed to as
+part of a team, not sole attribution. FortaFlow is labelled as in active development rather than
+shipped. Limitless Prop keeps its `2023 – 2024` range because no start month was supplied — a guessed
+month would have made the "4+ years" arithmetic look tidier than the evidence supports. Please keep
+that discipline when editing.
+
+Two claims are load-bearing and are worth re-checking whenever the timeline changes. The **7+ years**
+figure rests on contract work running back to 2019 (`CLIENTS.note`). The **4+ years** product figure
+is *not* derivable from the timeline alone: overlapping roles do not add calendar time, so the union
+of the product-titled ranges is only 2.3–3.5 years, and the balance comes from the contract product
+work. The arithmetic is written out in a comment above `CONCURRENCY` in `index.html`; do not raise
+either number without extending one of those date ranges. Debonk is a seventh product-titled role
+and adds nothing to the sum, because it has no dates.
 
 ## Licence
 
