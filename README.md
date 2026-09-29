@@ -2,9 +2,8 @@
 
 Personal portfolio site for **Olamide Olanipekun** (Flux) — Technical Product Manager · Product Builder · Growth & Operations.
 
-Live: <https://github.com/Flux-web3/Portfolio> — replace this with the Vercel URL, then run
-`bash tools/set-site-url.sh <that-url>` so `index.html`, `robots.txt` and `sitemap.xml` agree.
-`check.js` fails while they disagree.
+Live: <https://portfolio-site-kappa-ashy.vercel.app> · Repo: <https://github.com/Flux-web3/Portfolio>.
+Pushing `main` publishes it — see [Deploy](#deploy).
 
 ## What this is
 
@@ -114,14 +113,30 @@ from code (Pillow only, no network).
 
 ## Deploy
 
+**Pushing `main` deploys to production.** The Vercel project `portfolio-site` (team `flux-build`) is
+connected to `Flux-web3/Portfolio`, so every push to `main` builds and goes live at
+<https://portfolio-site-kappa-ashy.vercel.app> within seconds. Verified 2026-09-29: commit `79cc01b`
+was built by Vercel from GitHub (source `git`, target `production`) with no CLI involved.
+
+```bash
+node tools/check.js   # always, before pushing — a push is a production release
+git push origin main
+```
+
+Then confirm it landed: `vercel ls portfolio-site --scope flux-build` should show the new deployment
+as `● Ready`, and the live page should serve the new copy.
+
+`deploy.sh` still works and is handy on a fresh machine:
+
 ```bash
 bash deploy.sh
 ```
 
-Verifies the site, commits, pushes to the GitHub repo named in `REPO_URL` at the top of the script
-(`https://github.com/Flux-web3/Portfolio.git`), deploys to Vercel, then offers to rewrite the site
-URL to the real domain. Safe to re-run — a second run just pushes, which is also how you ship an
-edit later.
+It verifies the site, commits, pushes to the GitHub repo named in `REPO_URL` at the top of the script
+(`https://github.com/Flux-web3/Portfolio.git`), runs `vercel deploy --prod`, then offers to rewrite the
+site URL to the real domain. The script predates the Git integration, so its `vercel deploy` step now
+duplicates the deployment the push already triggered — harmless (both build the same commit), just
+redundant.
 
 It does not create the repo; that already exists, so it needs only `git` and `node`.
 [`gh`](https://cli.github.com) is optional — used only to hand git a credential if it happens to be
@@ -164,15 +179,16 @@ well as in comments at each site.
 
 ### ⚠ The origin: done, but here is the trap
 
-**Live at https://portfolio-site-kappa-ashy.vercel.app** (Vercel project `portfolio-site`, scope
-`forta-flow`). `index.html`, `robots.txt` and `sitemap.xml` all carry that origin, so the canonical
+**Live at https://portfolio-site-kappa-ashy.vercel.app** (Vercel project `portfolio-site`, team
+`flux-build` — formerly `forta-flow`, which is why older deployment URLs still end in
+`-forta-flow.vercel.app`). `index.html`, `robots.txt` and `sitemap.xml` all carry that origin, so the canonical
 tag, `og:image`, `twitter:image` and the sitemap are correct as of 2026-09-08. It previously shipped
 with a placeholder that resolved to nothing, which makes the `canonical` tag tell Google the real
 page lives at a URL that does not exist and leaves LinkedIn, X, Facebook and Slack unable to fetch
 the share image — the card renders blank.
 
-**The trap, if you ever re-point it:** `vercel --prod` prints two `https://…vercel.app` URLs and they
-are not interchangeable.
+**The trap, if you ever re-point it:** every deployment has two kinds of `https://…vercel.app` URL
+(`vercel --prod` prints both; `vercel inspect` lists them) and they are not interchangeable.
 
 | Vercel calls it | Example | Use it for |
 |---|---|---|
@@ -186,7 +202,7 @@ reads both and always prefers the alias.
 ```bash
 bash tools/set-site-url.sh https://your-real-domain   # the ALIAS, or a custom domain
 git commit -am "Point canonical, og:image and sitemap at the live domain" && git push
-vercel --prod   # the push alone does NOT redeploy: this project has no git integration
+# the push deploys it — Vercel's GitHub integration builds main automatically
 ```
 
 `deploy.sh` offers to do all of this for you. `tools/check.js` fails if the three files ever disagree.
