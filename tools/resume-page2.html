@@ -1,0 +1,154 @@
+<!doctype html>
+<!--
+  Page 2 of Olamide-Olanipekun-Product-Manager.pdf ("PROJECTS").
+
+  Why this file exists: page 1 of the résumé is an export from Enhancv, and it
+  is full. Enhancv cannot be scripted, so page 1 is kept byte-for-byte from that
+  export (tools/build-resume-pdf.py reuses its PDF page object and never
+  re-renders it). This page is generated from HTML with headless Chrome and
+  appended as page 2.
+
+  Style: this page copies page 1's left column. Values were measured from the
+  Enhancv PDF's content stream. Enhancv lays the page out on a 939.5 x 1328.8 px
+  canvas scaled at 0.634309 pt/px, so every length below is in those "design
+  px". The sheet is printed at that size, and the build script scales it by
+  0.845745 onto the 595.92 x 842.88 pt page, so the numbers here match page 1's
+  numbers directly:
+    - left column x 47 -> 534 (487 px wide), body text #3E3E3E
+    - section heading: Rubik 500, 18 px, black, uppercase; 3 px black rule
+      whose top sits 5 px below the heading baseline
+    - entry title: Rubik 500, 15 px, black (baseline 19 px below the rule)
+    - organisation: Inter 700, 14 px, #1E90FF (baseline +23)
+    - meta line: Inter 400, 11 px, #3E3E3E, 14 px grey (#65696D) icon box,
+      text at x 65 (baseline +19)
+    - header-style links: Inter 700, 12 px, #3E3E3E, 1 px underline at
+      baseline +1, 12 px #1E90FF chain icon, text 16 px after the icon's left edge
+    - bullets: Inter 400, 12 px / 16 px line height, "•" at x 51, text at x 64.75
+    - footer: Inter 400, 11 px, #3E3E3E, x 52, baseline 1291 (page 1 has
+      Enhancv's branding in this spot; this page has none)
+  The icon paths are copied from page 1's vector data.
+
+  Edit the text here, then run: python tools/build-resume-pdf.py
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Olanipekun Olamide - Résumé page 2</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  /* Google Fonts, static per-weight files (the URLs the Google Fonts CSS API
+     returns for its TrueType format). The default woff2 CSS serves one
+     variable font per family. Chrome then embeds it as an unnamed Type3 font
+     or as "RubikLight-Medium" in the PDF. These static files embed as
+     Inter-Regular, Inter-Bold and Rubik-Medium, the same fonts page 1 uses. */
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: block;
+    src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf) format("truetype"); }
+  @font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: block;
+    src: url(https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf) format("truetype"); }
+  @font-face { font-family: "Rubik"; font-style: normal; font-weight: 500; font-display: block;
+    src: url(https://fonts.gstatic.com/s/rubik/v31/iJWZBXyIfDnIV5PNhY1KTN7Z-Yh-NYi1UA.ttf) format("truetype"); }
+
+  /* The sheet is printed at design-px size (939.5 x 1328.8 CSS px, one design
+     px per CSS px, with no transform or zoom). build-resume-pdf.py then scales
+     the PDF page by 0.845745 to Enhancv's 595.92 x 842.88 pt, the same box as
+     page 1. Enhancv's own Chrome export scales the same way. Laying out at
+     design px keeps every line on a whole pixel, so line spacing is an even
+     16 px as on page 1. A CSS transform would put the text inside a Form
+     XObject that text extractors (ATS parsers) read with broken spacing. */
+  @page { size: 939.5px 1328.8px; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #fff; }
+  body {
+    width: 939.5px;
+    height: 1328px;               /* just under one sheet: never spills onto a 2nd page */
+    overflow: hidden;
+    position: relative;
+    color: #3E3E3E;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 16px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .col { position: absolute; left: 47px; top: 0; width: 487px; }
+
+  .section-title {
+    font-family: "Rubik", sans-serif; font-weight: 500;
+    font-size: 18px; line-height: 22px; color: #000;
+    text-transform: uppercase;
+    padding-top: 43px;            /* baseline lands at y 60 */
+  }
+  .section-rule { height: 3px; background: #000; }   /* top = baseline + 5 */
+
+  .entry { padding-top: 5px; }
+  .position {
+    font-family: "Rubik", sans-serif; font-weight: 500;
+    font-size: 15px; line-height: 19px; color: #000;
+  }
+  .org {
+    font-weight: 700; font-size: 14px; line-height: 18px; color: #1E90FF;
+    margin-top: 4px;
+  }
+  .meta {
+    display: flex; align-items: flex-end;
+    font-size: 11px; line-height: 14px; margin-top: 4px;
+  }
+  .meta svg { width: 14px; height: 14px; flex: none; margin-right: 4px; position: relative; top: 0; }
+  .links {
+    display: flex; align-items: flex-end;
+    font-weight: 700; font-size: 12px; line-height: 16px; margin-top: 3px;
+  }
+  .links a {
+    display: inline-flex; align-items: flex-end;
+    color: #3E3E3E; text-decoration: none; margin-right: 12px;
+  }
+  .links svg { width: 12px; height: 12px; flex: none; margin-right: 4px; position: relative; top: -2px; }
+  .links a span {
+    text-decoration: underline; text-decoration-thickness: 1px;
+    text-underline-offset: 1px; text-decoration-skip-ink: none;
+  }
+
+  ul.bullets { list-style: none; margin-top: 2px; }
+  /* Inter's contextual alternate for "(" before a digit is a glyph with no
+     Unicode mapping, so the "(" would disappear from copied or ATS-parsed text
+     (page 1 has this defect in "(Remote)"). Turn the alternate off for this one
+     character. */
+  .paren { font-feature-settings: "calt" 0; }
+  ul.bullets li { position: relative; padding-left: 17.75px; }
+  ul.bullets li::before { content: "\2022"; position: absolute; left: 4px; top: 0; }
+
+  .footer {
+    position: absolute; left: 52px; top: 1279px;
+    font-size: 11px; line-height: 16px; color: #3E3E3E;
+  }
+</style>
+</head>
+<body>
+  <main class="col">
+    <h2 class="section-title">Projects</h2>
+    <div class="section-rule"></div>
+
+    <section class="entry">
+      <h3 class="position">Tourist — AI Travel Companion</h3>
+      <div class="org">TS ACADEMY CAPSTONE | INDEPENDENT PROJECT</div>
+      <div class="meta">
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path fill="#65696D" d="M5.615 10.798C2.777 6.684 2.25 6.262 2.25 4.75C2.25 2.679 3.929 1 6 1C8.071 1 9.75 2.679 9.75 4.75C9.75 6.262 9.223 6.684 6.385 10.798C6.199 11.067 5.801 11.067 5.615 10.798ZM6 6.312C6.863 6.312 7.562 5.613 7.562 4.75C7.562 3.887 6.863 3.188 6 3.188C5.137 3.188 4.438 3.887 4.438 4.75C4.438 5.613 5.137 6.312 6 6.312Z"/></svg>
+        <span>End to end: documentation, research, scoping, and code</span>
+      </div>
+      <div class="links">
+        <a href="https://tourist-app-blush.vercel.app/"><svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#1E90FF" d="M342 26C305 26 268 40 242 69L207 100C196 112 196 129 207 141C219 152 236 152 247 141L282 106C314 75 371 75 403 106C420 124 429 147 429 170C429 193 420 216 403 230L371 265C360 276 360 293 371 305C377 311 386 314 391 314C397 314 406 311 411 305L446 270C472 244 486 207 486 170C486 132 472 95 443 69C417 40 380 26 342 26ZM265 371L230 406C198 437 141 437 109 406C92 388 83 365 83 342C83 319 92 296 109 282L141 247C152 236 152 219 141 207C129 196 112 196 100 207L69 242C40 268 26 305 26 342C26 380 40 417 69 443C95 472 132 486 170 486C207 486 244 472 270 443L305 409C316 397 316 380 305 368C293 357 276 360 265 371ZM296 175L175 296C164 308 164 325 175 337C181 342 190 345 196 345C201 345 210 342 216 337L337 216C348 204 348 187 337 175C325 164 308 164 296 175Z"/></svg><span>Live prototype</span></a>
+        <a href="https://github.com/Flux-web3/Tourist-App"><svg viewBox="0 0 512 512" aria-hidden="true"><path fill="#1E90FF" d="M342 26C305 26 268 40 242 69L207 100C196 112 196 129 207 141C219 152 236 152 247 141L282 106C314 75 371 75 403 106C420 124 429 147 429 170C429 193 420 216 403 230L371 265C360 276 360 293 371 305C377 311 386 314 391 314C397 314 406 311 411 305L446 270C472 244 486 207 486 170C486 132 472 95 443 69C417 40 380 26 342 26ZM265 371L230 406C198 437 141 437 109 406C92 388 83 365 83 342C83 319 92 296 109 282L141 247C152 236 152 219 141 207C129 196 112 196 100 207L69 242C40 268 26 305 26 342C26 380 40 417 69 443C95 472 132 486 170 486C207 486 244 472 270 443L305 409C316 397 316 380 305 368C293 357 276 360 265 371ZM296 175L175 296C164 308 164 325 175 337C181 342 190 345 196 345C201 345 210 342 216 337L337 216C348 204 348 187 337 175C325 164 308 164 296 175Z"/></svg><span>GitHub</span></a>
+      </div>
+      <ul class="bullets">
+        <li>Owned the capstone independently, end to end, from problem discovery to a working, deployed prototype.</li>
+        <li>Wrote the product documentation hub: vision and strategy, problem validation, research plan, PRD and user stories, MVP scope, prioritisation, roadmap, risk register, QA, and go-to-market plans.</li>
+        <li>Ran a 27-question traveller survey <span class="paren">(</span>19 usable responses); 68% ranked building a trip around a fixed budget as the most valuable feature, which set a budget-first MVP.</li>
+        <li>Scoped the MVP into P0/P1/P2 and broke P0 into a build-ready checklist, deferring safety features to P1.</li>
+        <li>Coded the prototype solo in React, TypeScript, and Vite, with 37 test files, and deployed it on Vercel. It runs on sample data; itinerary drafts come from templates, not a live AI model.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div class="footer">Olanipekun Olamide · page 2</div>
+</body>
+</html>

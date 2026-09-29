@@ -155,7 +155,11 @@ const collect = (text) => {
     if (/vercel\.app|olamide|olanipekun/i.test(o)) origins.add(o);
   }
 };
-collect(html);
+/* Only <head> carries the site's own origin (canonical, og:*, twitter:*,
+   JSON-LD); internal links in the body are all `#/` routes. The body is left
+   out on purpose: it links out to other projects' own *.vercel.app deploys
+   (the Tourist capstone prototype, for one), and those are not this site. */
+collect(html.slice(0, html.indexOf('</head>')));
 for (const f of ['robots.txt', 'sitemap.xml']) {
   if (fs.existsSync(path.join(root, f))) collect(fs.readFileSync(path.join(root, f), 'utf8'));
 }

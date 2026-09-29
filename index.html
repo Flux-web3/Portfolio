@@ -584,6 +584,12 @@ html[data-theme="light"] .chip-ff{color:var(--ff-hi)}
 .pj-hero-top::after{content:"";position:absolute;inset:0 auto 0 0;width:2px;background:linear-gradient(var(--ff),transparent)}
 .pj-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-soft)}
 .pj-cell{background:var(--surface);padding:clamp(20px,2.4vw,28px)}
+/* The capstone reuses the case-study hero, but the violet edge is FortaFlow's
+   own brand colour (--ff is scoped to that case study), so it switches to accent. */
+.pj-hero-alt .pj-hero-top::after{background:linear-gradient(var(--accent),transparent)}
+.mvp-l{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 22px}
+.mvp-l li{display:flex;flex-direction:column;gap:3px;padding-left:12px;border-left:1px solid var(--line)}
+.mvp-k{font-size:var(--fs-sm);color:var(--text);font-weight:500}
 
 .pcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .pcard{
@@ -1145,31 +1151,50 @@ const CLIENTS = {
 };
 
 const PROJECTS = {
+  /* FortaFlow copy was brought in line with the FORTAFLOW Product Doc (Notion)
+     on 2026-09-29: positioning, problem thesis, the layered module map, the
+     flywheel, the v1 MVP feature set, the north-star metric and the roadmap
+     phases all come from there. `surfaces`, `built` and `learned` are the
+     owner's own earlier account of the contribution and were kept — the doc
+     does not contradict them. `tagline` is not in the doc either; it predates it. */
   fortaflow:{
-    name:'FortaFlow', category:'AI × Trading × Product Analytics', flagship:true,
+    name:'FortaFlow', category:'AI × Trading strategy intelligence', flagship:true,
     tagline:'Research. Test. Evolve.',
     status:'In active development. The capabilities below describe product design and build work in progress — not a shipped, production-ready system.',
-    summary:'A trading research and strategy platform designed around AI-assisted strategy building, backtesting, strategy analytics, live condition detection, automated journaling, strategy stress testing, and continuous learning.',
+    summary:'An AI-powered strategy intelligence platform that helps forex, crypto, futures, stock, and prop-firm traders move from subjective trading ideas to measurable, testable, and continuously improving trading systems.',
     problem:[
-      'Most traders do not fail for lack of ideas. They fail because there is no system holding the ideas accountable — a strategy is formed in one place, tested informally somewhere else, traded from memory, and reviewed only after it stops working.',
-      'The tooling reinforces the gap. Charting tools help you look, brokers help you execute, spreadsheets help you record, and none of them close the loop between what you believed, what you tested, what you actually did, and what it returned.'
+      'Most traders have strategies. Very few have systems that can be measured, tested, and executed. Setups are described in words like "strong momentum" or "clean structure" that cannot be reliably tested, and a headline win rate can hide poor expectancy, deep drawdowns, long losing streaks, overfitting, and sensitivity to costs.',
+      'Live trading then drifts from the backtest — slippage, missed entries, spreads, early exits, rule violations — and the workflow is split across charts, execution, journaling, analytics, backtesting, and alerts. Traders end up believing one thing creates their edge while the data says another.'
     ],
     product:[
-      'FortaFlow is designed as one loop instead of four disconnected tools. A strategy is defined as structured, testable conditions; tested against history; given a statistical profile; monitored for those conditions appearing live; journaled automatically as it is traded; then stress-tested and revised.',
-      'The intent is that a trader should never have to reconstruct their own reasoning after the fact. The system holds the strategy, the evidence, and the outcome in the same place.'
+      'A trader describes their approach in plain language. FortaFlow turns it into a structured strategy, flags the ambiguities, and compiles machine-readable rules — then backtests them, stress-tests them, builds a Strategy DNA of the conditions where the edge actually exists, monitors live markets for those conditions, alerts on a match, and journals the execution.',
+      'The central object is the strategy, not the trade. The journal exists to check whether the strategy is being followed and whether it holds up under real execution. FortaFlow is deliberately not a signal service, a broker, copy trading, an autonomous bot, or another journal with AI added.'
     ],
     thinking:[
       { h:'The unit of the product is a strategy, not a chart', p:'Once a strategy is a first-class object with conditions, history, statistics, and a journal attached, almost every feature becomes an operation on that object. That single decision shapes the data model, the navigation, and the roadmap.' },
-      { h:'AI assists definition, it does not issue verdicts', p:'AI is most useful turning a loosely described idea into structured, testable conditions. It is least trustworthy telling a trader what will work. Keeping it on the definition side of the loop keeps the product honest.' },
-      { h:'Evidence has to be uncomfortable to be useful', p:'Backtesting that only flatters a strategy is decoration. Stress testing exists so a strategy is examined under conditions the trader did not choose.' },
-      { h:'Journaling must be a by-product, not a chore', p:'Manual journaling fails at exactly the moment it matters most. If the system already knows the strategy and the conditions, the record should write itself.' }
+      { h:'"Journal + AI" is not a position', p:'Journaling, analytics, broker sync, replay, and backtesting are already table stakes — TradeZella, TradesViz, and TraderWaves offer combinations of them. The differentiation has to come from strategy intelligence: rule compilation, Strategy DNA, robustness scoring, and backtest-versus-live drift.' },
+      { h:'Evidence has to be uncomfortable to be useful', p:'Backtesting that only flatters a strategy is decoration. Stress testing — win-rate shocks, spread, slippage, missed entries, volatility — exists so a strategy is examined under conditions the trader did not choose.' },
+      { h:'The journal verifies, it does not just record', p:'Manual journaling fails at exactly the moment it matters most. If the system already knows the strategy, the journal can score rule adherence and compare planned against actual execution instead of waiting to be filled in.' }
     ],
     architecture:[
-      { k:'Interface',      items:['Web application','Strategy workspace','Dashboard','Alerts'] },
-      { k:'Intelligence',   items:['AI-assisted Strategy Builder','Backtesting engine','Statistical Strategy DNA','Strategy stress testing'] },
-      { k:'Signals',        items:['Live condition detection','Automated journaling','Continuous learning loop'] },
-      { k:'Market data',    items:['MT5 integration','cTrader integration'] },
+      { k:'Strategy layer', items:['AI Strategy Builder','Strategy Library','Rule compilation','Ambiguity detection'] },
+      { k:'Quant layer',    items:['Backtesting engine','Strategy stress testing','Strategy DNA','Market replay'] },
+      { k:'Live layer',     items:['Live condition detection','Smart alerts','Automatic trade capture'] },
+      { k:'Journal + analytics', items:['Trading journal','Execution analysis','AI Trading Coach','Strategy evolution'] },
+      { k:'Governance',     items:['Risk management','Prop firm mode','Account management','Broker integrations'] },
       { k:'Platform',       items:['Supabase','Vercel','GitHub'] }
+    ],
+    loop:['Define','Structure','Test','Stress','Understand (DNA)','Monitor','Alert','Execute','Journal','Compare','Learn','Improve'],
+    mvp:[
+      { n:'Authentication', d:'Sign-up, login, onboarding' },
+      { n:'Strategy Builder', d:'Plain language → extraction → rule builder → versioning' },
+      { n:'Backtesting', d:'Manual and automated, with a performance report' },
+      { n:'Strategy DNA', d:'Core metrics and basic condition breakdowns' },
+      { n:'Stress testing', d:'Win-rate shock, spread, slippage, missed entries, R, volatility' },
+      { n:'Journal', d:'Manual trades, notes, screenshots, tags, strategy link' },
+      { n:'Broker import', d:'cTrader and MT4/MT5, read-only' },
+      { n:'AI Coach', d:'Questions over strategy, trades, and performance' },
+      { n:'Alerts', d:'Condition, price, and risk alerts' }
     ],
     surfaces:[
       { n:'Dashboard', d:'Portfolio and strategy overview' },
@@ -1183,7 +1208,7 @@ const PROJECTS = {
     built:[
       'Product architecture — the strategy object model and how the modules relate to one another.',
       'Product and UX design across the platform surfaces: dashboard, strategy workspace, backtesting, alerts, trade journal, onboarding, and authentication.',
-      'Technical requirements and integration planning for broker and market data connectivity via MT5 and cTrader.',
+      'Technical requirements and integration planning for broker and market data connectivity via MT4/MT5 and cTrader.',
       'Implementation planning and sequencing — what an MVP has to contain for the loop to close, and what can wait.',
       'The brand and visual identity system, including the mark and product design language.',
       'Hands-on build work using AI-assisted development on a Supabase, Vercel, and GitHub stack.'
@@ -1195,12 +1220,73 @@ const PROJECTS = {
       { h:'Trust is a feature in trading products', p:'Users are risking money on the system\'s output. Transparency about what was tested, on what data, and with what assumptions is not a nice-to-have.' }
     ],
     next:[
-      'Close the core loop end to end — define, test, monitor, journal, revise — before widening feature scope.',
-      'Firm up broker and market data integration paths.',
+      'Prove the MVP hypothesis: that traders will adopt an end-to-end workflow turning strategy ideas into validated, monitored systems.',
+      'Measure it against one north-star metric — Validated Trading Systems: explicit rules, sufficient data, a backtest, robustness testing, validation criteria, and forward testing.',
       'Validate the strategy definition experience with real traders and rework it against what they actually do.',
-      'Define the metrics that tell us the loop is creating value, not just activity.'
+      'Then phase in live intelligence, write-access execution, advanced AI such as regime and anomaly detection, and an ecosystem layer — prop firm mode, marketplace, API.'
     ],
-    tags:['AI','Strategy Builder','Backtesting','Statistical Strategy DNA','Live Conditions','Automated Journaling','Strategy Stress Testing','Continuous Learning','MT5','cTrader','Supabase','Vercel','GitHub']
+    tags:['AI Strategy Builder','Backtesting','Strategy DNA','Stress Testing','Live Condition Detection','Smart Alerts','Trading Journal','AI Coach','MT4/MT5','cTrader','Supabase','Vercel','GitHub']
+  },
+  /* TS Academy capstone. Every claim here comes from the project's Notion
+     Document Hub (vision, problem discovery, user research, MVP scope, MVP build
+     checklist) or from the Flux-web3/Tourist-App repository (README, source,
+     commit history — the prototype's 35 commits are all the owner's). What the
+     docs leave open — AI-trust findings, validation thresholds, personas,
+     launch metrics — is left out rather than filled in.
+     `contribution` is the owner's own statement (2026-09-29): the capstone was
+     independent, end to end — documentation, research, scoping, and code. The
+     hub's "Team" and "Owner" fields are unfilled template placeholders, so this
+     is the only source for it; each bullet names only artefacts that exist in
+     the hub or the repo.
+     The prototype's itinerary drafts come from a seeded template bank, not a
+     language model (src/services/itineraryGenerator.ts), so the copy never says
+     the prototype's plans are AI-generated. Keep it that way until one is wired in.
+     `live` is the URL in the repo README and the repo's GitHub "homepage" field.
+     An older alias, tourist-app-nu-six.vercel.app, 404s — do not use it. */
+  tourist:{
+    name:'Tourist', category:'AI travel companion · TS Academy capstone',
+    tagline:'Plan better. Travel safer. Spend smarter. Experience more.',
+    status:'Working capstone prototype. It runs entirely in the browser on sample data: itinerary drafts come from a template bank rather than a live AI model, and prices and places are illustrative, not live quotes.',
+    summary:'An AI-powered travel companion designed to help tourists plan, budget, discover, organise, and safely manage a trip from one place, instead of across a stack of disconnected apps.',
+    problem:[
+      'Travel planning is spread across search, maps, booking sites, review sites, notes, spreadsheets, and messaging apps. That makes a trip slow to plan, hard to keep organised, and hard to personalise.',
+      'Travellers also struggle to estimate the true cost of a trip, stay within budget, discover experiences worth their time, and keep track of what they still have to do.'
+    ],
+    research:[
+      { v:'68%', l:'ranked building the whole trip around a fixed budget as the most valuable feature (13 of 19)' },
+      { v:'4.3/5', l:'usefulness of flights, hotel, activities, and itinerary in one place' },
+      { v:'4.1/5', l:'average perceived value of the product' },
+      { v:'7.3/10', l:'average stated likelihood to use it' }
+    ],
+    researchNote:'From a 27-question survey: 20 submissions, 19 usable. Most respondents juggle 2–5+ separate tools per trip. The top hesitations were hidden fees and inaccurate prices — doubts about the numbers, not about the need. Whether travellers would trust AI to build an itinerary was not covered and is still open.',
+    decisions:[
+      { h:'The research backed a budget-first product', p:'"Build my trip around a fixed budget" was the one feature a clear majority chose. In the prototype, remaining budget is the trip budget minus logged spending only — the itinerary estimate is shown beside it and never counted as money spent.' },
+      { h:'Safety stays out of the MVP', p:'Live location sharing scored 3.6/5 — valued, not critical — which backed its P1 placement. Location sharing, trusted contacts, and travel alerts sit in P1; VR/AR previews, booking integrations, and group trips in P2.' },
+      { h:'Trust in the numbers', p:'Hidden fees and inaccurate prices were the top objections. In the prototype no currency is ever converted silently: every stop and expense keeps its own currency, and anything outside the trip currency is shown but left out of totals.' }
+    ],
+    features:[
+      { n:'Create a trip', d:'Destination, dates, travellers, currency' },
+      { n:'Draft itinerary', d:'Day by day, from interests and pace' },
+      { n:'Regenerate & swap', d:'Redraft the plan, or swap one stop' },
+      { n:'Edit stops', d:'Times, notes, location, remove' },
+      { n:'Explore places', d:'Search and filter, then add to a day' },
+      { n:'Budget', d:'Log expenses, see what remains' },
+      { n:'Notes', d:'Free-form notes for the trip' }
+    ],
+    stack:['React 19','TypeScript','Vite 7','Tailwind CSS v4','React Router 7','Vitest','Vercel'],
+    engineering:'Everything is stored in the browser, with no backend or account. Saved data is versioned and migrated forward, damaged records are salvaged rather than wiped, and the previous copy is kept as a backup. The codebase carries 37 test files.',
+    contribution:[
+      'Owned the capstone independently, end to end — from problem discovery to a working, deployed prototype.',
+      'Wrote the product documentation hub: vision and strategy, problem validation, research plan, PRD and user stories, MVP scope, prioritisation, roadmap, risk register, QA, and go-to-market plans.',
+      'Ran a 27-question traveller survey (19 usable responses) and let the result — 68% chose a fixed-budget trip — set a budget-first MVP.',
+      'Scoped the MVP into P0/P1/P2 and broke P0 into a build-ready checklist, deferring safety features to P1.',
+      'Coded the prototype solo in React, TypeScript, and Vite, with 37 test files, and deployed it on Vercel.'
+    ],
+    live:'https://tourist-app-blush.vercel.app/',
+    repo:'https://github.com/Flux-web3/Tourist-App',
+    tags:['Product discovery','User research','MVP scoping','Prototyping','Travel','React','TypeScript'],
+    p:'An AI travel companion for planning, budgeting, and organising a trip in one place. I took it end to end on my own — research, scoping, and a working prototype.',
+    more:'Problem discovery, a 19-response traveller survey, P0/P1/P2 scoping, and a browser-based prototype in React and TypeScript.'
   },
   others:[
     { name:'YNX', cat:'Product + Growth',
@@ -1744,12 +1830,17 @@ const Home = () => `
         <div style="margin-top:28px">
           ${ProjectCard({name:PROJECTS.fortaflow.name,cat:PROJECTS.fortaflow.category,ff:true,
             p:PROJECTS.fortaflow.summary,
-            more:'Strategy definition, backtesting, statistical strategy analytics, live condition detection, and automated journaling — designed as one closed loop.',
+            more:'Plain-language strategy building, backtesting, stress testing, Strategy DNA, live condition detection, alerts, and journaling — designed as one closed loop.',
             tags:PROJECTS.fortaflow.tags,cta:'Read the case study',href:'/projects',
             aria:'FortaFlow case study'})}
         </div>
         <div class="pcards" style="margin-top:16px">
-          ${PROJECTS.others.slice(0,2).map(p=>ProjectCard({...p,cta:'See projects'})).join('')}
+          ${ProjectCard({name:PROJECTS.tourist.name,cat:PROJECTS.tourist.category,p:PROJECTS.tourist.p,
+            more:PROJECTS.tourist.more,tags:PROJECTS.tourist.tags,cta:'See the capstone',href:'/projects',
+            aria:'Tourist, TS Academy capstone'})}
+          ${/* Tourist takes YNX's old slot, so the grid stays at two cards.
+               YNX is still on the Projects page (Other projects) and the résumé. */''}
+          ${PROJECTS.others.filter(p=>p.name==='Deserialize').map(p=>ProjectCard({...p,cta:'See projects'})).join('')}
         </div>
         <div class="mt-ml"><a class="tlink" href="#/projects">All projects${ICON.ar()}</a></div>
       </div>
@@ -1995,10 +2086,11 @@ const Experience = () => `
 /* --- Projects ------------------------------------------------------------ */
 const Projects = () => {
   const f = PROJECTS.fortaflow;
+  const t = PROJECTS.tourist;
   return `
   ${PageHead({n:'04',label:'projects',kicker:'selected work',
     h:'Products, prototypes, and systems I have built.',
-    lede:'One flagship product-building project, plus the product, growth, and automation work around it.'})}
+    lede:'One flagship product-building project, my TS Academy capstone, and the product, growth, and automation work around them.'})}
 
   <section class="shell sect">
     <div class="grid">
@@ -2054,7 +2146,7 @@ const Projects = () => {
     <div class="grid">
       ${Rail('03','architecture')}
       <div class="col">
-        ${SectionHeader({label:'Architecture',h:'How the system is laid out.',sub:'Product architecture as designed. Integrations and platform choices are planned and in progress, not shipped infrastructure.'})}
+        ${SectionHeader({label:'Architecture',h:'How the system is laid out.',sub:'Modules grouped by the stage of the loop they serve. Product architecture as designed — integrations and platform choices are planned and in progress, not shipped infrastructure.'})}
         <div class="arch mt-ml">
           ${f.architecture.map(r=>`
             <div class="arch-row">
@@ -2065,9 +2157,9 @@ const Projects = () => {
         <div class="panel-flat" style="margin-top:20px">
           <p class="mono" style="margin-bottom:14px">The loop, in order</p>
           <div class="arch-v" style="padding:0">
-            ${['Define','Test','Profile','Monitor','Journal','Stress-test','Revise'].map((s,i)=>`${i?'<span class="arch-flow" aria-hidden="true">→</span>':''}<span class="arch-b">${s}</span>`).join('')}
+            ${f.loop.map((s,i)=>`${i?'<span class="arch-flow" aria-hidden="true">→</span>':''}<span class="arch-b">${s}</span>`).join('')}
           </div>
-          <p class="sm mt-s" style="max-width:60ch">Every capability maps to a stage. If a feature does not advance the loop, it is not an MVP feature.</p>
+          <p class="sm mt-s" style="max-width:60ch">Every completed cycle should improve the strategy definition, the validation evidence, the trader's execution, or the understanding of where the edge lives. If a feature does not advance the loop, it is not an MVP feature.</p>
         </div>
       </div>
     </div>
@@ -2085,6 +2177,13 @@ const Projects = () => {
               <div class="smap-l">${s.n}</div>
               <div class="xs" style="margin-top:4px">${s.d}</div>
             </div>`).join('')}
+        </div>
+        <div class="panel-flat" style="margin-top:20px">
+          <p class="mono" style="margin-bottom:14px">What v1 has to contain</p>
+          <ul class="mvp-l">
+            ${f.mvp.map(m=>`<li><span class="mvp-k">${m.n}</span><span class="xs">${m.d}</span></li>`).join('')}
+          </ul>
+          <p class="sm mt-s" style="max-width:60ch">The MVP exists to test one hypothesis: that traders will adopt an end-to-end workflow that turns strategy ideas into validated, monitored systems.</p>
         </div>
       </div>
     </div>
@@ -2117,9 +2216,78 @@ const Projects = () => {
     </div>
   </section>
 
+  <section class="shell sect" id="capstone">
+    <div class="grid">
+      ${Rail('07','capstone')}
+      <div class="col">
+        <article class="pj-hero pj-hero-alt">
+          <div class="pj-hero-top">
+            <div class="pcard-top" style="margin-bottom:16px">
+              <span class="mono">${t.category}</span>
+              <span class="chip chip-a chip-m">Capstone</span>
+            </div>
+            <h2 class="display" style="font-size:clamp(2rem,4.4vw,3rem);letter-spacing:-.035em">${t.name}</h2>
+            <p class="mono" style="margin-top:12px;letter-spacing:.08em">${t.tagline}</p>
+            <p class="lede measure" style="margin-top:20px">${t.summary}</p>
+            <div class="note" style="margin-top:22px"><span>${t.status}</span></div>
+            <div class="btns" style="margin-top:22px">
+              <a class="btn btn-p" href="${t.live}" target="_blank" rel="noopener noreferrer">Open the prototype${ICON.ext()}<span class="sr">, opens in a new tab</span></a>
+              <a class="btn btn-s" href="${t.repo}" target="_blank" rel="noopener noreferrer">View the code${ICON.ext()}<span class="sr">, opens in a new tab</span></a>
+            </div>
+          </div>
+          <div class="pj-grid">
+            <div class="pj-cell">
+              <h3 class="h3">The problem</h3>
+              ${t.problem.map(p=>`<p class="body" style="margin-top:12px;font-size:var(--fs-sm)">${p}</p>`).join('')}
+            </div>
+            <div class="pj-cell">
+              <h3 class="h3">What the research found</h3>
+              <p class="body" style="margin-top:12px;font-size:var(--fs-sm)">${t.researchNote}</p>
+            </div>
+          </div>
+        </article>
+
+        <h3 class="mono" style="margin-top:clamp(34px,4vw,48px)">My contribution</h3>
+        <ul style="margin-top:14px" class="measure">
+          ${t.contribution.map(b=>`<li class="cv-li" style="font-size:var(--fs-body)">${b}</li>`).join('')}
+        </ul>
+
+        <h3 class="mono" style="margin-top:clamp(34px,4vw,48px)">The survey, in numbers</h3>
+        <div class="smap" style="margin-top:14px">
+          ${t.research.map(r=>`
+            <div class="smap-i">
+              <div class="smap-n">${r.v}</div>
+              <div class="xs" style="margin-top:6px">${r.l}</div>
+            </div>`).join('')}
+        </div>
+
+        <h3 class="mono" style="margin-top:clamp(34px,4vw,48px)">From research to scope</h3>
+        <div class="mx" style="margin-top:14px">
+          ${t.decisions.map(d=>`
+            <article class="mx-i"><h4 class="h3 mx-h" style="margin-top:0">${d.h}</h4><p class="mx-p">${d.p}</p></article>`).join('')}
+        </div>
+
+        <h3 class="mono" style="margin-top:clamp(34px,4vw,48px)">What the prototype does</h3>
+        <div class="smap" style="margin-top:14px">
+          ${t.features.map((s,i)=>`
+            <div class="smap-i">
+              <div class="smap-n">${String(i+1).padStart(2,'0')}</div>
+              <div class="smap-l">${s.n}</div>
+              <div class="xs" style="margin-top:4px">${s.d}</div>
+            </div>`).join('')}
+        </div>
+        <div class="panel-flat" style="margin-top:20px">
+          <p class="mono" style="margin-bottom:14px">Built with</p>
+          <ul class="chips">${t.stack.map(s=>`<li class="chip chip-m">${s}</li>`).join('')}</ul>
+          <p class="sm mt-s" style="max-width:62ch">${t.engineering}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="shell sect">
     <div class="grid">
-      ${Rail('07','other work')}
+      ${Rail('08','other work')}
       <div class="col">
         ${SectionHeader({label:'Other projects',h:'Product, growth, and automation work.'})}
         <div class="pcards mt-ml">
@@ -2352,6 +2520,16 @@ const Resume = () => `
                   <li class="cv-li">Product architecture, UX, strategy, technical requirements, integrations, and implementation planning.</li>
                   <li class="cv-li">Designed seven product surfaces as one connected workspace; built with AI-assisted development on Supabase, Vercel, and GitHub.</li>
                   <li class="cv-li">In active development — not a shipped production system.</li>
+                </ul>
+              </div>
+              <div class="cv-item">
+                <h2 class="h3">Tourist — ${PROJECTS.tourist.category}</h2>
+                <p class="body" style="font-size:var(--fs-sm);margin-top:6px">${PROJECTS.tourist.summary}</p>
+                <ul>
+                  <li class="cv-li">Independent project, end to end: documentation, research, scoping, and code.</li>
+                  <li class="cv-li">Wrote the product documentation hub and ran a 27-question traveller survey (19 usable responses); 68% chose a fixed-budget trip, which set a budget-first MVP.</li>
+                  <li class="cv-li">Scoped the MVP into P0/P1/P2, then coded and deployed a working prototype solo in React, TypeScript, and Vite.</li>
+                  <li class="cv-li">Prototype on sample data — itinerary drafts come from templates, not a live AI model.</li>
                 </ul>
               </div>
               ${PROJECTS.others.map(p=>`

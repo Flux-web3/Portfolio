@@ -218,6 +218,21 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
 - **YNX's `also` titles (VP Operations, Marketing Lead) came from him directly.** His public LinkedIn
   lists that engagement as "Product Manager · Part-time" only, so a reader checking the profile will
   not find them. Worth adding there if the profile is the reference anyone checks.
+- **Tourist (TS Academy capstone) is sourced from its Notion Document Hub and the
+  `Flux-web3/Tourist-App` repo, nothing else.** The survey numbers (19 usable of 20, 68%, 4.3/5,
+  4.1/5, 7.3/10) are the hub's. The prototype's itinerary drafts come from a seeded template
+  bank, not a language model, and the copy says so — change that only once a model is actually
+  wired in. The "My contribution" copy (independent, end to end — documentation, research,
+  scoping, and code) is the owner's own statement from 2026-09-29; the hub's Team and Owner fields
+  are unfilled placeholders, so do not cite the hub for it. The live URL is
+  `tourist-app-blush.vercel.app`; the older `tourist-app-nu-six` alias 404s.
+- **The résumé PDF is two sources stitched together.** Page 1 is the untouched Enhancv export.
+  Page 2 (Projects → Tourist) is generated from `tools/resume-page2.html` by
+  `python tools/build-resume-pdf.py`, which keeps only page 1 of the current PDF and appends a
+  fresh page 2, so it is safe to re-run. If the résumé is ever re-exported from Enhancv, run the
+  script again afterwards — or add Tourist in Enhancv and drop page 2.
+- **FortaFlow's positioning, problem, module map, loop, v1 MVP set and north-star metric follow
+  the FORTAFLOW Product Doc** in Notion (updated 2026-09-29).
 - **delabz, Dextopus, Deserialize, YNX and FortaFlow dates were verified** against screenshots of the
   LinkedIn profile and match. Limitless Prop and Debonk were not visible in those captures.
 
