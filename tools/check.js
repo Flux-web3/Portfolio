@@ -156,7 +156,7 @@ function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
   return /Limitless Prop Firm<\/h3><span class="date">2022 – 2023<\/span>/.test(page)
     && /worked with a six-person community team and led a separate two-person website support team/.test(page)
-    && /window\\.print\\(\\)/.test(page);
+    && page.includes('window.print()');
 }
 
 /* --- referenced local assets must exist ---------------------------------- */
