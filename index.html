@@ -872,6 +872,8 @@ const PROFILE = {
   philosophy:['Build.','Measure.','Learn.','Evolve.'],
   arc:'Product Management → Technical Product Management → Product Leadership',
   resumeFile:'Olamide-Olanipekun-Product-Manager.pdf',
+  communityResumeFile:'Olamide-Olanipekun-Community-Management-Resume.pdf',
+  communityResumeReady:false,
   /* The PDF ships alongside index.html. If it is ever removed, flip this to false
      and every résumé button routes to the résumé page — which prints cleanly —
      instead of pointing at a file that is not there. No dead links, ever. */
@@ -881,7 +883,7 @@ const PROFILE = {
 /* One helper, used by every résumé button on the site. */
 const resumeHref  = () => PROFILE.resumeReady ? PROFILE.resumeFile : '#/resume';
 const resumeAttr  = () => PROFILE.resumeReady ? ' download' : '';
-const resumeLabel = () => PROFILE.resumeReady ? 'Download résumé' : 'View résumé';
+const resumeLabel = () => PROFILE.resumeReady ? 'Download Product résumé' : 'View résumé';
 const resumeIcon  = () => PROFILE.resumeReady ? ICON.down() : ICON.ar();
 
 /* Centralised social config. `url:null` = not supplied yet; it is skipped in the
@@ -946,10 +948,17 @@ const WHAT_I_DO = [
    floating free of it. */
 const METRICS = [
   { v:'4',   suffix:'+',  l:'Years in product management' },
-  { v:'7',   suffix:'+',  l:'Years broader professional experience' },
+  { v:'7',   suffix:'+',  l:'Years across marketing, community, operations & customer experience' },
   { v:'30',  prefix:'$', suffix:'M', l:'Web3 transaction volume, first six months' },
   { v:'40',  suffix:'%', l:'Onboarding and activation improvement' },
   { v:'50',  suffix:'%', l:'Operational bottleneck reduction' }
+];
+
+const COMMUNITY_HIGHLIGHTS = [
+  { v:'~50K', l:'Betboom community', d:'Discord and Telegram communities built from scratch.' },
+  { v:'5K+', l:'Limitless Prop members', d:'Community growth, onboarding, moderation and operations.' },
+  { v:'6 + 2', l:'Two coordinated teams', d:'A six-person community team and a separate two-person website support team.' },
+  { v:'5–15 min', l:'Support response times', d:'Zendesk ticketing, triage and escalation workflows.' }
 ];
 
 /* Supplied on the résumé. The site had no education section before; a maths
@@ -1734,7 +1743,7 @@ const Home = () => `
       <div class="col">
         <div class="hero-eyebrow">
           <span class="dot" aria-hidden="true"></span>
-          <span class="mono">${PROFILE.pmYears} yrs product management · ${PROFILE.totalYears} yrs broader experience</span>
+          <span class="mono">${PROFILE.pmYears} yrs hands-on product/project management · ${PROFILE.totalYears} yrs across product, operations, growth marketing, community, CX &amp; trading</span>
         </div>
         <h1 class="display hero-h1">
           <span class="ln"><span>I build products</span></span>
@@ -1743,7 +1752,7 @@ const Home = () => `
         ${/* The years figure is in the eyebrow directly above this, so repeating
              it here spent the most valuable line on the site restating a fact the
              reader had just read. This says what the eyebrow cannot. */''}
-        <p class="lede hero-lede">Technical Product Manager and product builder, working in fintech, trading, and Web3. I take products from ambiguity to clarity — and I work close enough to the engineering to build the thing myself.</p>
+        <p class="lede hero-lede">I combine hands-on product/project management with Web3 community growth, customer support, growth marketing and operations. I turn user problems into clear delivery plans, strengthen the systems around a product, and use data and feedback to improve outcomes.</p>
         <div class="btns">
           <a class="btn btn-p" href="#/projects">View my work</a>
           <a class="btn btn-s" href="${resumeHref()}"${resumeAttr()}>${resumeLabel()}${resumeIcon()}</a>
@@ -1877,7 +1886,7 @@ const PageHead = ({n,label,h,lede,kicker}) => `
 const About = () => `
   ${PageHead({n:'02',label:'about',kicker:'about',
     h:'I came to product through support, operations, community, and trading.',
-    lede:'A Technical Product Manager and product builder with ' + PROFILE.pmYears + ' years across product and project management, and ' + PROFILE.totalYears + ' years spanning Web3, growth, operations, community, customer experience, and trading.'})}
+    lede:'A product and project management professional with ' + PROFILE.pmYears + ' years hands-on experience within ' + PROFILE.totalYears + ' years spanning product, operations, growth marketing, community management, customer support/CX, Web3, and trading.'})}
 
   ${/* The metric strip that used to sit here now opens the Home page, where the
        twenty-second reader actually is. Repeating it one click later added length
@@ -2013,9 +2022,9 @@ const About = () => `
 
 /* --- Experience ---------------------------------------------------------- */
 const Experience = () => `
-  ${PageHead({n:'03',label:'experience',kicker:PROFILE.pmYears+' yrs product · '+PROFILE.totalYears+' yrs total',
+  ${PageHead({n:'03',label:'experience',kicker:PROFILE.pmYears+' yrs product/project · '+PROFILE.totalYears+' yrs across marketing, operations, community & CX',
     h:'Where I have done the work.',
-    lede:'Product, growth, and operations roles across fintech, trading, Web3, and community-driven products — plus the support experience underneath them.'})}
+    lede:'Product, community, growth marketing, customer support and operations roles across trading and Web3, informed by direct member and customer experience.'})}
 
   <section class="shell sect">
     <div class="grid">
@@ -2361,7 +2370,7 @@ const Thinking = () => `
 const Skills = () => `
   ${PageHead({n:'06',label:'skills',kicker:'capability',
     h:'What I work with.',
-    lede:'Five areas: the technical work, product, growth, operations, and analytics. Grouped by what the work needs rather than by how well I know each tool.'})}
+    lede:'Six areas: technical work, product delivery, growth, operations, analytics, and community/customer experience. Grouped by what the work needs rather than by how well I know each tool.'})}
 
   <section class="shell sect">
     <div class="grid">
