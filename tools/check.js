@@ -128,6 +128,21 @@ for (const [name, out] of Object.entries(rendered)) {
   if (out.includes(pdf) && !mod.PROFILE.resumeReady) fail(`${name}: links to ${pdf} while resumeReady is false`);
 }
 
+/* --- community résumé fallback must exist and be selectable --------------- */
+const communityPage = path.join(__dirname, '..', 'community-resume.html');
+if (!fs.existsSync(communityPage)) fail('community-resume.html is missing');
+else {
+  const communityHtml = fs.readFileSync(communityPage, 'utf8');
+  if (!/<title>[^<]*Community Management Résumé/i.test(communityHtml))
+    fail('community-resume.html is missing its descriptive title');
+  if (!/window\\.print\\(\\)/.test(communityHtml))
+    fail('community-resume.html must provide a Print / Save as PDF action');
+  if (!/name="viewport"/.test(communityHtml))
+    fail('community-resume.html must be responsive on mobile');
+}
+if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
+  fail('Résumé page must link to the Community Management web résumé');
+
 /* --- referenced local assets must exist ---------------------------------- */
 for (const m of html.matchAll(/(?:href|src|content)="((?!https?:|mailto:|#|data:)[\w./-]+\.(?:png|svg|pdf|ico|xml|css|js))"/g)) {
   if (!fs.existsSync(path.join(__dirname, '..', m[1]))) fail(`missing local asset: ${m[1]}`);
