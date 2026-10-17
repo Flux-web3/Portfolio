@@ -1,6 +1,6 @@
 # Olamide Olanipekun — Portfolio
 
-Personal portfolio site for **Olamide Olanipekun** (Flux) — Technical Product Manager · Product Builder · Growth & Operations.
+Personal portfolio site for **Olamide Olanipekun** — product/project management, Web3 community growth, customer support/CX, marketing, operations, analytics and AI-assisted product building.
 
 Live: <https://portfolio-site-kappa-ashy.vercel.app> · Repo: <https://github.com/Flux-web3/Portfolio>.
 Pushing `main` publishes it — see [Deploy](#deploy).
@@ -27,6 +27,15 @@ moved, and stay editable years from now without archaeology.
 | `6. BOOT` | Theme restore, reduced-motion flag, first render |
 
 Content is separated from presentation. To change what the site says, edit the `DATA` block only.
+
+## Résumé downloads
+
+The original Product Manager résumé remains at `Olamide-Olanipekun-Product-Manager.pdf`.
+The community résumé is intended to be a separate file named
+`Olamide-Olanipekun-Community-Management-Resume.pdf`. Generic résumé calls-to-action route to
+the Résumé page so visitors can select the appropriate version. The Community Management download
+must remain unavailable until the PDF has actually been added to the repository; never link to a
+missing file.
 
 ## Editing the content
 
