@@ -1863,6 +1863,27 @@ const Home = () => `
     </div>
   </section>
 
+
+  <section class="shell sect">
+    <div class="grid">
+      ${Rail('—','community')}
+      <div class="col">
+        ${SectionHeader({label:'Community, support & growth',h:'Build the community. Operate the system behind it.',sub:'Community building, member engagement and customer support are part of the product experience, not separate from it.'})}
+        <div class="smap mt-ml">
+          ${COMMUNITY_HIGHLIGHTS.map(m=>`
+            <article class="smap-i" data-reveal>
+              <div class="smap-n">${m.v}</div><div class="smap-l">${m.l}</div>
+              <p class="xs" style="margin-top:7px">${m.d}</p>
+            </article>`).join('')}
+        </div>
+        <div class="btns mt-l">
+          <a class="btn btn-q" href="#/experience">See relevant experience${ICON.ar()}</a>
+          <a class="btn btn-q" href="#/contact">Discuss community roles${ICON.ar()}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="shell sect-tight">
     <div class="grid">
       ${Rail('—','philosophy')}
