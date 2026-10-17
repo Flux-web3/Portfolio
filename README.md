@@ -243,7 +243,8 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   lists that engagement as "Product Manager · Part-time" only, so a reader checking the profile will
   not find them. Worth adding there if the profile is the reference anyone checks.
 - **Tourist (TS Academy capstone) is sourced from its Notion Document Hub and the
-  `Flux-web3/Tourist-App` repo, nothing else.** The survey numbers (19 usable of 20, 68%, 4.3/5,
+  `Flux-web3/Tourist-App` repo, nothing else.** It is a travel-planning concept with a working
+  browser prototype; itinerary drafts use seeded templates rather than a live AI model. The survey numbers (19 usable of 20, 68%, 4.3/5,
   4.1/5, 7.3/10) are the hub's. The prototype's itinerary drafts come from a seeded template
   bank, not a language model, and the copy says so — change that only once a model is actually
   wired in. The "My contribution" copy (independent, end to end — documentation, research,
@@ -263,9 +264,7 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
  Where a fact was not supplied it is either omitted or rendered as a
 visible placeholder, and the metrics carry an explicit note that they are outcomes contributed to as
 part of a team, not sole attribution. FortaFlow is labelled as in active development rather than
-shipped. Limitless Prop keeps its `2023 – 2024` range because no start month was supplied — a guessed
-month would have made the "4+ years" arithmetic look tidier than the evidence supports. Please keep
-that discipline when editing.
+shipped. Limitless Prop Firm's community-management résumé uses the confirmed `2022 – 2023` range. Keep that distinct from concurrent product/project work and do not invent start months where source records do not provide them.
 
 Two claims are load-bearing and are worth re-checking whenever the timeline changes. The **7+ years**
 figure rests on contract work running back to 2019 (`CLIENTS.note`). The **4+ years** product figure
