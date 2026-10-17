@@ -135,7 +135,7 @@ else {
   const communityHtml = fs.readFileSync(communityPage, 'utf8');
   if (!/<title>[^<]*Community Management Résumé/i.test(communityHtml))
     fail('community-resume.html is missing its descriptive title');
-  if (!/window\\.print\\(\\)/.test(communityHtml))
+  if (!/window\.print\(\)/.test(communityHtml))
     fail('community-resume.html must provide a Print / Save as PDF action');
   if (!/name="viewport"/.test(communityHtml))
     fail('community-resume.html must be responsive on mobile');
