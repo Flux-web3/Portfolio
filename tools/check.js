@@ -169,6 +169,19 @@ function communityHtmlSafe() {
     && page.includes('window.print()');
 }
 
+/* --- date, impact attribution, and print safety ---------------------------- */
+if (!html.includes("when:'Jun 2025 – 2026'") || html.includes("when:'Apr 2025 – May 2026'"))
+  fail('YNX chronology must match the confirmed June 2025–2026 range');
+if (!html.includes("l:'Deserialize swap volume in its first six months'"))
+  fail('The $30M metric must be attributed to Deserialize, not an unspecified product');
+if (!html.includes("Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months."))
+  fail('Résumé impact bullet must identify Deserialize as the swap aggregator');
+const communityPrintCss = communityPage && fs.existsSync(communityPage) ? fs.readFileSync(communityPage, 'utf8') : '';
+if (/\.sheet\{[^}]*overflow:hidden/.test(communityPrintCss))
+  fail('Community résumé print sheets must not silently clip content');
+if (!/\.section,\.job,\.skill\{break-inside:avoid;page-break-inside:avoid\}/.test(communityPrintCss))
+  fail('Community résumé print stylesheet must keep sections and jobs together where possible');
+
 /* --- cross-cutting portfolio content and responsive safeguards ----------- */
 const processBlock = html.slice(html.indexOf('const PROCESS = ['), html.indexOf('const SKILLS = ['));
 if (!processBlock.startsWith('const PROCESS = [') || (processBlock.match(/\{ n:'0[1-7]', h:'/g) || []).length !== 7)
