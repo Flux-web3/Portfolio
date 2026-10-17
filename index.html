@@ -8,10 +8,8 @@
 <meta name="author" content="Olamide Olanipekun">
 <meta name="theme-color" content="#0E1011">
 <!-- SITE URL: every absolute URL below, plus robots.txt and sitemap.xml, uses
-     this origin. It is a PLACEHOLDER until Vercel assigns the real domain.
-     After the first deploy run:  bash tools/set-site-url.sh https://your-real-domain
-     Leaving it wrong tells Google the canonical page lives somewhere that does
-     not exist, and social crawlers will fail to fetch the share image. -->
+     this origin is the current production Vercel URL. If the domain changes,
+     update the canonical, social metadata, robots.txt, and sitemap together. -->
 <link rel="canonical" href="https://portfolio-site-kappa-ashy.vercel.app/">
 
 <!-- Open Graph -->
@@ -50,7 +48,7 @@
   "@type": "Person",
   "name": "Olamide Olanipekun",
   "alternateName": "Flux",
-  "jobTitle": "Technical Product Manager & Web3 Community Manager",
+  "jobTitle": "Product & Project Management; Web3 Community Management",
   "description": "Product and community professional spanning product management, growth marketing, community operations, customer support, analytics, and trading in Web3 and fintech.",
   "address": { "@type": "PostalAddress", "addressLocality": "Lagos", "addressCountry": "NG" },
   "email": "mailto:flux.fx05@gmail.com",
@@ -60,7 +58,7 @@
     "https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/",
     "https://t.me/king_flux"
   ],
-  "knowsAbout": ["Technical Product Management","Product Management","Product Strategy","Product Operations","Growth","Product Analytics","SQL","Automation","API Integration","Fintech","Trading","Web3"],
+  "knowsAbout": ["Product Management","Project Management","Product Strategy","Product Operations","Growth Marketing","Community Management","Customer Support","Customer Experience","Discord","Telegram","Zendesk","Product Analytics","SQL","Automation","Fintech","Trading","Web3"],
   "worksFor": { "@type": "Organization", "name": "FortaFlow" },
   "alumniOf": {
     "@type": "CollegeOrUniversity",
@@ -881,10 +879,10 @@ const PROFILE = {
 };
 
 /* One helper, used by every résumé button on the site. */
-const resumeHref  = () => PROFILE.resumeReady ? PROFILE.resumeFile : '#/resume';
-const resumeAttr  = () => PROFILE.resumeReady ? ' download' : '';
-const resumeLabel = () => PROFILE.resumeReady ? 'Download Product résumé' : 'View résumé';
-const resumeIcon  = () => PROFILE.resumeReady ? ICON.down() : ICON.ar();
+const resumeHref  = () => '#/resume';
+const resumeAttr  = () => '';
+const resumeLabel = () => 'Choose a résumé';
+const resumeIcon  = () => ICON.ar();
 
 /* Centralised social config. `url:null` = not supplied yet; it is skipped in the
    UI rather than guessed. Add a URL here and it appears everywhere at once. */
@@ -918,7 +916,7 @@ const activeSocials = () => Object.values(SOCIALS).filter(s => s.url && s.primar
 const activeContacts = () => activeSocials().filter(s => s.contact !== false);
 
 const NAV = [
-  { path:'/',         n:'01', label:'Home',            title:'Olamide Olanipekun | Technical Product Manager & Product Builder' },
+  { path:'/',         n:'01', label:'Home',            title:'Olamide Olanipekun | Product, Community & Growth' },
   { path:'/about',    n:'02', label:'About',           title:'About — Olamide Olanipekun' },
   { path:'/experience',n:'03',label:'Experience',      title:'Experience — Olamide Olanipekun' },
   { path:'/projects', n:'04', label:'Projects',        title:'Projects — Olamide Olanipekun' },
@@ -1007,7 +1005,7 @@ const EXPERIENCE = [
     org:'YNX', role:'Product Manager', also:'VP Operations & Marketing Lead',
     when:'Apr 2025 – May 2026',
     engagement:'Part-time', mode:'United Kingdom · Remote',
-    summary:'Built and launched an MVP while running product execution across digital products — managing the lifecycle, coordinating engineering, design and growth, and supporting grant and fundraising efforts.',
+    summary:'Built and launched an MVP, managed its product lifecycle, and built and led project communities across Discord, Telegram, X/Twitter, LinkedIn and other social channels alongside product, operations and growth work.',
     detail:[
       'The work sat where product direction meets delivery. I took an MVP from concept to launch and managed the lifecycle around it, partnering with engineering to move concepts through development while keeping product, operations, and growth pointed at the same outcome.',
       'Sprint planning and backlog prioritisation ran in Notion and Trello, which improved delivery coordination across the team. Market and competitor research fed the roadmap, and data-informed process changes cut workflow bottlenecks — improving operational efficiency by around 30%.',
@@ -1041,7 +1039,7 @@ const EXPERIENCE = [
        a pipe ever did. */
     org:'Deserialize', role:'Product Manager', when:'Apr 2024 – May 2025',
     engagement:'Full-time', mode:'Lagos, Nigeria · Remote',
-    summary:'One title, several jobs — product management, ecosystem operations, and growth for a Web3 platform that processed over $30M in transaction volume in its first six months.',
+    summary:'One title, several jobs — product management, ecosystem operations, growth, and community leadership for a Web3 swap aggregator that processed over $30M in transaction volume in its first six months.',
     detail:[
       'This is where the $30M figure on this site comes from. I led product and ecosystem operations for a Web3 platform through the period it processed over $30M in transaction volume — its first six months. That number belongs to a team and a market, not to me alone, but the onboarding and activation work behind it was mine to own.',
       'The role was never one lane. Product, operations, and growth were on my desk at the same time, so the person who wrote the requirement also ran the process around it and watched the number it was supposed to move. Wide remit, small company — and useful, because the handoffs where work usually goes missing were internal to one person.',
@@ -1606,7 +1604,7 @@ const Navbar = path => `
         ${ICON.mono()}
         <span class="brand-txt">
           <span class="brand-n">Olamide Olanipekun</span>
-          <span class="brand-r">technical product manager · product builder</span>
+          <span class="brand-r">product · community · growth</span>
         </span>
       </a>
       <nav class="nav" aria-label="Primary">
@@ -1780,7 +1778,7 @@ const Home = () => `
         <dl class="hero-meta">
           <div><dt>Based in</dt><dd>${PROFILE.location} · ${PROFILE.relocation.replace('Open','open')}</dd></div>
           <div><dt>Currently</dt><dd>Founder — <a href="#/projects">FortaFlow</a> (part-time, in build)</dd></div>
-          <div><dt>Open to</dt><dd>Full-time product roles · remote or hybrid</dd></div>
+          <div><dt>Open to</dt><dd>Product, community and growth roles · remote or hybrid</dd></div>
         </dl>
       </div>
     </div>
