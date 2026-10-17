@@ -31,10 +31,11 @@ Content is separated from presentation. To change what the site says, edit the `
 ## Résumé downloads
 
 The original Product Manager résumé remains at `Olamide-Olanipekun-Product-Manager.pdf`.
-The Résumé page offers that PDF plus a separate, print-ready Community Management résumé at
-`community-resume.html`. The community page includes a **Print / Save as PDF** control so visitors
-can save their own PDF from the browser. The two versions are kept distinct; do not replace the
-original Product Manager PDF with the community résumé.
+The Résumé page offers two distinct options: the original Product Manager PDF and a separate,
+print-ready Community Management résumé at `community-resume.html`. The Product Manager option
+downloads the existing PDF; the Community Management option opens the web résumé, which includes
+its own **Print / Save as PDF** control. The selector explains this difference explicitly. Keep the
+files distinct; do not replace the original Product Manager PDF with the community résumé.
 
 ## Editing the content
 
