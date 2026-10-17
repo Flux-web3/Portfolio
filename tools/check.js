@@ -170,13 +170,14 @@ function communityHtmlSafe() {
 }
 
 /* --- cross-cutting portfolio content and responsive safeguards ----------- */
-if (!/const PROCESS = \[/.test(html) || (html.match(/\{ n:'0[1-7]', h:'/g) || []).length !== 7)
+const processBlock = html.slice(html.indexOf('const PROCESS = ['), html.indexOf('const SKILLS = ['));
+if (!processBlock.startsWith('const PROCESS = [') || (processBlock.match(/\{ n:'0[1-7]', h:'/g) || []).length !== 7)
   fail('Product Thinking must define seven numbered stages');
 if (!/html\.dataset\.theme|html\[data-theme/.test(html) || !/\.chips\{display:flex;flex-wrap:wrap;gap:7px\}/.test(html))
   fail('Theme and wrapping chip styles must remain present');
 if (!/grid-template-columns:minmax\(0,1fr\)/.test(html.slice(html.indexOf('@media (max-width:980px)'), html.indexOf('@media (max-width:720px)'))))
   fail('Main layout must collapse to a single column at tablet/mobile widths');
-if (/label:'thinking'[\s\S]{0,250}Seven stages/.test(html) && (html.match(/\{ n:'0[1-7]', h:'/g) || []).length !== 7)
+if (/label:'thinking'[\s\S]{0,250}Seven stages/.test(html) && (processBlock.match(/\{ n:'0[1-7]', h:'/g) || []).length !== 7)
   fail('Thinking page description and stage count disagree');
 
 /* --- referenced local assets must exist ---------------------------------- */
