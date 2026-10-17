@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Olamide Olanipekun | Product, Community &amp; Growth</title>
-<meta name="description" content="Olamide Olanipekun works across product management, Web3 community growth, customer support, marketing and operations in fintech and trading.">
+<meta name="description" content="Product/project manager with 4+ years hands-on PM experience within 7+ years across operations, growth marketing, Web3 communities, customer support/CX, and trading.">
 <meta name="author" content="Olamide Olanipekun">
 <meta name="theme-color" content="#0E1011">
 <!-- SITE URL: every absolute URL below, plus robots.txt and sitemap.xml, uses
@@ -30,7 +30,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Olamide Olanipekun | Product, Community &amp; Growth">
-<meta name="twitter:description" content="Product and community leadership across fintech, trading and Web3: product delivery, community growth, customer support, marketing, operations and analytics.">
+<meta name="twitter:description" content="4+ years hands-on product/project management within 7+ years across product, operations, growth marketing, Web3 community, customer support/CX, and trading.">
 <meta name="twitter:image" content="https://portfolio-site-kappa-ashy.vercel.app/twitter-card.png">
 <meta name="twitter:image:alt" content="Olamide Olanipekun — Product, Web3 Community Growth, Customer Experience and Operations.">
 <meta name="twitter:creator" content="@King_flux_">
@@ -47,10 +47,11 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Olamide Olanipekun",
+  "url": "https://portfolio-site-kappa-ashy.vercel.app/",
   "jobTitle": "Product & Project Management; Web3 Community Management",
   "description": "Product and community professional spanning product management, growth marketing, community operations, customer support, analytics, and trading in Web3 and fintech.",
   "address": { "@type": "PostalAddress", "addressLocality": "Lagos", "addressCountry": "NG" },
-  "email": "mailto:flux.fx05@gmail.com",
+  "email": "flux.fx05@gmail.com",
   "sameAs": [
     "https://github.com/Flux-web3",
     "https://x.com/King_flux_",
@@ -894,7 +895,7 @@ const SOCIALS = {
      résumé and drops off the "how to reach me" table. Adding the flag rather
      than removing the entry means the real handle is never lost from the config. */
   x:        { label:'X',          value:'@King_flux_',         url:'https://x.com/King_flux_', icon:'x', external:true, primary:true, contact:false },
-  linkedin: { label:'LinkedIn',   value:'Olanipekun Olamide',  url:'https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/', icon:'linkedin', external:true, primary:true },
+  linkedin: { label:'LinkedIn',   value:'Olamide Olanipekun',  url:'https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/', icon:'linkedin', external:true, primary:true },
   telegram: { label:'Telegram',   value:'@king_flux',          url:'https://t.me/king_flux', icon:'telegram', external:true, primary:true },
   /* The number is never a tel: link and never plain text — every place it is
      shown it is this wa.me URL, so a click or tap opens WhatsApp (the app on
@@ -1061,10 +1062,10 @@ const EXPERIENCE = [
     org:'Limitless Prop Firm', role:'Product Manager',
     also:'Community Manager & Growth Operations Lead', when:'2022 – 2023',
     engagement:'Contract', mode:null,
-    summary:'Product, community and growth operations for a proprietary trading firm. Built Discord and Telegram communities to 5,000+ members, led a six-person community team and a separate two-person website support team, and implemented Zendesk workflows supporting roughly 5–15-minute response times.',
+    summary:'Product, community and growth operations for a proprietary trading firm. Built Discord and Telegram communities from scratch and worked with a six-person community team to grow them beyond 5,000 members; separately led a two-person website support team and implemented Zendesk workflows supporting roughly 5–15-minute response times.',
     detail:[
-      'Built the Discord and Telegram communities from scratch and grew them to more than 5,000 members, managing onboarding, moderation, announcements, engagement, and daily operations.',
-      'Led a six-person community team coordinating campaigns, giveaways, educational activities, and community activations; separately led a two-person website support team.',
+      'Built the Discord and Telegram communities from scratch and worked with a six-person community team to grow them beyond 5,000 members, covering onboarding, moderation, announcements, engagement, and daily operations.',
+      'Worked with a six-person community team on campaigns, giveaways, educational activities, and community activations; separately led a two-person website support team.',
       'Implemented Zendesk and structured ticket handling and escalation workflows, maintaining response times of roughly 5–15 minutes.',
       'Configured Discord bots for gaming, security, ticketing, alerts, and other community needs; built personalised Telegram bots with automation and auto-responses.',
       'Managed X/Twitter and LinkedIn publishing with the design team, using Canva, Claude, and ChatGPT to support content creation and Buffer to schedule posts.',
@@ -2473,8 +2474,8 @@ const Resume = () => `
           </div>
           <div class="btns noprint" style="flex-direction:column;align-items:flex-start">
             ${PROFILE.resumeReady?`<a class="btn btn-p" href="${PROFILE.resumeFile}" download>Download Product Manager résumé${ICON.down()}</a>`:''}
-            <a class="btn btn-s" href="community-resume.html" target="_blank" rel="noopener">View / Save Community Management résumé ↗</a>
-            <button class="btn btn-q" type="button" id="printcv">Print or save this page as PDF${ICON.down()}</button>
+            <a class="btn btn-s" href="community-resume.html" target="_blank" rel="noopener noreferrer">Open Community Management résumé ↗</a>
+            <p class="sm mt-s" style="max-width:34ch">The Product Manager résumé downloads as a PDF. The Community Management résumé opens in a print-ready page with its own Print / Save as PDF control.</p>
           </div>
         </div>
       </div>
@@ -2897,8 +2898,6 @@ function bind(path){
   }
 
   /* --- print résumé ----------------------------------------------------- */
-  const pc = document.getElementById('printcv');
-  if (pc) pc.addEventListener('click', () => window.print());
 }
 
 /* ======================  6. BOOT  ======================================= */
