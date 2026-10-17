@@ -143,6 +143,22 @@ else {
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 
+/* --- cross-file factual and résumé consistency --------------------------- */
+if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy capstone'"))
+  fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
+if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
+  fail('Tourist summary must disclose the current template-based itinerary implementation');
+if (html.includes('"alternateName": "Flux"'))
+  fail('Person structured data must not publish an unsupported alternate name');
+if (!communityHtmlSafe())
+  fail('Community résumé must preserve the confirmed Limitless Prop Firm 2022–2023 dates and team attribution');
+function communityHtmlSafe() {
+  const page = fs.readFileSync(communityPage, 'utf8');
+  return /Limitless Prop Firm<\/h3><span class="date">2022 – 2023<\/span>/.test(page)
+    && /worked with a six-person community team and a separate two-person website support team/.test(page)
+    && /window\\.print\\(\\)/.test(page);
+}
+
 /* --- referenced local assets must exist ---------------------------------- */
 for (const m of html.matchAll(/(?:href|src|content)="((?!https?:|mailto:|#|data:)[\w./-]+\.(?:png|svg|pdf|ico|xml|css|js))"/g)) {
   if (!fs.existsSync(path.join(__dirname, '..', m[1]))) fail(`missing local asset: ${m[1]}`);
