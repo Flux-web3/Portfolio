@@ -2474,7 +2474,7 @@ const Resume = () => `
           </div>
           <div class="btns noprint" style="flex-direction:column;align-items:flex-start">
             ${PROFILE.resumeReady?`<a class="btn btn-p" href="${PROFILE.resumeFile}" download>Download Product Manager résumé${ICON.down()}</a>`:''}
-            ${PROFILE.communityResumeReady?`<a class="btn btn-s" href="${PROFILE.communityResumeFile}" download>Download Community Management résumé${ICON.down()}</a>`:`<span class="btn btn-q" aria-disabled="true" title="Community résumé PDF still needs to be uploaded">Community Management résumé · upload pending</span>`}
+            <a class="btn btn-s" href="community-resume.html" target="_blank" rel="noopener">View / Save Community Management résumé ↗</a>
             <button class="btn btn-q" type="button" id="printcv">Print or save this page as PDF${ICON.down()}</button>
           </div>
         </div>
