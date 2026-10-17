@@ -2467,13 +2467,15 @@ const Resume = () => `
           <div>
             <h1 class="h1">${PROFILE.name}</h1>
             <p class="lede mt-s">${PROFILE.title}</p>
-            <p class="sm mt-xs">${PROFILE.pmYears} years Product Management · ${PROFILE.totalYears} years across growth, operations and analytics</p>
+            <p class="sm mt-xs">${PROFILE.pmYears} years hands-on product/project management within ${PROFILE.totalYears} years across growth marketing, community, operations, customer experience and trading</p>
+            <p class="sm mt-s">Choose the résumé version that best matches the role.</p>
             <p class="sm">${PROFILE.location} · ${PROFILE.availability}</p>
             <p class="sm mt-xs"><a class="tlink" style="font-size:var(--fs-sm)" href="${SOCIALS.email.url}">${SOCIALS.email.value}</a></p>
           </div>
           <div class="btns noprint" style="flex-direction:column;align-items:flex-start">
-            ${PROFILE.resumeReady?`<a class="btn btn-p" href="${PROFILE.resumeFile}" download>Download résumé${ICON.down()}</a>`:''}
-            <button class="btn ${PROFILE.resumeReady?'btn-s':'btn-p'}" type="button" id="printcv">Print or save as PDF${ICON.down()}</button>
+            ${PROFILE.resumeReady?`<a class="btn btn-p" href="${PROFILE.resumeFile}" download>Download Product Manager résumé${ICON.down()}</a>`:''}
+            ${PROFILE.communityResumeReady?`<a class="btn btn-s" href="${PROFILE.communityResumeFile}" download>Download Community Management résumé${ICON.down()}</a>`:`<span class="btn btn-q" aria-disabled="true" title="Community résumé PDF still needs to be uploaded">Community Management résumé · upload pending</span>`}
+            <button class="btn btn-q" type="button" id="printcv">Print or save this page as PDF${ICON.down()}</button>
           </div>
         </div>
       </div>
