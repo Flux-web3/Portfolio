@@ -151,11 +151,21 @@ if (!html.includes('itinerary drafts use seeded templates rather than a live AI 
 if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
 if (!communityHtmlSafe())
-  fail('Community résumé must preserve the confirmed Limitless Prop Firm 2022–2023 dates and team attribution');
+  fail('Community résumé must preserve the confirmed Limitless Prop Firm 2022–2023 dates and accurate team attribution');
+if (!/linkedin:\s*\{ label:'LinkedIn',\s*value:'Olamide Olanipekun'/.test(html))
+  fail('LinkedIn display name must match the portfolio owner name order');
+if (html.includes('value:\'Olanipekun Olamide\'')) fail('Stale reversed LinkedIn display name found');
+if (html.includes('id="printcv"')) fail('Résumé selector must not offer print-current-page as if it were a résumé download');
+if (!/The Product Manager résumé downloads as a PDF/.test(html))
+  fail('Résumé selector must explain the difference between the Product Manager PDF and community print page');
+if (!/4\+ years hands-on product\/project management within 7\+ years across product, operations, growth marketing, community management, customer support\/CX, and trading/i.test(html.slice(0, html.indexOf('</head>'))))
+  fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
   return /Limitless Prop Firm<\/h3><span class="date">2022 – 2023<\/span>/.test(page)
-    && /worked with a six-person community team and led a separate two-person website support team/.test(page)
+    && /worked with a six-person community team/.test(page)
+    && /led a separate two-person website support team/.test(page)
+    && !/Led a six-person team supporting/.test(page)
     && page.includes('window.print()');
 }
 
