@@ -30,11 +30,12 @@ Content is separated from presentation. To change what the site says, edit the `
 
 ## Résumé downloads
 
-The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a two-page, ATS-readable PDF
-covering the current LinkedIn experience history, selected product-building projects, skills, tools,
-education, and professional development. The Résumé page also offers a separate, print-ready
-Community Management résumé at `community-resume.html`, which includes its own **Print / Save as PDF**
-control. Keep the two documents distinct; the PM PDF is not a copy of the community résumé.
+The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a refreshed two-page,
+ATS-readable PDF aligned to the owner's current LinkedIn Experience history. It includes YNX, Dextopus,
+Debonk Bot, Deserialize, Limitless Prop Firm, Gotabit, and Betboom with the supplied dates, plus selected
+product-building work, skills, tools, education, and professional development. The Résumé page also
+offers a separate, print-ready Community Management résumé at `community-resume.html`, which includes
+its own **Print / Save as PDF** control. Keep the two documents distinct.
 
 ## Editing the content
 
@@ -259,8 +260,9 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   the older `tourist-app-nu-six` alias 404s.
 - **FortaFlow is in active development**, not a shipped, production-ready system. Its positioning,
   problem, module map, loop, v1 MVP set and north-star metric follow the FORTAFLOW Product Doc in Notion.
-- **The PM PDF is now a single, two-page document** built to match the current Experience history.
-  The community résumé remains a separate two-page HTML print view.
+- **The Product Manager PDF is a refreshed two-page document**, aligned to the corrected LinkedIn
+  experience history supplied on 2026-11-04. The Community Management résumé remains a separate HTML
+  print view and is not a substitute for the PM résumé.
 
 The site labels team outcomes as contributions rather than sole attribution. FortaFlow is labelled
 as in active development. The chronology explains overlapping product roles; overlapping dates are
