@@ -14,6 +14,7 @@ import sys
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+from reportlab import rl_config
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
@@ -25,6 +26,8 @@ from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak,
     KeepTogether, HRFlowable
 )
+
+rl_config.invariant = 1
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "Olamide-Olanipekun-Product-Manager.pdf"
@@ -144,13 +147,13 @@ story.append(P(
     "customer experience, and trading. Experience across Web3, fintech, SaaS, and AI, translating ambiguous "
     "user and business problems into product direction, requirements, prioritised backlogs, and cross-functional "
     "delivery. Contributed to a Web3 swap aggregator that processed <b>$30M+ in transaction volume within its "
-    "first six months</b>; delivered onboarding and activation improvements of <b>40%</b> and reduced workflow "
-    "bottlenecks by <b>30%</b> through product and operational improvements.", "Summary"))
+    "first six months</b>; contributed to a <b>40%</b> improvement in onboarding and activation and a <b>30%</b> "
+    "reduction in YNX workflow bottlenecks.", "Summary"))
 
 metrics = Table([[
     P("<b>$30M+</b><br/><font color='#667482'>swap volume in 6 months</font>"),
     P("<b>40%</b><br/><font color='#667482'>activation improvement</font>"),
-    P("<b>30%</b><br/><font color='#667482'>workflow bottlenecks reduced</font>"),
+    P("<b>30%</b><br/><font color='#667482'>YNX workflow bottlenecks reduced</font>"),
     P("<b>5K+ / ~50K</b><br/><font color='#667482'>communities managed</font>")
 ]], colWidths=[45*mm,45*mm,45*mm,45*mm])
 metrics.setStyle(TableStyle([
@@ -235,7 +238,7 @@ story.append(role("Community Management & Growth Contributor", "Betboom", "Jan 2
 story.extend(section("Selected Product-Building Work"))
 story.append(KeepTogether([
     P("FortaFlow | Independent Product Builder", "ProjectTitle"),
-    P("An AI-powered trading research and strategy platform in active development. Leading product discovery, product direction, requirements, UX, architecture, prototyping, and MVP build planning. Uses AI-assisted workflows across research, documentation, prototyping, and development."),
+    P("A trading-strategy research and validation product scoped for intermediate retail crypto and forex traders. Led product discovery, product direction, requirements, UX, architecture, prototyping, and MVP planning. Coding/build work is currently paused; this is not a shipped production system. The MVP centres on explicit rules, immutable strategy versions, reproducible historical backtesting, performance and risk review, bounded stress scenarios, and manual/CSV journaling. It does not place live orders."),
     P("Tools: Notion, ChatGPT, Claude, Google Stitch, Lovable, Claude Code, Supabase, GitHub, Vercel.", "RoleMeta"),
     Spacer(1,3)
 ]))
