@@ -38,7 +38,7 @@ The standalone Community Management résumé is `Olamide_Olanipekun_Community_Ma
 a two-page A4, ATS-readable PDF. It includes YNX, Deserialize, both concurrent Limitless positions with
 their separate LinkedIn dates, Gotabit, and Betboom, plus community skills, tools, selected Web3 projects,
 and education. Its reproducible ReportLab source is `tools/build-community-resume.py`. Both résumé PDFs
-use natural pagination and larger body text while remaining exactly two A4 pages. GitHub Actions
+use natural pagination and larger body text (10 pt summary and approximately 9.2–9.5 pt principal body/bullet typography) while remaining exactly two A4 pages. GitHub Actions
 regenerates and validates both PDFs, then publishes changed binaries through a separate post-validation
 job on trusted pushes to `main`; pull-request validation remains read-only. The Résumé page links
 directly to both PDFs; `community-resume.html` remains available as a browser-based, print-ready
