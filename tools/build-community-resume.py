@@ -58,11 +58,15 @@ def role(title: str, org: str, dates: str, summary: str, items: list[str]):
         ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ("TOPPADDING", (0, 0), (-1, -1), 0), ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
     ]))
-    # Keep the role heading/date together, while letting summary and
-    # bullet paragraphs use any remaining page space naturally.
-    block = [KeepTogether([heading])]
+    # Keep role context intact. For roles without a summary, keep the first
+    # responsibility with the heading so neither is stranded at a page edge.
+    lead = [heading]
     if summary:
-        block.append(p(summary, "RoleText"))
+        lead.append(p(summary, "RoleText"))
+    elif items:
+        lead.append(bullet(items[0]))
+        items = items[1:]
+    block = [KeepTogether(lead)]
     block.extend(bullet(item) for item in items)
     block.append(Spacer(1, 1.5))
     return block
@@ -96,7 +100,7 @@ story = []
 
 # Page 1: identity, summary, capabilities and latest roles.
 story.append(p("OLAMIDE OLANIPEKUN", "Name"))
-story.append(p("WEB3 COMMUNITY MANAGER  |  COMMUNITY GROWTH, CUSTOMER SUPPORT &amp; OPERATIONS", "Headline"))
+story.append(p("WEB3 COMMUNITY MANAGER  |  GROWTH, SUPPORT &amp; OPERATIONS", "Headline"))
 story.append(p(
     '<link href="mailto:flux.fx05@gmail.com" color="#5D6870">flux.fx05@gmail.com</link>  |  '
     '<link href="https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/" color="#5D6870">LinkedIn</link>  |  '
@@ -104,7 +108,7 @@ story.append(p(
 
 story.extend(section("Professional Summary"))
 story.append(p(
-    "I build Web3 communities and run the work that keeps them active and supported: engagement, moderation, social channels, automation, and customer support, with a working knowledge of blockchain and cryptocurrency. At <b>Betboom</b>, I created Discord and Telegram communities from scratch for approximately <b>50,000 members</b>, maintaining typical response times of <b>5–7 minutes</b>. At <b>Limitless Prop Firm</b>, I held two concurrent roles: Product Manager &amp; Growth Operations Lead (Sep 2022–Dec 2023) and Community &amp; Customer support specialist (May 2022–Dec 2023). Across those roles, I helped grow Discord and Telegram communities beyond <b>5,000 members</b>, led a six-person community team and a separate two-person website support team, and maintained support response times of approximately <b>5–15 minutes</b> using Zendesk. At <b>YNX</b>, I built and owned the community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth, and product delivery. My broader experience spans <b>7+ years</b> across product, operations, marketing, growth, community management, and customer experience.", "Summary"))
+    "Web3 community and customer experience operator with <b>7+ years</b> across product, operations, marketing, growth, community management, and customer support, with blockchain and cryptocurrency ecosystem knowledge. At <b>Betboom</b>, built Discord and Telegram communities from scratch for approximately <b>50,000 members</b>, with typical <b>5–7-minute</b> responses. At <b>Limitless Prop Firm</b>, supported a <b>5,000+ member</b> community, led a <b>six-person Discord/Telegram team</b> and a separate <b>two-person website support team</b>, and maintained <b>5–15-minute</b> Zendesk response times across two concurrent roles. At <b>YNX</b>, built and owned the community from scratch, then sourced moderators, marketing talent, and developers.", "Summary"))
 
 story.extend(section("Core Skills"))
 skills = [
