@@ -175,6 +175,11 @@ function communityHtmlSafe() {
     && /Community Management &amp; Growth Contributor · Betboom<\/h3><span class="date">Jan 2020 – Sep 2021<\/span>/.test(page)
     && /5–7 minutes/.test(page)
     && /two-person website support team/.test(page)
+    && page.includes('At Deserialize, I worked across product and ecosystem operations for a Web3 swap aggregator')
+    && !page.includes('building and leading the project’s communities')
+    && !page.includes('community presence across Discord, Telegram')
+    && !page.includes('<span>Lagos, Nigeria · Remote / Hybrid</span>')
+    && page.includes('<link rel="canonical" href="https://portfolio-site-kappa-ashy.vercel.app/community">')
     && page.includes('window.print()');
 }
 
@@ -268,6 +273,16 @@ if (origins.size > 1)
 else if (origins.size === 1)
   console.log(`\n  site origin: ${[...origins][0]}`);
 
+/* --- sitemap freshness and clean URL canonical --------------------------- */
+const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
+if (fs.existsSync(sitemapPath)) {
+  const sitemap = fs.readFileSync(sitemapPath, 'utf8');
+  if (!sitemap.includes('<loc>https://portfolio-site-kappa-ashy.vercel.app/community</loc>'))
+    fail('Sitemap must publish the clean canonical Community résumé URL');
+  if (sitemap.split('<lastmod>2026-11-04</lastmod>').length - 1 !== 2)
+    fail('Both sitemap URLs must carry the current 2026-11-04 lastmod date');
+}
+
 /* --- vercel.json must be valid, with only keys Vercel accepts ------------- */
 const vjPath = path.join(root, 'vercel.json');
 if (fs.existsSync(vjPath)) {
@@ -282,6 +297,26 @@ if (fs.existsSync(vjPath)) {
       }
     }
   }
+}
+
+/* --- fixed résumé URL, safe CI permissions, and current runner actions ----- */
+if (fs.existsSync(vjPath)) {
+  const vjPolicy = JSON.parse(fs.readFileSync(vjPath, 'utf8'));
+  const pdfRule = (vjPolicy.headers || []).find(h => (h.source || '').endsWith('\\.pdf'));
+  const pdfCache = (pdfRule?.headers || []).find(h => (h.key || '').toLowerCase() === 'cache-control')?.value;
+  if (pdfCache !== 'public, max-age=0, must-revalidate')
+    fail('Product Manager PDF must revalidate; do not cache the fixed résumé URL as immutable');
+  const immutableRule = (vjPolicy.headers || []).find(h => (h.source || '').includes('svg|png'));
+  if (!immutableRule || (immutableRule.source || '').includes('pdf'))
+    fail('Immutable asset cache rule must exclude PDF files');
+}
+const workflowPath = path.join(root, '.github', 'workflows', 'portfolio-check.yml');
+if (fs.existsSync(workflowPath)) {
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+  if (workflow.includes('contents: write') || workflow.includes('persist-credentials: true') || workflow.includes('git push origin'))
+    fail('Portfolio validation workflow must not expose a write-capable token to checked-out project code');
+  if (!workflow.includes('actions/checkout@v7') || !workflow.includes('actions/setup-node@v7') || !workflow.includes('actions/setup-python@v7'))
+    fail('Portfolio validation workflow must use current Node 24-compatible official actions');
 }
 
 /* --- the phone number must always route to WhatsApp, never tel: or text ---- */

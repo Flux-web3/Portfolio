@@ -273,11 +273,16 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   employer span, and no separate community-only role. The Community Management résumé is a separate
   HTML print view that shows both positions with their respective LinkedIn dates.
 
-The site labels team outcomes as contributions rather than sole attribution. FortaFlow is labelled
-as build-paused, not production-ready. The chronology distinguishes concurrent positions at one
+The site labels team outcomes as contributions rather than sole attribution. The Community Management
+résumé does not claim community ownership at Deserialize; it describes the verified product and ecosystem
+operations work only. FortaFlow is labelled as build-paused, not production-ready. The chronology distinguishes concurrent positions at one
 employer and overlapping engagements; calendar time is counted once in experience totals. The
 homepage's **All projects** link routes to Experience by design, while individual project cards route
 to their project detail page.
+
+The PDF validation workflow generates a temporary comparison file and checks it byte-for-byte against
+the committed PDF; it does not rewrite or push résumé files. GitHub Actions uses read-only repository
+permissions for validation. The Product Manager PDF uses revalidation caching because it has a fixed URL.
 
 The 4+ years hands-on product/project management figure is the owner's stated professional positioning;
 it is not calculated by adding the durations of overlapping LinkedIn entries. The PM résumé retains

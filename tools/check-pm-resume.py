@@ -59,4 +59,7 @@ for label, path in (("committed", COMMITTED), ("generated", GENERATED)):
     if found_stale:
         raise SystemExit(f"FAIL: {label} PM PDF contains excluded/stale statements: " + "; ".join(found_stale))
 
-print("PASS: committed and generated PM PDFs are two-page A4; all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
+if COMMITTED.resolve() != GENERATED.resolve() and COMMITTED.read_bytes() != GENERATED.read_bytes():
+    raise SystemExit("FAIL: committed Product Manager PDF differs from the canonical generated output. Regenerate and commit the PDF with tools/build-pm-resume.py.")
+
+print("PASS: committed PDF exactly matches the canonical generated output; both are two-page A4 with all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
