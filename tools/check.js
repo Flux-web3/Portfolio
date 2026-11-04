@@ -148,6 +148,7 @@ if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy caps
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
   fail('Tourist summary must disclose the current template-based itinerary implementation');
+if (!communityHtmlSafe()) fail('Community Management résumé must include both Limitless positions with separate dates');
 if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
 if (!communityHtmlSafe())
@@ -162,13 +163,13 @@ if (!/4\+ years hands-on product\/project management within 7\+ years across pro
   fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
-  return /Limitless Prop Firm<\/h3><span class="date">May 2022 – Dec 2023<\/span>/.test(page)
-    && /worked with a six-person community team/.test(page)
+  return /Product Manager &amp; Growth Operations Lead · Limitless Prop Firm<\/h3><span class="date">Sep 2022 – Dec 2023<\/span>/.test(page)
+    && /Community &amp; Customer support specialist · Limitless Prop Firm<\/h3><span class="date">May 2022 – Dec 2023<\/span>/.test(page)
+    && /six-person Discord and Telegram team/.test(page)
     && /Community Manager · Gotabit<\/h3><span class="date">Feb 2021 – Oct 2022<\/span>/.test(page)
     && /Community Management &amp; Growth Contributor · Betboom<\/h3><span class="date">Jan 2020 – Sep 2021<\/span>/.test(page)
     && /5–7 minutes/.test(page)
-    && /led a separate two-person website support team/.test(page)
-    && !/Led a six-person team supporting/.test(page)
+    && /two-person website support team/.test(page)
     && page.includes('window.print()');
 }
 
@@ -178,7 +179,7 @@ const expectedExperience = [
   ["Dextopus", "Aug 2025 – Feb 2026"],
   ["Debonk Bot", "Jun 2025 – Jan 2026"],
   ["Deserialize", "Apr 2024 – May 2025"],
-  ["Limitless Prop Firm", "May 2022 – Dec 2023"],
+  ["Limitless Prop Firm", "Sep 2022 – Dec 2023"],
   ["Gotabit", "Feb 2021 – Oct 2022"],
   ["Betboom", "Jan 2020 – Sep 2021"]
 ];
@@ -188,6 +189,14 @@ for (const [org, dates] of expectedExperience) {
 }
 if (/org:'delabz'/i.test(html)) fail('delabz must not appear in the Experience timeline');
 if ((html.match(/org:'Dextopus'/g) || []).length !== 1) fail('Dextopus / Dextopus Bridge must be represented by one Experience entry');
+if (!/also:'Community & Customer support specialist · May 2022 – Dec 2023'/.test(html)) fail('Limitless community/support position is missing from Experience timeline');
+if (!/resumeWhen:'May 2022 – Dec 2023'/.test(html)) fail('PM résumé must retain the full May 2022-Dec 2023 Limitless span');
+const pmResume = html.slice(html.indexOf('const Resume = () =>'), html.indexOf('const Contact = () =>'));
+if (!pmResume.includes('e.resumeWhen || e.when')) fail('PM résumé renderer must use its separate full employer date');
+if (/Community & Customer support specialist/.test(pmResume)) fail('PM résumé must exclude the community-only title');
+if (/50% reduction in operational bottlenecks/i.test(html)) fail('Stale 50% workflow bottleneck metric remains');
+if (!html.includes('30% reduction in workflow bottlenecks at YNX')) fail('Résumé preview must use the current 30% YNX metric');
+if (!/Build status: currently paused/.test(html) || !/intermediate retail crypto and forex traders/.test(html)) fail('FortaFlow audience or build status is stale');
 if (!html.includes("when:'Apr 2025 – May 2026'") || html.includes("when:'Jun 2025 – 2026'"))
   fail('YNX chronology must match the current LinkedIn Apr 2025–May 2026 range');
 if (!html.includes("l:'Deserialize swap volume in its first six months'"))
