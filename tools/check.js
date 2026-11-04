@@ -148,8 +148,6 @@ if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy caps
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
   fail('Tourist summary must disclose the current template-based itinerary implementation');
-if (!communityHtmlSafe()) fail('Community résumé must preserve YNX community ownership/talent sourcing and both Limitless positions with their dates');
-if (!communityHtmlSafe()) fail('Community Management résumé must include both Limitless positions with separate dates');
 if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
 if (!communityHtmlSafe())
@@ -161,7 +159,7 @@ if (html.includes('id="printcv"')) fail('Résumé selector must not offer print-
 if (!/The Product Manager résumé downloads as a PDF/.test(html))
   fail('Résumé selector must explain the difference between the Product Manager PDF and community print page');
 const homeBlock = html.slice(html.indexOf('const Home = () =>'), html.indexOf('const PageHead'));
-if (!/<a class="tlink" href="#\\/experience">All projects/.test(homeBlock))
+if (!homeBlock.includes('<a class="tlink" href="#/experience">All projects'))
   fail('Homepage All projects link must route to Experience');
 if (!/4\+ years hands-on product\/project management within 7\+ years across product, operations, growth marketing, community management, customer support\/CX, and trading/i.test(html.slice(0, html.indexOf('</head>'))))
   fail('Social description must preserve the approved experience positioning');
