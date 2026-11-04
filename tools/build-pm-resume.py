@@ -47,26 +47,26 @@ PALE = colors.HexColor("#F2F6F9")
 styles = getSampleStyleSheet()
 styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5,
                           textColor=NAVY, spaceAfter=2, alignment=TA_LEFT))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.6, leading=13.2,
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.8, leading=13.5,
                           textColor=BLUE, spaceAfter=4))
 styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.5, leading=10.9,
                           textColor=MUTED, spaceAfter=6))
 styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.6, leading=12.7,
                           textColor=NAVY, spaceBefore=7, spaceAfter=4, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.4, leading=12.6,
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.8, leading=13.0,
                           textColor=BODY, spaceAfter=4))
-styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=8.9, leading=11.8,
+styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=9.3, leading=12.2,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.7, leading=11.9,
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=10.0, leading=12.2,
                           textColor=NAVY))
-styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=8.3, leading=10.1,
+styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=8.7, leading=10.5,
                           textColor=MUTED, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=8.7, leading=11.2,
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=9.2, leading=11.8,
                           textColor=BODY, leftIndent=9, firstLineIndent=-6,
                           bulletIndent=0, spaceAfter=1.2))
-styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=8.8, leading=11.6,
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=9.2, leading=12.0,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.2, leading=11.2,
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.6, leading=11.8,
                           textColor=NAVY, spaceAfter=1))
 
 
