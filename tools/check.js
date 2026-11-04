@@ -322,22 +322,27 @@ if (fs.existsSync(vjPath)) {
 const workflowPath = path.join(root, '.github', 'workflows', 'portfolio-check.yml');
 if (fs.existsSync(workflowPath)) {
   const workflow = fs.readFileSync(workflowPath, 'utf8');
-  const jobsStart = workflow.indexOf('jobs:');
-  const validateStart = workflow.indexOf('  validate:');
-  const publishStart = workflow.indexOf('  publish-community-pdf:');
-  const topPermissions = jobsStart >= 0 ? workflow.slice(0, jobsStart) : '';
-  const validateJob = validateStart >= 0 && publishStart > validateStart ? workflow.slice(validateStart, publishStart) : '';
-  const publishJob = publishStart >= 0 ? workflow.slice(publishStart) : '';
-  if (!/^permissions:\\s*contents:\\s*read\\s*$/m.test(topPermissions))
+  const workflowLines = workflow.split('\n');
+  const jobsLine = workflowLines.indexOf('jobs:');
+  const validateLine = workflowLines.indexOf('  validate:');
+  const publishLine = workflowLines.indexOf('  publish-community-pdf:');
+  const topPermissions = jobsLine >= 0 ? workflowLines.slice(0, jobsLine) : [];
+  const validateJob = validateLine >= 0 && publishLine > validateLine ? workflowLines.slice(validateLine, publishLine) : [];
+  const publishJob = publishLine >= 0 ? workflowLines.slice(publishLine) : [];
+  const permissionIs = (lines, value) => lines.some((line, i) =>
+    line.trim() === 'permissions:' && lines[i + 1]?.trim() === 'contents: ' + value
+  );
+  if (!permissionIs(topPermissions, 'read'))
     fail('Workflow-wide permissions must remain read-only');
-  if (!validateJob || /contents:\\s*write/.test(validateJob) || validateJob.includes('persist-credentials: true') || validateJob.includes('git push'))
+  if (!validateJob.length || permissionIs(validateJob, 'write') ||
+      validateJob.some(line => line.includes('persist-credentials: true') || line.includes('git push')))
     fail('General validation job must not receive a write-capable token or push to the repository');
-  if (!publishJob.includes("if: github.event_name == 'push' && github.ref == 'refs/heads/main'") ||
-      !publishJob.includes('needs: validate') ||
-      !/permissions:\\s*contents:\\s*write/.test(publishJob) ||
-      !publishJob.includes('persist-credentials: true') ||
-      !publishJob.includes('git push origin HEAD:main') ||
-      !publishJob.includes('python tools/check-community-resume.py --generated-only'))
+  if (!publishJob.join('\n').includes("if: github.event_name == 'push' && github.ref == 'refs/heads/main'") ||
+      !publishJob.includes('    needs: validate') ||
+      !permissionIs(publishJob, 'write') ||
+      !publishJob.some(line => line.trim() === 'persist-credentials: true') ||
+      !publishJob.some(line => line.includes('git push origin HEAD:main')) ||
+      !publishJob.some(line => line.includes('python tools/check-community-resume.py --generated-only')))
     fail('PDF publishing must be limited to a post-validation job on trusted main pushes, with a regenerated and validated PDF');
   if (!workflow.includes('actions/checkout@v7') || !workflow.includes('actions/setup-node@v7') || !workflow.includes('actions/setup-python@v7'))
     fail('Portfolio validation workflow must use current Node 24-compatible official actions');
