@@ -40,7 +40,7 @@ required = [
     "intermediate retail crypto and forex traders",
     "currently paused",
     "manual/CSV journaling",
-    "B.Sc.Ed., Mathematics and Education",
+    "B.Sc.Ed., Mathematics and Education", "Completed 2026", "Second Class Upper", "CGPA: 3.8/5",
 ]
 stale = (
     "50% reduction in operational bottlenecks",
