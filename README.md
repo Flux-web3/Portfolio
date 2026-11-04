@@ -37,8 +37,10 @@ It retains the full May 2022-Dec 2023 Limitless Prop Firm employer span and does
 The standalone Community Management résumé is `Olamide_Olanipekun_Community_Management_Resume.pdf`,
 a two-page A4, ATS-readable PDF. It includes YNX, Deserialize, both concurrent Limitless positions with
 their separate LinkedIn dates, Gotabit, and Betboom, plus community skills, tools, selected Web3 projects,
-and education. The Résumé page links directly to this PDF; `community-resume.html` remains available
-as a browser-based, print-ready alternative. The two résumé documents are intentionally distinct.
+and education. Its reproducible ReportLab source is `tools/build-community-resume.py`; GitHub Actions
+regenerates a comparison PDF and validates both files on every push. The Résumé page links directly to
+this PDF; `community-resume.html` remains available as a browser-based, print-ready alternative. The two
+résumé documents are intentionally distinct.
 
 ## Editing the content
 
