@@ -207,11 +207,9 @@ story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
 
 # Earlier experience, selected product work, tools, and education flow naturally
 # into the remaining first-page space before continuing onto page two.
-story.append(KeepTogether(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
-    "",
-    [
-        "Led growth/product operations using community insights to improve activation, retention, and service; grew Discord/Telegram beyond <b>5,000 members</b>, led a <b>six-person community team</b> and separate <b>two-person support team</b>, and implemented Zendesk with <b>5–15-minute response times</b>."
-    ])))
+story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
+    "Led product/growth operations informed by user and community feedback; improved onboarding, activation, retention, and delivery. Built <b>5,000+ member</b> Discord/Telegram communities, led a <b>six-person community team</b> and separate <b>two-person website support team</b>, and implemented Zendesk with <b>5–15-minute response times</b>.",
+    []))
 story.extend(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
     "Managed community operations, customer support, content coordination, and engagement, acting as a communication link between users and the technical team.",
     [
