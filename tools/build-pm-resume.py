@@ -93,15 +93,14 @@ def role(title, company, dates, location, summary, bullets):
         f"<font name='Helvetica' size='8.4' color='#667482'>| {escape(dates)}</font>",
         styles["Role"]
     )
-    # Keep the role heading with its location and summary, then allow bullets
-    # to flow naturally. This prevents a long role from forcing a large block
-    # onto page two while preserving context at a page boundary.
-    lead = [heading]
+    # Keep the role title, employer, and dates together. Let the summary
+    # and bullets flow independently so a short remaining space is not wasted
+    # merely because the complete role lead cannot fit before a page break.
+    flow = [KeepTogether([heading])]
     if location:
-        lead.append(P(escape(location), "RoleMeta"))
+        flow.append(P(escape(location), "RoleMeta"))
     if summary:
-        lead.append(P(summary, "BodySmall"))
-    flow = [KeepTogether(lead)]
+        flow.append(P(summary, "BodySmall"))
     flow.extend(bullet(item) for item in bullets)
     flow.append(Spacer(1, 3))
     return flow

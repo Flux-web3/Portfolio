@@ -58,10 +58,11 @@ def role(title: str, org: str, dates: str, summary: str, items: list[str]):
         ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ("TOPPADDING", (0, 0), (-1, -1), 0), ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
     ]))
-    lead = [heading]
+    # Keep the role heading/date together, while letting summary and
+    # bullet paragraphs use any remaining page space naturally.
+    block = [KeepTogether([heading])]
     if summary:
-        lead.append(p(summary, "RoleText"))
-    block = [KeepTogether(lead)]
+        block.append(p(summary, "RoleText"))
     block.extend(bullet(item) for item in items)
     block.append(Spacer(1, 3))
     return block
@@ -136,7 +137,7 @@ story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 – May 2026
         "Built and owned the YNX community from scratch, establishing its structure and ongoing community operations.",
         "Sourced moderators to support community moderation, and sourced marketing talent and developers to support growth initiatives and product delivery.",
     ]))
-story.append(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",
+story.extend(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",
     "Worked across product and ecosystem operations for a Web3 swap aggregator focused on best-price routing, using user feedback and operational insights to inform product improvements.", [
         "Supported discovery, prioritisation, delivery, and product improvement across the swap aggregator.",
         "Used user behaviour, operational feedback, and recurring customer needs to identify friction and inform product decisions.",
@@ -144,18 +145,18 @@ story.append(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",
 
 # Earlier roles and supporting information continue through natural pagination.
 # No forced page break: use remaining first-page space before flowing to page two.
-story.append(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "Sep 2022 – Dec 2023",
+story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "Sep 2022 – Dec 2023",
     "", [
         "Led growth-focused product initiatives using user/community feedback to improve engagement, activation, retention, and operations; coordinated campaigns and partnerships.",
     ]))
-story.append(role("Community & Customer support specialist", "Limitless Prop Firm", "May 2022 – Dec 2023",
+story.extend(role("Community & Customer support specialist", "Limitless Prop Firm", "May 2022 – Dec 2023",
     "Owned community operations and customer support workflows alongside the concurrent product and growth role.", [
         "Built and managed Discord and Telegram communities from scratch, growing the community beyond <b>5,000 members</b>.",
         "Led a <b>six-person Discord and Telegram team</b>; developed community infrastructure, customised Telegram bots, Discord bots, engagement systems, and operational workflows.",
         "Coordinated a separate <b>two-person website support team</b> and improved support operations using Zendesk, maintaining response times of approximately <b>5–15 minutes</b>.",
         "Coordinated community engagement, moderation, announcements, and member feedback to inform product and operational improvements.",
     ]))
-story.append(role("Community Manager", "Gotabit", "Feb 2021 – Oct 2022",
+story.extend(role("Community Manager", "Gotabit", "Feb 2021 – Oct 2022",
     "Managed community operations, customer support, content coordination, and engagement initiatives, acting as a communication link between users and the technical team.", [
         "Created and published community content across social media, keeping members informed about project updates and activities.",
         "Managed community enquiries and customer support, providing guidance and coordinating technical issues with the technical team.",
@@ -163,7 +164,7 @@ story.append(role("Community Manager", "Gotabit", "Feb 2021 – Oct 2022",
         "Welcomed and onboarded new users, hosted AMA sessions, organised community events, and enforced community guidelines fairly.",
         "Prepared weekly progress reports covering community activities, engagement, feedback, and outstanding issues.",
     ]))
-story.append(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 – Sep 2021",
+story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 – Sep 2021",
     "Created Discord and Telegram communities from scratch and supported their ongoing management for a community of approximately <b>50,000 members</b>.", [
         "Managed member enquiries and customer support, maintaining typical response times of approximately <b>5–7 minutes</b>.",
         "Handled member onboarding, community communications, project updates, campaigns, and engagement activities.",
