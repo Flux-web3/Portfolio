@@ -148,6 +148,7 @@ if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy caps
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
   fail('Tourist summary must disclose the current template-based itinerary implementation');
+if (!communityHtmlSafe()) fail('Community résumé must preserve YNX community ownership/talent sourcing and both Limitless positions with their dates');
 if (!communityHtmlSafe()) fail('Community Management résumé must include both Limitless positions with separate dates');
 if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
@@ -166,7 +167,10 @@ if (!/4\+ years hands-on product\/project management within 7\+ years across pro
   fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
-  return /Product Manager &amp; Growth Operations Lead · Limitless Prop Firm<\/h3><span class="date">Sep 2022 – Dec 2023<\/span>/.test(page)
+  return /Product Manager &amp; Growth Lead · YNX<\/h3><span class="date">Apr 2025 – May 2026<\/span>/.test(page)
+    && /Built and owned the YNX community from scratch/.test(page)
+    && /Sourced moderators to support community moderation, and sourced marketing talent and developers/.test(page)
+    && /Product Manager &amp; Growth Operations Lead · Limitless Prop Firm<\/h3><span class="date">Sep 2022 – Dec 2023<\/span>/.test(page)
     && /Community &amp; Customer support specialist · Limitless Prop Firm<\/h3><span class="date">May 2022 – Dec 2023<\/span>/.test(page)
     && /six-person Discord and Telegram team/.test(page)
     && /Community Manager · Gotabit<\/h3><span class="date">Feb 2021 – Oct 2022<\/span>/.test(page)
@@ -201,7 +205,8 @@ if (/Community & Customer support specialist/.test(pmResume)) fail('PM résumé 
 if (/50% reduction in operational bottlenecks/i.test(html)) fail('Stale 50% workflow bottleneck metric remains');
 if (!html.includes('30% reduction in workflow bottlenecks at YNX')) fail('Résumé preview must use the current 30% YNX metric');
 if (!/Build status: currently paused/.test(html) || !/intermediate retail crypto and forex traders/.test(html)) fail('FortaFlow audience or build status is stale');
-if (!/Built and owned the YNX community from scratch/.test(html) || !/sourced moderators, marketing talent, and developers/.test(html)) fail('YNX community ownership and talent sourcing must remain visible in Experience');
+if (!/MVP scope: define and confirm crypto\/forex strategy rules/.test(homeBlock)) fail('Homepage FortaFlow teaser must not list later-phase features as MVP');
+if (!/Built and owned the YNX community from scratch/.test(html) || !/Sourced moderator talent to support community moderation, and sourced marketing talent and developers/.test(html)) fail('YNX community ownership and talent sourcing must remain visible in Experience');
 if (!html.includes("when:'Apr 2025 – May 2026'") || html.includes("when:'Jun 2025 – 2026'"))
   fail('YNX chronology must match the current LinkedIn Apr 2025–May 2026 range');
 if (!html.includes("l:'Deserialize swap volume in its first six months'"))
