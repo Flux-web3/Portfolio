@@ -20,10 +20,7 @@ REQUIRED = [
     "Betboom", "Jan 2020", "Sep 2021", "50,000 members", "5–7 minutes",
     "University of Lagos"
 ]
-EXCLUDED = [
-    "50% reduction in operational bottlenecks",
-    "community ownership at Deserialize"
-]
+EXCLUDED = ["50% reduction in operational bottlenecks", "community ownership at Deserialize"]
 
 def inspect(path: Path) -> None:
     if not path.is_file():
@@ -31,7 +28,7 @@ def inspect(path: Path) -> None:
     reader = PdfReader(str(path), strict=True)
     if len(reader.pages) != 2:
         raise SystemExit(f"FAIL: {path.name} must be exactly two pages; got {len(reader.pages)}")
-    text_parts = []
+    parts = []
     for page_number, page in enumerate(reader.pages, start=1):
         width, height = float(page.mediabox.width), float(page.mediabox.height)
         if abs(width - 595.276) > 1 or abs(height - 841.89) > 1:
@@ -39,14 +36,14 @@ def inspect(path: Path) -> None:
         page_text = " ".join((page.extract_text() or "").split())
         if not page_text:
             raise SystemExit(f"FAIL: {path.name} page {page_number} has no extractable text")
-        if any(ord(ch) < 32 and ch not in "\\t\\n\\r" for ch in page_text):
+        if any(ord(ch) < 32 and ch not in "\t\n\r" for ch in page_text):
             raise SystemExit(f"FAIL: {path.name} page {page_number} contains control characters")
-        text_parts.append(page_text)
-    full_text = " ".join(text_parts)
-    missing = [term for term in REQUIRED if term.casefold() not in full_text.casefold()]
+        parts.append(page_text)
+    content = " ".join(parts)
+    missing = [term for term in REQUIRED if term.casefold() not in content.casefold()]
     if missing:
         raise SystemExit(f"FAIL: {path.name} is missing current résumé facts: " + "; ".join(missing))
-    stale = [term for term in EXCLUDED if term.casefold() in full_text.casefold()]
+    stale = [term for term in EXCLUDED if term.casefold() in content.casefold()]
     if stale:
         raise SystemExit(f"FAIL: {path.name} contains stale or excluded claims: " + "; ".join(stale))
 
