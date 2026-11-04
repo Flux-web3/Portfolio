@@ -25,12 +25,13 @@ def read_pdf(path: Path):
 
 required = [
     "Olamide Olanipekun",
-    "4+ years of hands-on product management experience",
-    "7+ years of broader experience",
+    "4+ years of hands-on PM experience",
+    "7+ years",
     "$30M+", "40%", "30%",
     "YNX | Apr 2025 - May 2026",
     "Built and owned the YNX community from scratch",
-    "Sourced moderator talent, marketing talent, and developers",
+    "sourced moderators for ongoing community operations",
+    "Sourced marketing talent and developers",
     "Dextopus | Aug 2025 - Feb 2026",
     "Debonk Bot | Jun 2025 - Jan 2026",
     "Deserialize | Apr 2024 - May 2025",
@@ -38,7 +39,7 @@ required = [
     "Gotabit | Feb 2021 - Oct 2022",
     "Betboom | Jan 2020 - Sep 2021",
     "intermediate retail crypto and forex traders",
-    "currently paused",
+    "Build is paused; it is not shipped",
     "manual/CSV journaling",
     "B.Sc.Ed., Mathematics and Education", "Completed 2026", "Second Class Upper", "CGPA: 3.8/5",
 ]
