@@ -34,10 +34,10 @@ jobs:
           python-version: '3.12'
       - name: Install pinned PDF dependencies
         run: python -m pip install "reportlab==5.1.0" "pypdf==6.21.4"
-      - name: Generate a clean comparison PDF
+      - name: Generate a clean Product Manager PDF
         run: python tools/build-pm-resume.py /tmp/product-manager-generated.pdf
-      - name: Validate committed and generated PM PDFs
-        run: python tools/check-pm-resume.py /tmp/product-manager-generated.pdf
+      - name: Validate generated Product Manager PDF
+        run: python tools/check-pm-resume.py --generated-only /tmp/product-manager-generated.pdf
       - name: Generate a clean Community Management PDF
         run: python tools/build-community-resume.py /tmp/community-management-generated.pdf
       - name: Validate generated Community Management PDF
@@ -46,7 +46,7 @@ jobs:
         run: git diff --check HEAD^ HEAD
 
   publish-community-pdf:
-    name: Publish regenerated Community Management PDF
+    name: Publish both résumé PDFs
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: validate
     runs-on: ubuntu-latest
@@ -65,21 +65,26 @@ jobs:
           python-version: '3.12'
       - name: Install pinned PDF dependencies
         run: python -m pip install "reportlab==5.1.0" "pypdf==6.21.4"
-      - name: Generate and validate Community Management PDF
+      - name: Generate and validate both résumé PDFs
         run: |
+          python tools/build-pm-resume.py /tmp/product-manager-generated.pdf
+          python tools/check-pm-resume.py --generated-only /tmp/product-manager-generated.pdf
           python tools/build-community-resume.py /tmp/community-management-generated.pdf
           python tools/check-community-resume.py --generated-only /tmp/community-management-generated.pdf
-      - name: Publish the generated PDF when it has changed
+      - name: Publish both generated PDFs when changed
         run: |
+          cp /tmp/product-manager-generated.pdf Olamide-Olanipekun-Product-Manager.pdf
           cp /tmp/community-management-generated.pdf Olamide_Olanipekun_Community_Management_Resume.pdf
-          if git diff --quiet -- Olamide_Olanipekun_Community_Management_Resume.pdf; then
-            echo "Community Management PDF is already current."
+          if git diff --quiet -- Olamide-Olanipekun-Product-Manager.pdf Olamide_Olanipekun_Community_Management_Resume.pdf; then
+            echo "Both résumé PDFs are already current."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add Olamide_Olanipekun_Community_Management_Resume.pdf
-            git commit -m "Regenerate Community Management résumé PDF"
+            git add Olamide-Olanipekun-Product-Manager.pdf Olamide_Olanipekun_Community_Management_Resume.pdf
+            git commit -m "Regenerate both résumé PDFs"
             git push origin HEAD:main
           fi
-      - name: Validate committed and generated Community Management PDFs
-        run: python tools/check-community-resume.py /tmp/community-management-generated.pdf
+      - name: Validate committed and generated résumé PDFs
+        run: |
+          python tools/check-pm-resume.py /tmp/product-manager-generated.pdf
+          python tools/check-community-resume.py /tmp/community-management-generated.pdf
