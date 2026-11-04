@@ -322,15 +322,19 @@ if (fs.existsSync(vjPath)) {
 const workflowPath = path.join(root, '.github', 'workflows', 'portfolio-check.yml');
 if (fs.existsSync(workflowPath)) {
   const workflow = fs.readFileSync(workflowPath, 'utf8');
-  const validateJob = workflow.slice(workflow.indexOf('  validate:'), workflow.indexOf('  publish-community-pdf:'));
-  const publishJob = workflow.slice(workflow.indexOf('  publish-community-pdf:'));
-  if (!/^permissions:\\n  contents: read/m.test(workflow))
+  const jobsStart = workflow.indexOf('jobs:');
+  const validateStart = workflow.indexOf('  validate:');
+  const publishStart = workflow.indexOf('  publish-community-pdf:');
+  const topPermissions = jobsStart >= 0 ? workflow.slice(0, jobsStart) : '';
+  const validateJob = validateStart >= 0 && publishStart > validateStart ? workflow.slice(validateStart, publishStart) : '';
+  const publishJob = publishStart >= 0 ? workflow.slice(publishStart) : '';
+  if (!/^permissions:\\s*contents:\\s*read\\s*$/m.test(topPermissions))
     fail('Workflow-wide permissions must remain read-only');
-  if (!validateJob || validateJob.includes('contents: write') || validateJob.includes('persist-credentials: true') || validateJob.includes('git push'))
+  if (!validateJob || /contents:\\s*write/.test(validateJob) || validateJob.includes('persist-credentials: true') || validateJob.includes('git push'))
     fail('General validation job must not receive a write-capable token or push to the repository');
   if (!publishJob.includes("if: github.event_name == 'push' && github.ref == 'refs/heads/main'") ||
       !publishJob.includes('needs: validate') ||
-      !publishJob.includes('permissions:\\n      contents: write') ||
+      !/permissions:\\s*contents:\\s*write/.test(publishJob) ||
       !publishJob.includes('persist-credentials: true') ||
       !publishJob.includes('git push origin HEAD:main') ||
       !publishJob.includes('python tools/check-community-resume.py --generated-only'))
