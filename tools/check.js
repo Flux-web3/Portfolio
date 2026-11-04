@@ -209,8 +209,8 @@ if (!html.includes("when:'Apr 2025 – May 2026'") || html.includes("when:'Jun 2
   fail('YNX chronology must match the current LinkedIn Apr 2025–May 2026 range');
 if (!html.includes("l:'Deserialize swap volume in its first six months'"))
   fail('The $30M metric must be attributed to Deserialize, not an unspecified product');
-if (!html.includes("Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months."))
-  fail('Résumé impact bullet must identify Deserialize as the swap aggregator');
+if (!html.includes("Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months (team outcome)."))
+  fail('Résumé impact bullet must identify Deserialize as the swap aggregator and preserve team attribution');
 const communityPrintCss = communityPage && fs.existsSync(communityPage) ? fs.readFileSync(communityPage, 'utf8') : '';
 if (/\.sheet\{[^}]*overflow:hidden/.test(communityPrintCss))
   fail('Community résumé print sheets must not silently clip content');
