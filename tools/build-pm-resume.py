@@ -93,14 +93,18 @@ def role(title, company, dates, location, summary, bullets):
         f"<font name='Helvetica' size='7.4' color='#667482'>| {escape(dates)}</font>",
         styles["Role"]
     )
-    block = [heading]
+    # Keep the role heading with its location and summary, then allow bullets
+    # to flow naturally. This prevents a long role from forcing a large block
+    # onto page two while preserving context at a page boundary.
+    lead = [heading]
     if location:
-        block.append(P(escape(location), "RoleMeta"))
+        lead.append(P(escape(location), "RoleMeta"))
     if summary:
-        block.append(P(summary, "BodySmall"))
-    block.extend(bullet(item) for item in bullets)
-    block.append(Spacer(1, 4))
-    return KeepTogether(block)
+        lead.append(P(summary, "BodySmall"))
+    flow = [KeepTogether(lead)]
+    flow.extend(bullet(item) for item in bullets)
+    flow.append(Spacer(1, 3))
+    return flow
 
 
 def page_frame(canvas, doc):
@@ -141,13 +145,11 @@ story.append(P(
 
 story.extend(section("Professional Summary"))
 story.append(P(
-    "Technical Product Manager with <b>4+ years of hands-on product management experience</b> and "
-    "<b>7+ years of broader experience</b> across product, operations, growth, marketing, community management, "
-    "customer experience, and trading. Experience across Web3, fintech, SaaS, and AI, translating ambiguous "
-    "user and business problems into product direction, requirements, prioritised backlogs, and cross-functional "
-    "delivery. Contributed to a Web3 swap aggregator that processed <b>$30M+ in transaction volume within its "
-    "first six months</b>; contributed to a <b>40%</b> improvement in onboarding and activation and a <b>30%</b> "
-    "reduction in YNX workflow bottlenecks.", "Summary"))
+    "Technical Product Manager with <b>4+ years of hands-on PM experience</b> within <b>7+ years</b> "
+    "across product, operations, marketing, growth, community, customer experience, and trading. Translate "
+    "ambiguous business and user needs into product strategy, requirements, prioritised backlogs, and "
+    "cross-functional delivery across Web3, fintech, SaaS, and AI. Contributed to <b>$30M+ swap volume in six "
+    "months</b>, a <b>40%</b> onboarding/activation improvement, and a <b>30%</b> reduction in YNX workflow bottlenecks.", "Summary"))
 
 metrics = Table([[
     P("<b>$30M+</b><br/><font color='#667482'>swap volume in 6 months</font>"),
@@ -170,86 +172,78 @@ story.append(metrics)
 
 story.extend(section("Core Product Competencies"))
 story.append(P(
-    "Product discovery &amp; user research  |  Product strategy &amp; roadmapping  |  PRDs, user stories &amp; acceptance criteria  |  "
-    "RICE / MoSCoW prioritisation  |  Agile delivery &amp; backlog management  |  Cross-functional stakeholder management  |  "
-    "Onboarding, activation &amp; retention  |  Product analytics, SQL &amp; Dune  |  AI-assisted prototyping &amp; development  |  "
-    "Workflow automation &amp; process optimisation", "Skill"))
+    "Discovery &amp; user research | Product strategy &amp; roadmaps | PRDs, user stories &amp; acceptance criteria | "
+    "RICE / MoSCoW | Agile delivery &amp; backlog | Stakeholder management | Onboarding, activation &amp; retention | "
+    "Product analytics, SQL &amp; Dune | AI-assisted prototyping | Workflow automation &amp; optimisation", "Skill"))
 
 story.extend(section("Professional Experience"))
-story.append(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
+story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
     "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth initiatives, and product delivery.",
     [
-        "Built and launched an MVP, managed its product lifecycle, and coordinated delivery with engineering and cross-functional teams.",
-        "Built and owned the YNX community from scratch, establishing its structure and ongoing community operations.",
-        "Sourced moderator talent, marketing talent, and developers to support community moderation, growth initiatives, and product delivery.",
-        "Partnered with leadership on product direction, early-stage growth strategy, and grant and fundraising initiatives.",
-        "Managed sprint planning and backlog prioritisation in Notion and Trello; conducted market and competitor research to inform product decisions.",
-        "Improved operational workflows, reducing workflow bottlenecks by <b>30%</b> through data-informed process improvements."
+        "Built and launched an MVP, managed its lifecycle, and coordinated engineering and cross-functional delivery.",
+        "Built and owned the YNX community from scratch and sourced moderators for ongoing community operations.",
+        "Sourced marketing talent and developers to support growth initiatives and product delivery.",
+        "Partnered with leadership on product direction, growth strategy, grants, and fundraising; managed sprint planning, backlog priorities, and competitor research.",
+        "Improved operational workflows, reducing bottlenecks by <b>30%</b>."
     ]))
-story.append(role("Product Manager", "Dextopus", "Aug 2025 - Feb 2026", "Hybrid",
+story.extend(role("Product Manager", "Dextopus", "Aug 2025 - Feb 2026", "Hybrid",
     "Supported product growth, product operations, and lifecycle optimisation for a fintech platform following launch.",
     [
-        "Optimised onboarding and activation workflows to improve user engagement and retention.",
-        "Worked with product and technical teams to turn business and user needs into prioritised features and execution requirements.",
-        "Analysed user behaviour, engagement patterns, and operational feedback to identify friction and inform product improvements."
+        "Optimised onboarding and activation workflows to improve engagement and retention.",
+        "Translated user needs, behavioural data, and operational feedback into prioritised features with product and technical teams."
     ]))
-story.append(role("Product Manager | Team Lead", "Debonk Bot", "Jun 2025 - Jan 2026", "",
+story.extend(role("Product Manager | Team Lead", "Debonk Bot", "Jun 2025 - Jan 2026", "",
     "Led product and team execution for Debonk Bot, moving the concept toward an initial product.",
     [
-        "Drove 0-to-1 product development, translating the concept into product direction and actionable requirements.",
-        "Coordinated a multidisciplinary team of approximately <b>eight people</b> around priorities, tasks, and delivery.",
-        "Contributed to onboarding, demo trading, gamification, and the final mini-app experience."
+        "Led 0-to-1 product direction and coordinated delivery with a multidisciplinary team of approximately <b>eight people</b>.",
+        "Contributed to onboarding, demo trading, gamification, and the mini-app experience."
     ]))
-story.append(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lagos, Nigeria · Remote",
-    "Led product and ecosystem operations for a Web3 swap aggregator focused on best-price routing. The platform processed <b>$30M+ in transaction volume within its first six months</b> (team outcome).",
+story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lagos, Nigeria · Remote",
+    "Led product and ecosystem operations for a best-price Web3 swap aggregator that processed <b>$30M+ in its first six months</b> (team outcome).",
     [
-        "Worked across product discovery, execution planning, feature prioritisation, and product improvement.",
-        "Collaborated with engineering and stakeholders to translate user and business needs into product requirements and delivery priorities.",
-        "Improved onboarding and activation workflows, and used behavioural data and operational feedback to guide engagement and retention improvements."
+        "Coordinated discovery, requirements, prioritisation, and delivery with engineering and stakeholders.",
+        "Used behavioural data and operational feedback to improve onboarding, activation, and retention."
     ]))
 
 # Earlier experience, selected product work, tools, and education flow naturally
 # into the remaining first-page space before continuing onto page two.
-story.append(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
+story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
     "Worked across growth-focused product initiatives, community infrastructure, customer experience, and operational execution for a proprietary trading business.",
     [
-        "Translated user feedback, community insights, and operational challenges into product and growth improvements across onboarding, engagement, activation, and retention.",
-        "Built Discord and Telegram communities from scratch, growing them beyond <b>5,000 members</b>; worked with and led a <b>six-person community team</b>.",
-        "Led a separate <b>two-person website support team</b>; implemented Zendesk ticketing and escalation workflows, maintaining approximately <b>5-15-minute response times</b>.",
-        "Configured Discord bots and built customised Telegram bots to support automation, engagement, and community operations.",
-        "Coordinated growth campaigns, social content, and cross-functional community and product feedback loops."
+        "Turned user and community feedback into onboarding, engagement, activation, retention, and product/growth improvements.",
+        "Built Discord and Telegram communities beyond <b>5,000 members</b> and led a <b>six-person community team</b>; configured Discord and customised Telegram bots.",
+        "Led a separate <b>two-person website support team</b>, implemented Zendesk ticketing/escalation, and maintained approximately <b>5–15-minute response times</b>.",
+        "Coordinated growth campaigns, partnerships, social content, and product feedback loops."
     ]))
-story.append(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
+story.extend(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
     "Managed community operations, customer support, content coordination, and engagement, acting as a communication link between users and the technical team.",
     [
-        "Created and published social content; welcomed and onboarded new users and handled community enquiries and support.",
-        "Programmed customised and general-purpose community bots to automate processes and support community operations.",
-        "Coordinated technical issues with the technical team, hosted AMAs, organised engagement events, and enforced community rules fairly.",
-        "Prepared weekly progress reports covering community activity, engagement, feedback, and outstanding issues."
+        "Managed community communications, social content, onboarding, and member support.",
+        "Programmed community bots, coordinated technical issues, hosted AMAs and events, and enforced community rules.",
+        "Prepared weekly reports on activity, engagement, feedback, and outstanding issues."
     ]))
-story.append(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 - Sep 2021", "",
+story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 - Sep 2021", "",
     "Created and supported Discord and Telegram communities from the ground up for a community of approximately <b>50,000 members</b>.",
     [
-        "Managed member enquiries and customer support, maintaining typical response times of approximately <b>5-7 minutes</b>.",
-        "Handled onboarding, community communications, project updates, campaigns, and engagement activities.",
-        "Coordinated with project stakeholders and surfaced member questions, feedback, and recurring concerns for resolution."
+        "Created Discord and Telegram communities from scratch for approximately <b>50,000 members</b>, handling onboarding, updates, and engagement campaigns.",
+        "Managed member support with typical response times of <b>5–7 minutes</b> and surfaced recurring issues and feedback to stakeholders."
     ]))
 
 story.extend(section("Selected Product-Building Work"))
 story.append(KeepTogether([
     P("FortaFlow | Independent Product Builder", "ProjectTitle"),
-    P("A trading-strategy research and validation product scoped for intermediate retail crypto and forex traders. Led product discovery, product direction, requirements, UX, architecture, prototyping, and MVP planning. Coding/build work is currently paused; this is not a shipped production system. The MVP centres on explicit rules, immutable strategy versions, reproducible historical backtesting, performance and risk review, bounded stress scenarios, and manual/CSV journaling. It does not place live orders."),
+    P("A trading-strategy research and validation product scoped for intermediate retail crypto and forex traders. Led discovery, requirements, UX, architecture, prototyping, and MVP planning. <b>Build is paused; it is not shipped and has no live-order path.</b> MVP scope: explicit rules, immutable strategy versions, reproducible historical backtests, performance/risk reporting, bounded stress scenarios, and manual/CSV journaling."),
     P("Tools: Notion, ChatGPT, Claude, Google Stitch, Lovable, Claude Code, Supabase, GitHub, Vercel.", "RoleMeta"),
     Spacer(1,3)
 ]))
 story.append(KeepTogether([
     P("AI-Powered Job Discovery &amp; Automation", "ProjectTitle"),
-    P("Built n8n workflows for job discovery, filtering, deduplication, AI-assisted relevance scoring, scheduling, and alerts, integrating data and decision workflows into one process."),
+    P("Built n8n workflows for job discovery, filtering, deduplication, AI relevance scoring, scheduling, and alerts."),
     Spacer(1,3)
 ]))
 story.append(KeepTogether([
     P("Tourist | TS Academy Capstone", "ProjectTitle"),
-    P("Defined a budget-first travel-planning MVP from user research (19 usable survey responses), wrote product documentation and prioritised scope, then built and deployed a working React and TypeScript prototype. Itinerary drafts use seeded templates rather than a live AI model.")
+    P("Defined a budget-first travel MVP from 19 usable survey responses, documented and prioritised scope, then built and deployed a React/TypeScript prototype. Itinerary drafts use seeded templates, not a live AI model.")
 ]))
 
 story.extend(section("Tools &amp; Technologies"))
