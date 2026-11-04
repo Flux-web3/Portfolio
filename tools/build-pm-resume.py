@@ -21,7 +21,6 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak,
     KeepTogether, HRFlowable
@@ -110,12 +109,12 @@ def page_frame(canvas, doc):
     canvas.setStrokeColor(LINE)
     canvas.setLineWidth(0.55)
     canvas.line(15*mm, 12*mm, width-15*mm, 12*mm)
-    canvas.setFont("DV", 7)
+    canvas.setFont("Helvetica", 7)
     canvas.setFillColor(MUTED)
     canvas.drawString(15*mm, 7.5*mm, "OLAMIDE OLANIPEKUN  |  PRODUCT MANAGEMENT")
     canvas.drawRightString(width-15*mm, 7.5*mm, f"{doc.page}")
     if doc.page > 1:
-        canvas.setFont("DV-Bold", 7.5)
+        canvas.setFont("Helvetica-Bold", 7.5)
         canvas.setFillColor(NAVY)
         canvas.drawString(15*mm, height-10*mm, "OLAMIDE OLANIPEKUN  |  PRODUCT MANAGER RÉSUMÉ")
         canvas.setStrokeColor(LINE)
