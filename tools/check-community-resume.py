@@ -54,7 +54,7 @@ def inspect(path: Path) -> None:
             raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
         parts.append(page_text)
     if "community & customer support specialist" not in parts[0].casefold():
-        raise SystemExit(f"FAIL: {path.name} page 1 still leaves the Limitless Community & Customer support role entirely on page 2; allow role content to flow across the page boundary")
+        raise SystemExit(f"FAIL: {path.name} page 1 did not reach the Limitless Community & Customer support role after natural flow. Last extracted text: {parts[0][-260:]}")
     content = " ".join(parts)
     missing = [term for term in REQUIRED if term.casefold() not in content.casefold()]
     if missing:

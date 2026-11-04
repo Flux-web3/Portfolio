@@ -64,7 +64,7 @@ def role(title: str, org: str, dates: str, summary: str, items: list[str]):
     if summary:
         block.append(p(summary, "RoleText"))
     block.extend(bullet(item) for item in items)
-    block.append(Spacer(1, 3))
+    block.append(Spacer(1, 1.5))
     return block
 
 def footer(canvas, doc):
@@ -126,15 +126,14 @@ skill_table.setStyle(TableStyle([
     ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, -1), WASH),
     ("BOX", (0, 0), (-1, -1), 0.45, LINE), ("INNERGRID", (0, 0), (-1, -1), 0.35, LINE),
     ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6),
-    ("TOPPADDING", (0, 0), (-1, -1), 5), ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+    ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
 ]))
 story.append(skill_table)
 
 story.extend(section("Professional Experience"))
 story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 – May 2026",
-    "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth initiatives, and product delivery.", [
+    "Led product development and growth from discovery through launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers for operations, growth, and product delivery.", [
         "Built and launched an MVP and managed its product lifecycle, coordinating delivery with engineering and cross-functional teams.",
-        "Built and owned the YNX community from scratch, establishing its structure and ongoing community operations.",
         "Sourced moderators to support community moderation, and sourced marketing talent and developers to support growth initiatives and product delivery.",
     ]))
 story.extend(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",

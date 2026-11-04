@@ -38,7 +38,7 @@ def read_pdf(path: Path):
             raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
         page_texts.append(page_text)
     if "gotabit" not in page_texts[0].casefold():
-        raise SystemExit(f"FAIL: {path.name} page 1 still leaves usable space before the Gotabit role; allow experience content to flow across the page boundary")
+        raise SystemExit(f"FAIL: {path.name} page 1 did not reach the Gotabit entry after natural flow. Last extracted text: {page_texts[0][-260:]}")
     return " ".join(page_texts)
 
 required = [

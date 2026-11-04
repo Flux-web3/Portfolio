@@ -50,9 +50,9 @@ styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=24, l
 styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=11.3, leading=14.2,
                           textColor=BLUE, spaceAfter=4))
 styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=9.0, leading=11.5,
-                          textColor=MUTED, spaceAfter=6))
+                          textColor=MUTED, spaceAfter=4))
 styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=11.2, leading=13.2,
-                          textColor=NAVY, spaceBefore=5.5, spaceAfter=3.0, keepWithNext=True))
+                          textColor=NAVY, spaceBefore=5, spaceAfter=2.5, keepWithNext=True))
 styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=10.5, leading=14.0,
                           textColor=BODY, spaceAfter=4))
 styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=10.0, leading=13.2,
@@ -102,7 +102,7 @@ def role(title, company, dates, location, summary, bullets):
     if summary:
         flow.append(P(summary, "BodySmall"))
     flow.extend(bullet(item) for item in bullets)
-    flow.append(Spacer(1, 3))
+    flow.append(Spacer(1, 1.5))
     return flow
 
 
@@ -177,10 +177,9 @@ story.append(P(
 
 story.extend(section("Professional Experience"))
 story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
-    "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth initiatives, and product delivery.",
+    "Led product development and growth from discovery through launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers for operations, growth, and product delivery.",
     [
         "Built and launched an MVP, managed its lifecycle, and coordinated engineering and cross-functional delivery.",
-        "Built and owned the YNX community from scratch and sourced moderators for ongoing community operations.",
         "Sourced marketing talent and developers to support growth initiatives and product delivery.",
         "Partnered with leadership on product direction, growth strategy, grants, and fundraising; managed sprint planning, backlog priorities, and competitor research.",
         "Improved operational workflows, reducing bottlenecks by <b>30%</b>."
@@ -207,7 +206,7 @@ story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
 # Earlier experience, selected product work, tools, and education flow naturally
 # into the remaining first-page space before continuing onto page two.
 story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
-    "Led product/growth operations informed by user and community feedback; improved onboarding, activation, retention, and delivery. Built <b>5,000+ member</b> Discord/Telegram communities, led a <b>six-person community team</b> and separate <b>two-person website support team</b>, and implemented Zendesk with <b>5–15-minute response times</b>.",
+    "Led product and growth operations informed by user/community feedback. Built <b>5,000+ member</b> Discord/Telegram communities, led a <b>six-person community team</b> and a separate <b>two-person website support team</b>, and implemented Zendesk with <b>5–15-minute responses</b>.",
     []))
 story.extend(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
     "Managed community operations, customer support, content coordination, and engagement, acting as a communication link between users and the technical team.",
