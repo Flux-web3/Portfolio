@@ -6,7 +6,9 @@ from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parent.parent
 COMMITTED = ROOT / "Olamide_Olanipekun_Community_Management_Resume.pdf"
-GENERATED = Path(sys.argv[1]) if len(sys.argv) > 1 else COMMITTED
+args = [arg for arg in sys.argv[1:] if arg != "--generated-only"]
+GENERATED = Path(args[0]) if args else COMMITTED
+GENERATED_ONLY = "--generated-only" in sys.argv[1:]
 
 REQUIRED = [
     "OLAMIDE OLANIPEKUN", "WEB3 COMMUNITY MANAGER",
@@ -47,6 +49,9 @@ def inspect(path: Path) -> None:
     if stale:
         raise SystemExit(f"FAIL: {path.name} contains stale or excluded claims: " + "; ".join(stale))
 
-inspect(COMMITTED)
+# Always validate the freshly generated PDF before considering the committed copy.
 inspect(GENERATED)
-print("PASS: committed and regenerated Community Management PDFs are two-page A4, ATS-readable, and retain YNX ownership and sourcing, both concurrent Limitless positions, Gotabit and Betboom dates, support metrics, and University of Lagos education.")
+if not GENERATED_ONLY:
+    inspect(COMMITTED)
+print("PASS: " + ("generated " if GENERATED_ONLY else "committed and regenerated ") +
+      "Community Management PDF(s) are two-page A4, ATS-readable, and retain YNX ownership and sourcing, both concurrent Limitless positions, Gotabit and Betboom dates, support metrics, and University of Lagos education.")
