@@ -82,7 +82,7 @@ def section(title: str):
 
 
 def bullet(text: str) -> Paragraph:
-    return Paragraph("• " + text, styles["ResumeBullet"])
+    return Paragraph("- " + text, styles["ResumeBullet"])
 
 
 def role(title, company, dates, location, summary, bullets):
@@ -135,8 +135,8 @@ story = []
 story.append(P("OLAMIDE OLANIPEKUN", "Name"))
 story.append(P("TECHNICAL PRODUCT MANAGER  |  PRODUCT STRATEGY, GROWTH &amp; OPERATIONS", "Headline"))
 story.append(P(
-    'Lagos, Nigeria  &nbsp;•&nbsp; <link href="mailto:flux.fx05@gmail.com" color="#667482">flux.fx05@gmail.com</link>  &nbsp;•&nbsp; '
-    '<link href="https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/" color="#667482">LinkedIn</link>  &nbsp;•&nbsp; '
+    'Lagos, Nigeria  &nbsp;|&nbsp; <link href="mailto:flux.fx05@gmail.com" color="#667482">flux.fx05@gmail.com</link>  &nbsp;|&nbsp; '
+    '<link href="https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/" color="#667482">LinkedIn</link>  &nbsp;|&nbsp; '
     '<link href="https://portfolio-site-kappa-ashy.vercel.app" color="#667482">Portfolio</link>', "Contact"))
 
 story.extend(section("Professional Summary"))
@@ -170,9 +170,9 @@ story.append(metrics)
 
 story.extend(section("Core Product Competencies"))
 story.append(P(
-    "Product discovery &amp; user research  •  Product strategy &amp; roadmapping  •  PRDs, user stories &amp; acceptance criteria  •  "
-    "RICE / MoSCoW prioritisation  •  Agile delivery &amp; backlog management  •  Cross-functional stakeholder management  •  "
-    "Onboarding, activation &amp; retention  •  Product analytics, SQL &amp; Dune  •  AI-assisted prototyping &amp; development  •  "
+    "Product discovery &amp; user research  |  Product strategy &amp; roadmapping  |  PRDs, user stories &amp; acceptance criteria  |  "
+    "RICE / MoSCoW prioritisation  |  Agile delivery &amp; backlog management  |  Cross-functional stakeholder management  |  "
+    "Onboarding, activation &amp; retention  |  Product analytics, SQL &amp; Dune  |  AI-assisted prototyping &amp; development  |  "
     "Workflow automation &amp; process optimisation", "Skill"))
 
 story.extend(section("Professional Experience"))
