@@ -6,7 +6,7 @@ Source of truth: the corrected LinkedIn Experience history supplied on
 not added together when stating years of experience.
 
 Run: python tools/build-pm-resume.py [output.pdf]
-Requires: Python 3, ReportLab, and DejaVu Sans fonts.
+Requires: Python 3 and ReportLab.
 """
 from __future__ import annotations
 
@@ -30,19 +30,10 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "Olamide-Olanipekun-Product-Manager.pdf"
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
-FONT_DIRS = [Path("/usr/share/fonts/truetype/dejavu"), Path("/usr/local/share/fonts")]
-
-def find_font(filename: str) -> str:
-    for directory in FONT_DIRS:
-        candidate = directory / filename
-        if candidate.exists():
-            return str(candidate)
-    raise FileNotFoundError(f"Could not find {filename}; install DejaVu Sans fonts.")
-
-pdfmetrics.registerFont(TTFont("DV", find_font("DejaVuSans.ttf")))
-pdfmetrics.registerFont(TTFont("DV-Bold", find_font("DejaVuSans-Bold.ttf")))
-pdfmetrics.registerFont(TTFont("DV-Oblique", find_font("DejaVuSans-Oblique.ttf")))
-pdfmetrics.registerFontFamily("DV", normal="DV", bold="DV-Bold", italic="DV-Oblique", boldItalic="DV-Bold")
+# ReportLab's built-in Base-14 fonts keep the generated PDF compact and
+# reliably searchable/selectable without external font downloads.
+pdfmetrics.registerFontFamily("Helvetica", normal="Helvetica", bold="Helvetica-Bold",
+                              italic="Helvetica-Oblique", boldItalic="Helvetica-BoldOblique")
 
 NAVY = colors.HexColor("#132B43")
 BLUE = colors.HexColor("#1876B9")
@@ -52,28 +43,28 @@ LINE = colors.HexColor("#D8E0E7")
 PALE = colors.HexColor("#F2F6F9")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="Name", fontName="DV-Bold", fontSize=21, leading=23,
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=21, leading=23,
                           textColor=NAVY, spaceAfter=2, alignment=TA_LEFT))
-styles.add(ParagraphStyle(name="Headline", fontName="DV-Bold", fontSize=9.5, leading=12,
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=9.5, leading=12,
                           textColor=BLUE, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="DV", fontSize=7.4, leading=9.5,
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=7.4, leading=9.5,
                           textColor=MUTED, spaceAfter=6))
-styles.add(ParagraphStyle(name="Section", fontName="DV-Bold", fontSize=9.3, leading=11,
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=9.3, leading=11,
                           textColor=NAVY, spaceBefore=7, spaceAfter=4, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="DV", fontSize=8.05, leading=11.1,
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=8.05, leading=11.1,
                           textColor=BODY, spaceAfter=4))
-styles.add(ParagraphStyle(name="BodySmall", fontName="DV", fontSize=7.55, leading=10.1,
+styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=7.55, leading=10.1,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="Role", fontName="DV-Bold", fontSize=8.55, leading=10.5,
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=8.55, leading=10.5,
                           textColor=NAVY))
-styles.add(ParagraphStyle(name="RoleMeta", fontName="DV", fontSize=7.1, leading=8.8,
+styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=7.1, leading=8.8,
                           textColor=MUTED, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="DV", fontSize=7.35, leading=9.45,
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=7.35, leading=9.45,
                           textColor=BODY, leftIndent=9, firstLineIndent=-6,
                           bulletIndent=0, spaceAfter=1.2))
-styles.add(ParagraphStyle(name="Skill", fontName="DV", fontSize=7.45, leading=10,
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=7.45, leading=10,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ProjectTitle", fontName="DV-Bold", fontSize=8.0, leading=9.8,
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=8.0, leading=9.8,
                           textColor=NAVY, spaceAfter=1))
 
 
@@ -96,8 +87,8 @@ def role(title, company, dates, location, summary, bullets):
     # Keep title, employer, and dates in one text object so text extraction and
     # ATS parsers encounter them in the same logical order as a human reader.
     heading = Paragraph(
-        f"<b>{escape(title)}</b>  <font name='DV-Bold' color='#1876B9'>{escape(company)}</font>  "
-        f"<font name='DV' size='7.4' color='#667482'>| {escape(dates)}</font>",
+        f"<b>{escape(title)} | {escape(company)}</b>  "
+        f"<font name='Helvetica' size='7.4' color='#667482'>| {escape(dates)}</font>",
         styles["Role"]
     )
     block = [heading]
