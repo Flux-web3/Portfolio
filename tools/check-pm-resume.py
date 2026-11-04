@@ -53,6 +53,8 @@ for label, path in (("committed", COMMITTED), ("generated", GENERATED)):
     missing = [item for item in required if item.casefold() not in text.casefold()]
     if missing:
         raise SystemExit(f"FAIL: {label} PM PDF missing current facts: " + "; ".join(missing))
+    if "\\x7f" in text or any(ord(ch) < 32 and ch not in "\\n\\r\\t" for ch in text):
+        raise SystemExit(f"FAIL: {label} PM PDF contains control characters in its text layer")
     found_stale = [item for item in stale if item.casefold() in text.casefold()]
     if found_stale:
         raise SystemExit(f"FAIL: {label} PM PDF contains excluded/stale statements: " + "; ".join(found_stale))
