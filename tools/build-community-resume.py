@@ -144,10 +144,9 @@ story.append(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",
 # Earlier roles and supporting information continue through natural pagination.
 # No forced page break: use remaining first-page space before flowing to page two.
 story.append(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "Sep 2022 – Dec 2023",
-    "Worked across growth-focused product initiatives, customer experience, community infrastructure, and operational execution for a proprietary trading business.", [
-        "Managed growth-focused product initiatives, identifying opportunities to improve user journeys, engagement, activation, retention, and operational efficiency.",
-        "Translated user feedback, community insights, and operational challenges into product and growth improvements across onboarding, engagement, retention, and customer experience.",
-        "Coordinated growth campaigns, partnerships, and social media activity across X and LinkedIn.",
+    "", [
+        "Led growth-focused product initiatives to improve user journeys, engagement, activation, retention, and operational efficiency.",
+        "Turned user and community feedback into product improvements; coordinated campaigns, partnerships, and social media across X and LinkedIn.",
     ]))
 story.append(role("Community & Customer support specialist", "Limitless Prop Firm", "May 2022 – Dec 2023",
     "Owned community operations and customer support workflows alongside the concurrent product and growth role.", [
