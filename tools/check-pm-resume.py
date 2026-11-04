@@ -6,7 +6,9 @@ from pypdf import PdfReader
 
 ROOT = Path(__file__).resolve().parent.parent
 COMMITTED = ROOT / "Olamide-Olanipekun-Product-Manager.pdf"
-GENERATED = Path(sys.argv[1]) if len(sys.argv) > 1 else COMMITTED
+ARGS = [arg for arg in sys.argv[1:] if arg != "--generated-only"]
+GENERATED = Path(ARGS[0]) if ARGS else COMMITTED
+GENERATED_ONLY = "--generated-only" in sys.argv[1:]
 
 def read_pdf(path: Path):
     if not path.is_file():
@@ -48,7 +50,8 @@ stale = (
     "Community & Customer support specialist",
 )
 
-for label, path in (("committed", COMMITTED), ("generated", GENERATED)):
+checks = (("generated", GENERATED),) if GENERATED_ONLY else (("committed", COMMITTED), ("generated", GENERATED))
+for label, path in checks:
     text = read_pdf(path)
     missing = [item for item in required if item.casefold() not in text.casefold()]
     if missing:
@@ -59,7 +62,7 @@ for label, path in (("committed", COMMITTED), ("generated", GENERATED)):
     if found_stale:
         raise SystemExit(f"FAIL: {label} PM PDF contains excluded/stale statements: " + "; ".join(found_stale))
 
-if COMMITTED.resolve() != GENERATED.resolve() and COMMITTED.read_bytes() != GENERATED.read_bytes():
+if not GENERATED_ONLY and COMMITTED.resolve() != GENERATED.resolve() and COMMITTED.read_bytes() != GENERATED.read_bytes():
     raise SystemExit("FAIL: committed Product Manager PDF differs from the canonical generated output. Regenerate and commit the PDF with tools/build-pm-resume.py.")
 
-print("PASS: committed PDF exactly matches the canonical generated output; both are two-page A4 with all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
+print("PASS: " + ("generated " if GENERATED_ONLY else "committed and generated ") + "PM PDF(s) are two-page A4 with all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
