@@ -210,13 +210,13 @@ story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
 story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
     "Led product/growth operations informed by user and community feedback; improved onboarding, activation, retention, and delivery. Built <b>5,000+ member</b> Discord/Telegram communities, led a <b>six-person community team</b> and separate <b>two-person website support team</b>, and implemented Zendesk with <b>5–15-minute response times</b>.",
     []))
-story.extend(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
+story.append(KeepTogether(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
     "Managed community operations, customer support, content coordination, and engagement, acting as a communication link between users and the technical team.",
     [
         "Managed community communications, social content, onboarding, and member support.",
         "Programmed community bots, coordinated technical issues, hosted AMAs and events, and enforced community rules.",
         "Prepared weekly reports on activity, engagement, feedback, and outstanding issues."
-    ]))
+    ])))
 story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 - Sep 2021", "",
     "Created and supported Discord and Telegram communities from the ground up for a community of approximately <b>50,000 members</b>.",
     [
