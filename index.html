@@ -994,22 +994,16 @@ const EXPERIENCE = [
     link:'/projects'
   },
   {
-    /* His correction: he was also VP Operations and Marketing Lead here, not only
-       Product Manager. Same treatment as Limitless Prop below — `also` carries the
-       additional titles in lower emphasis on the same line, so a reader sees every
-       title he held and can tell they were concurrent rather than sequential.
-       Worth knowing when editing: his public LinkedIn lists this engagement as
-       "Product Manager · Part-time" only, with the description collapsed, so these
-       two titles are sourced from him directly and are not corroborated there. If
-       the profile is ever the reference a reader checks against, add them there. */
+    /* YNX role wording and responsibilities follow the current LinkedIn entry. */
     org:'YNX', role:'Product Manager | Growth Lead',
     when:'Apr 2025 – May 2026',
     engagement:'Part-time', mode:'United Kingdom · Remote',
-    summary:'Built and launched an MVP, managed its product lifecycle, and built and led project communities across Discord, Telegram, X/Twitter, LinkedIn and other social channels alongside product, operations and growth work.',
+    summary:'Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch.',
     detail:[
-      'The work sat where product direction meets delivery. I took an MVP from concept to launch and managed the lifecycle around it, partnering with engineering to move concepts through development while keeping product, operations, and growth pointed at the same outcome.',
-      'Sprint planning and backlog prioritisation ran in Notion and Trello, which improved delivery coordination across the team. Market and competitor research fed the roadmap, and data-informed process changes cut workflow bottlenecks — improving operational efficiency by around 30%.',
-      'Because the company was early-stage, product work and fundraising were not separable. I partnered with leadership on growth strategy and supported grant and fundraising efforts, which is a useful discipline: it forces you to explain the product to people who will not read the PRD.'
+      'Built and launched an MVP, managed its product lifecycle, and coordinated delivery with engineering and cross-functional teams.',
+      'Partnered with leadership on product direction and early-stage growth strategy, and supported grant and fundraising initiatives.',
+      'Managed sprint planning and backlog prioritisation in Notion and Trello; conducted market and competitor research to inform product decisions.',
+      'Improved operational workflows, reducing workflow bottlenecks by 30% through data-informed process improvements.'
     ],
     focus:['Product execution','MVP launch','Product lifecycle','Roadmaps','Sprint planning','Cross-functional collaboration','Market research','Operations','Marketing','Growth','Fundraising support']
   },
@@ -1125,17 +1119,13 @@ const CLIENTS = {
     { org:'ChainPeak Global' },
     { org:'Dorum' },
     { org:'SolFutureNFT' },
-    { org:'Proprietary trading firms', note:'several, including Limitless Prop Firm above' }
   ]
 };
 
 const PROJECTS = {
-  /* FortaFlow copy was brought in line with the FORTAFLOW Product Doc (Notion)
-     on 2026-09-29: positioning, problem thesis, the layered module map, the
-     flywheel, the v1 MVP feature set, the north-star metric and the roadmap
-     phases all come from there. `surfaces`, `built` and `learned` are the
-     owner's own earlier account of the contribution and were kept — the doc
-     does not contradict them. `tagline` is not in the doc either; it predates it. */
+  /* Current source of truth: canonical FortaFlow PRD, MVP scope and roadmap,
+     reconciled 2026-11-04. Public copy distinguishes the crypto/forex MVP from
+     Later and Conditional capabilities; coding/build work is paused, not released. */
   fortaflow:{
     name:'FortaFlow', category:'Trading-strategy research & validation', flagship:true,
     tagline:'Define. Test. Validate.',
@@ -1150,10 +1140,10 @@ const PROJECTS = {
       'The MVP supports manual decisions and manual/CSV journaling. Read-only integrations may be enabled only after end-to-end verification; no connector is advertised as supported before that gate. Live order placement, modification, and closure are excluded. Full Strategy DNA, continuous live monitoring, advanced AI Coach capabilities, and write-access execution belong to later or Conditional scope, not MVP.'
     ],
     thinking:[
-      { h:'The unit of the product is a strategy, not a chart', p:'Once a strategy is a first-class object with conditions, history, statistics, and a journal attached, almost every feature becomes an operation on that object. That single decision shapes the data model, the navigation, and the roadmap.' },
-      { h:'"Journal + AI" is not a position', p:'Journaling, analytics, broker sync, replay, and backtesting are already table stakes — TradeZella, TradesViz, and TraderWaves offer combinations of them. The differentiation has to come from strategy intelligence: rule compilation, Strategy DNA, robustness scoring, and backtest-versus-live drift.' },
-      { h:'Evidence has to be uncomfortable to be useful', p:'Backtesting that only flatters a strategy is decoration. Stress testing — win-rate shocks, spread, slippage, missed entries, volatility — exists so a strategy is examined under conditions the trader did not choose.' },
-      { h:'The journal verifies, it does not just record', p:'Manual journaling fails at exactly the moment it matters most. If the system already knows the strategy, the journal can score rule adherence and compare planned against actual execution instead of waiting to be filled in.' }
+      { h:'A saved strategy version is the unit of analysis', p:'Every backtest must reference the exact immutable strategy version it evaluated. This makes results traceable when a trader changes rules later.' },
+      { h:'Reproducibility matters more than a headline win rate', p:'A useful result declares its data source, symbol, timeframe, period, timezone, engine version, costs, and fill assumptions. Missing or revised inputs must be disclosed rather than hidden behind a precise-looking chart.' },
+      { h:'Data rights and instrument semantics are product requirements', p:'A technically reachable data endpoint is not automatically licensed for a commercial product. Coverage, provenance, price/volume semantics, instrument metadata, and account-currency calculations all affect whether a backtest can be trusted.' },
+      { h:'Validation and live execution are separate product boundaries', p:'The MVP helps traders evaluate evidence and compare manual/CSV-recorded activity. It does not place, modify, or close live orders; connectors and execution capabilities require separate verification and approval.' }
     ],
     architecture:[
       { k:'MVP · Strategy workflow', items:['Strategy authoring','Rule confirmation','Immutable version history'] },
@@ -1189,18 +1179,18 @@ const PROJECTS = {
       'Brand and visual identity direction, product prototyping, and earlier hands-on build work using AI-assisted development. Current coding/build work is paused.'
     ],
     learned:[
-      { h:'Scope discipline is the whole game', p:'Every capability in this product is individually defensible, which is exactly what makes it dangerous. The useful question was not what FortaFlow could include, but which subset makes the loop close at all.' },
-      { h:'Integrations set the real timeline', p:'Broker and market data connectivity is where product ambition meets other people\'s constraints. Planning integrations early changed the sequencing of everything downstream.' },
-      { h:'Building it changed how I specify it', p:'Doing hands-on build work surfaced trade-offs a document would have hidden. It made my requirements more precise, and my estimates more sceptical.' },
-      { h:'Trust is a feature in trading products', p:'Users are risking money on the system\'s output. Transparency about what was tested, on what data, and with what assumptions is not a nice-to-have.' }
+      { h:'Scope discipline is the whole game', p:'The MVP is deliberately narrower than the full product vision: make strategy definition, versioning, backtesting, risk review, and journaling useful before adding advanced intelligence or execution.' },
+      { h:'Data rights set the commercial boundary', p:'Backtesting requires lawful, documented rights to underlying market data. Public API access, a free tier, or a technically working adapter is not proof of commercial permission.' },
+      { h:'Reproducibility has to be designed in', p:'A saved result is only useful if its strategy version, source data, assumptions, and engine version can be traced and retained. This evidence needs to survive later edits and provider changes.' },
+      { h:'A pause is not a launch', p:'A complete specification and architecture are not production software. Keeping build, test, staging, and production status separate is essential to honest product communication.' }
     ],
     next:[
-      'Prove the MVP hypothesis: that traders will adopt an end-to-end workflow turning strategy ideas into validated, monitored systems.',
-      'Measure it against one north-star metric — Validated Trading Systems: explicit rules, sufficient data, a backtest, robustness testing, validation criteria, and forward testing.',
-      'Validate the strategy definition experience with real traders and rework it against what they actually do.',
-      'Then phase in live intelligence, write-access execution, advanced AI such as regime and anomaly detection, and an ecosystem layer — prop firm mode, marketplace, API.'
+      'When implementation resumes, close the critical security, data-rights, instrument-correctness, reproducibility, and operational release gates before expanding scope.',
+      'Complete and verify the P0 golden path: strategy authoring, immutable versioning, licensed historical data, deterministic backtesting, performance/risk reporting, bounded stress scenarios, and manual/CSV journaling.',
+      'Validate the activation journey with intermediate retail crypto and forex traders, then measure first-session activation against the documented hypothesis.',
+      'Consider P1/P2 and Conditional capabilities only after MVP evidence and separate technical, legal, security, and product approval. Live order execution, EA export, marketplace, and copy trading are not MVP commitments.'
     ],
-    tags:['AI Strategy Builder','Backtesting','Strategy DNA','Stress Testing','Live Condition Detection','Smart Alerts','Trading Journal','AI Coach','MT4/MT5','cTrader','Supabase','Vercel','GitHub']
+    tags:['Crypto','Forex','Strategy authoring','Immutable versions','Backtesting','Performance & risk','Stress testing','Manual journal','CSV import','Supabase','Vercel','GitHub']
   },
   /* TS Academy capstone. Every claim here comes from the project's Notion
      Document Hub (vision, problem discovery, user research, MVP scope, MVP build
@@ -1809,7 +1799,7 @@ const Home = () => `
         <div style="margin-top:28px">
           ${ProjectCard({name:PROJECTS.fortaflow.name,cat:PROJECTS.fortaflow.category,ff:true,
             p:PROJECTS.fortaflow.summary,
-            more:'Plain-language strategy building, backtesting, stress testing, Strategy DNA, live condition detection, alerts, and journaling — designed as one closed loop.',
+            more:'MVP scope: define and confirm crypto/forex strategy rules, save immutable versions, run reproducible historical backtests, review performance and risk, and record trades manually or by CSV. Live execution is excluded; advanced analytics and monitoring are later-phase work.',
             tags:PROJECTS.fortaflow.tags,cta:'Read the case study',href:'/projects',
             aria:'FortaFlow case study'})}
         </div>
@@ -1821,7 +1811,7 @@ const Home = () => `
                YNX is still on the Projects page (Other projects) and the résumé. */''}
           ${PROJECTS.others.filter(p=>p.name==='Deserialize').map(p=>ProjectCard({...p,cta:'See projects'})).join('')}
         </div>
-        <div class="mt-ml"><a class="tlink" href="#/projects">All projects${ICON.ar()}</a></div>
+        <div class="mt-ml"><a class="tlink" href="#/experience">All projects${ICON.ar()}</a></div>
       </div>
     </div>
   </section>
