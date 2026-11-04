@@ -42,6 +42,15 @@ jobs:
         run: python tools/build-community-resume.py /tmp/community-management-generated.pdf
       - name: Validate generated Community Management PDF
         run: python tools/check-community-resume.py --generated-only /tmp/community-management-generated.pdf
+      - name: Archive validated résumé previews
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-resume-preview-pdfs
+          path: |
+            /tmp/product-manager-generated.pdf
+            /tmp/community-management-generated.pdf
+          if-no-files-found: error
+          retention-days: 5
       - name: Check whitespace errors
         run: git diff --check HEAD^ HEAD
 
