@@ -22,7 +22,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak,
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle,
     KeepTogether, HRFlowable
 )
 
@@ -45,28 +45,28 @@ LINE = colors.HexColor("#D8E0E7")
 PALE = colors.HexColor("#F2F6F9")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=21, leading=23,
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5,
                           textColor=NAVY, spaceAfter=2, alignment=TA_LEFT))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=9.5, leading=12,
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.6, leading=13.2,
                           textColor=BLUE, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=7.4, leading=9.5,
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.5, leading=10.9,
                           textColor=MUTED, spaceAfter=6))
-styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=9.3, leading=11,
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.6, leading=12.7,
                           textColor=NAVY, spaceBefore=7, spaceAfter=4, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=8.05, leading=11.1,
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.4, leading=12.6,
                           textColor=BODY, spaceAfter=4))
-styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=7.55, leading=10.1,
+styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=8.9, leading=11.8,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=8.55, leading=10.5,
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.7, leading=11.9,
                           textColor=NAVY))
-styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=7.1, leading=8.8,
+styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=8.3, leading=10.1,
                           textColor=MUTED, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=7.35, leading=9.45,
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=8.7, leading=11.2,
                           textColor=BODY, leftIndent=9, firstLineIndent=-6,
                           bulletIndent=0, spaceAfter=1.2))
-styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=7.45, leading=10,
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=8.8, leading=11.6,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=8.0, leading=9.8,
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.2, leading=11.2,
                           textColor=NAVY, spaceAfter=1))
 
 
@@ -123,7 +123,7 @@ def page_frame(canvas, doc):
 
 
 doc = SimpleDocTemplate(
-    str(OUT), pagesize=A4, rightMargin=15*mm, leftMargin=15*mm,
+    str(OUT), pagesize=A4, rightMargin=13*mm, leftMargin=13*mm,
     topMargin=14*mm, bottomMargin=17*mm,
     title="Olamide Olanipekun - Product Manager Resume",
     author="Olamide Olanipekun",
@@ -208,9 +208,8 @@ story.append(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
         "Improved onboarding and activation workflows, and used behavioural data and operational feedback to guide engagement and retention improvements."
     ]))
 
-# Page 2: earlier experience, selected product work, tools, and education.
-story.append(PageBreak())
-story.extend(section("Professional Experience | Continued"))
+# Earlier experience, selected product work, tools, and education flow naturally
+# into the remaining first-page space before continuing onto page two.
 story.append(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
     "Worked across growth-focused product initiatives, community infrastructure, customer experience, and operational execution for a proprietary trading business.",
     [
@@ -259,7 +258,7 @@ story.append(P(
     "ChatGPT, Claude, n8n, Zapier, GitHub, Supabase, Vercel, Discord, Telegram, Zendesk, Slack, Google Workspace.", "Skill"))
 
 story.extend(section("Education &amp; Professional Development"))
-story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria"))
+story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria | Completed 2026 | Second Class Upper | CGPA: 3.8/5"))
 story.append(P(
     "DataCamp: Introduction to SQL, Intermediate SQL, Data Manipulation in SQL, Joining Data in SQL, PostgreSQL Summary Statistics &amp; "
     "Window Functions, Introduction to Data, Introduction to Data Literacy, Communicating Data Insights.  |  "

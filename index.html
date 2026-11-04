@@ -964,7 +964,8 @@ const COMMUNITY_HIGHLIGHTS = [
 const EDUCATION = {
   degree:'B.Sc.Ed — Mathematics and Education',
   school:'University of Lagos',
-  where:'Lagos, Nigeria'
+  where:'Lagos, Nigeria',
+  result:'Completed 2026 · Second Class Upper · CGPA: 3.8/5'
 };
 
 /* 'Fintech' is here on the evidence this site already carries, not as a wish:
@@ -2057,6 +2058,7 @@ const Experience = () => `
           <p class="mono">Education</p>
           <p class="h3" style="margin-top:12px;color:var(--text)">${EDUCATION.degree}</p>
           <p class="sm" style="margin-top:8px">${EDUCATION.school} — ${EDUCATION.where}</p>
+          <p class="sm">${EDUCATION.result}</p>
           <p class="sm mt-s" style="max-width:56ch">A maths background is the quieter reason the analytics side of this work comes easily.</p>
         </div>
       </div>
@@ -2572,6 +2574,7 @@ const Resume = () => `
             <div>
               <p class="h3" style="color:var(--text)">${EDUCATION.degree}</p>
               <p class="sm" style="margin-top:6px">${EDUCATION.school} — ${EDUCATION.where}</p>
+              <p class="sm">${EDUCATION.result}</p>
             </div>
           </div>
         </div>

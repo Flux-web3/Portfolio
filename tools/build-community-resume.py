@@ -11,7 +11,7 @@ from reportlab.lib.enums import TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import mm
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, KeepTogether, HRFlowable
 
 rl_config.invariant = 1
 ROOT = Path(__file__).resolve().parent.parent
@@ -26,18 +26,18 @@ LINE = colors.HexColor("#D9DFE2")
 WASH = colors.HexColor("#FBF4E8")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=21, leading=23, textColor=INK, spaceAfter=3))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10, leading=12.5, textColor=ACCENT, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8, leading=10.5, textColor=MUTED, spaceAfter=5))
-styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=9.5, leading=11.5, textColor=ACCENT, spaceBefore=6, spaceAfter=3, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=8.35, leading=11.1, textColor=BODY, spaceAfter=3))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=8.8, leading=10.5, textColor=INK))
-styles.add(ParagraphStyle(name="Date", fontName="Helvetica", fontSize=7.5, leading=9.2, textColor=MUTED, alignment=TA_RIGHT))
-styles.add(ParagraphStyle(name="RoleText", fontName="Helvetica", fontSize=7.9, leading=10.1, textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=7.7, leading=9.7, textColor=BODY, leftIndent=9, firstLineIndent=-6, spaceAfter=1))
-styles.add(ParagraphStyle(name="SkillTitle", fontName="Helvetica-Bold", fontSize=8.0, leading=9.4, textColor=INK, spaceAfter=1))
-styles.add(ParagraphStyle(name="SkillText", fontName="Helvetica", fontSize=7.55, leading=9.6, textColor=BODY))
-styles.add(ParagraphStyle(name="Small", fontName="Helvetica", fontSize=7.65, leading=9.8, textColor=BODY, spaceAfter=2))
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5, textColor=INK, spaceAfter=3))
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.5, leading=13, textColor=ACCENT, spaceAfter=4))
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.4, leading=10.8, textColor=MUTED, spaceAfter=5))
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.3, leading=12.3, textColor=ACCENT, spaceBefore=5, spaceAfter=2.5, keepWithNext=True))
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.6, leading=12.9, textColor=BODY, spaceAfter=3))
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.7, leading=11.8, textColor=INK))
+styles.add(ParagraphStyle(name="Date", fontName="Helvetica", fontSize=8.5, leading=10.0, textColor=MUTED, alignment=TA_RIGHT))
+styles.add(ParagraphStyle(name="RoleText", fontName="Helvetica", fontSize=9.1, leading=11.9, textColor=BODY, spaceAfter=2))
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=9.0, leading=11.5, textColor=BODY, leftIndent=9, firstLineIndent=-6, spaceAfter=1.0))
+styles.add(ParagraphStyle(name="SkillTitle", fontName="Helvetica-Bold", fontSize=9.1, leading=10.7, textColor=INK, spaceAfter=1))
+styles.add(ParagraphStyle(name="SkillText", fontName="Helvetica", fontSize=8.9, leading=11.2, textColor=BODY))
+styles.add(ParagraphStyle(name="Small", fontName="Helvetica", fontSize=8.9, leading=11.3, textColor=BODY, spaceAfter=2))
 
 def p(text: str, style: str = "Small") -> Paragraph:
     return Paragraph(text, styles[style])
@@ -52,7 +52,7 @@ def role(title: str, org: str, dates: str, summary: str, items: list[str]):
     heading = Table([[
         Paragraph(f"{escape(title)} · {escape(org)}", styles["Role"]),
         Paragraph(escape(dates), styles["Date"])
-    ]], colWidths=[128 * mm, 48 * mm])
+    ]], colWidths=[136 * mm, 48 * mm])
     heading.setStyle(TableStyle([
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0),
@@ -84,8 +84,8 @@ def footer(canvas, doc):
     canvas.restoreState()
 
 doc = SimpleDocTemplate(
-    str(OUT), pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm,
-    topMargin=14 * mm, bottomMargin=15 * mm,
+    str(OUT), pagesize=A4, leftMargin=13 * mm, rightMargin=13 * mm,
+    topMargin=14 * mm, bottomMargin=16 * mm,
     title="Olamide Olanipekun - Community Management Resume",
     author="Olamide Olanipekun",
     subject="Web3 Community Management, Growth, Customer Support and Operations",
@@ -119,7 +119,7 @@ for i in range(0, len(skills), 2):
     left_cell = [p(left[0], "SkillTitle"), p(left[1], "SkillText")]
     right_cell = [p(right[0], "SkillTitle"), p(right[1], "SkillText")] if right[0] else ""
     rows.append([left_cell, right_cell])
-skill_table = Table(rows, colWidths=[88 * mm, 88 * mm], hAlign="LEFT")
+skill_table = Table(rows, colWidths=[92 * mm, 92 * mm], hAlign="LEFT")
 skill_table.setStyle(TableStyle([
     ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, -1), WASH),
     ("BOX", (0, 0), (-1, -1), 0.45, LINE), ("INNERGRID", (0, 0), (-1, -1), 0.35, LINE),
@@ -141,9 +141,8 @@ story.append(role("Product Manager", "Deserialize", "Apr 2024 – May 2025",
         "Used user behaviour, operational feedback, and recurring customer needs to identify friction and inform product decisions.",
     ]))
 
-# Page 2: community/CX career history and supporting information.
-story.append(PageBreak())
-story.extend(section("Professional Experience | Continued"))
+# Earlier roles and supporting information continue through natural pagination.
+# No forced page break: use remaining first-page space before flowing to page two.
 story.append(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "Sep 2022 – Dec 2023",
     "Worked across growth-focused product initiatives, customer experience, community infrastructure, and operational execution for a proprietary trading business.", [
         "Managed growth-focused product initiatives, identifying opportunities to improve user journeys, engagement, activation, retention, and operational efficiency.",
@@ -177,7 +176,7 @@ story.append(p("Dorum  |  SolFutureNFT  |  ChainPeak Global  |  Debonk"))
 story.extend(section("Tools"))
 story.append(p("Zendesk  |  Discord  |  Telegram  |  X/Twitter  |  LinkedIn  |  Buffer  |  Canva  |  Claude  |  ChatGPT  |  Notion  |  Trello  |  Slack  |  Google Workspace"))
 story.extend(section("Education"))
-story.append(p("B.Sc.Ed., Mathematics and Education  |  University of Lagos"))
+story.append(p("<b>B.Sc.Ed., Mathematics and Education</b>  |  University of Lagos  |  Completed 2026  |  Second Class Upper  |  CGPA: 3.8/5"))
 
 doc.build(story, onFirstPage=footer, onLaterPages=footer)
 print(f"Wrote {OUT}")

@@ -37,11 +37,12 @@ It retains the full May 2022-Dec 2023 Limitless Prop Firm employer span and does
 The standalone Community Management résumé is `Olamide_Olanipekun_Community_Management_Resume.pdf`,
 a two-page A4, ATS-readable PDF. It includes YNX, Deserialize, both concurrent Limitless positions with
 their separate LinkedIn dates, Gotabit, and Betboom, plus community skills, tools, selected Web3 projects,
-and education. Its reproducible ReportLab source is `tools/build-community-resume.py`; GitHub Actions
-regenerates, validates, and publishes the PDF when the committed binary is missing or out of date. The
-write-capable publishing job runs only on trusted pushes to `main`; pull-request validation remains
-read-only. The Résumé page links directly to this PDF; `community-resume.html` remains available as a
-browser-based, print-ready alternative. The two résumé documents are intentionally distinct.
+and education. Its reproducible ReportLab source is `tools/build-community-resume.py`. Both résumé PDFs
+use natural pagination and larger body text while remaining exactly two A4 pages. GitHub Actions
+regenerates and validates both PDFs, then publishes changed binaries through a separate post-validation
+job on trusted pushes to `main`; pull-request validation remains read-only. The Résumé page links
+directly to both PDFs; `community-resume.html` remains available as a browser-based, print-ready
+alternative. The two résumé documents are intentionally distinct.
 
 ## Editing the content
 
@@ -294,6 +295,9 @@ the requested full Limitless employer span, while the Experience timeline shows 
 Growth Operations Lead role from Sep 2022 and the separate Community & Customer support specialist role
 from May 2022. Concurrent calendar time is counted once. The broader 7+ years spans product, operations,
 marketing, growth, community management, customer experience, and trading.
+
+Education is listed as completed: B.Sc.Ed. in Mathematics and Education, University of Lagos (2026),
+Second Class Upper, CGPA 3.8/5.
 
 ## Licence
 
