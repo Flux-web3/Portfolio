@@ -177,9 +177,11 @@ story.append(P(
 
 story.extend(section("Professional Experience"))
 story.append(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
-    "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch.",
+    "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth initiatives, and product delivery.",
     [
         "Built and launched an MVP, managed its product lifecycle, and coordinated delivery with engineering and cross-functional teams.",
+        "Built and owned the YNX community from scratch, establishing its structure and ongoing community operations.",
+        "Sourced moderator talent, marketing talent, and developers to support community moderation, growth initiatives, and product delivery.",
         "Partnered with leadership on product direction, early-stage growth strategy, and grant and fundraising initiatives.",
         "Managed sprint planning and backlog prioritisation in Notion and Trello; conducted market and competitor research to inform product decisions.",
         "Improved operational workflows, reducing workflow bottlenecks by <b>30%</b> through data-informed process improvements."
