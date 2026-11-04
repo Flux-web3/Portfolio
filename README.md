@@ -249,8 +249,9 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   reduced beginner friction, demo trading, gamification, and work on the final mini-app design —
   are contributions, not measured outcomes. Do not attach percentages or unprovided metrics.
 - **YNX's current public title is Product Manager | Growth Lead.** Its dates are Apr 2025 – May 2026.
-  The 30% workflow-bottleneck reduction is the figure in the current LinkedIn description; do not
-  substitute the older 50% summary figure.
+  The owner built and owned the community from scratch, sourced moderators for community operations,
+  and sourced marketing talent and developers for growth and product delivery. The 30% workflow-
+  bottleneck reduction is the current LinkedIn figure; do not substitute the older 50% summary figure.
 - **Limitless Prop Firm has two concurrent LinkedIn positions.** Product Manager & Growth Operations
   Lead: Sep 2022 – Dec 2023. Community & Customer support specialist: May 2022 – Dec 2023. The
   Experience timeline shows both; the PM résumé intentionally retains one PM entry with the full
@@ -274,7 +275,9 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
 
 The site labels team outcomes as contributions rather than sole attribution. FortaFlow is labelled
 as build-paused, not production-ready. The chronology distinguishes concurrent positions at one
-employer and overlapping engagements; calendar time is counted once in experience totals.
+employer and overlapping engagements; calendar time is counted once in experience totals. The
+homepage's **All projects** link routes to Experience by design, while individual project cards route
+to their project detail page.
 
 The 4+ years hands-on product/project management figure is the owner's stated professional positioning;
 it is not calculated by adding the durations of overlapping LinkedIn entries. The PM résumé retains
