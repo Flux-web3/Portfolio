@@ -59,7 +59,7 @@ required = [
     "intermediate retail crypto and forex traders",
     "Build is paused; it is not shipped",
     "manual/CSV journaling",
-    "B.Sc.Ed., Mathematics and Education", "Completed 2026", "Second Class Upper", "CGPA: 3.8/5",
+    "B.Sc.Ed., Mathematics and Education", "University of Lagos", "Second Class Upper",
 ]
 stale = (
     "50% reduction in operational bottlenecks",
@@ -67,6 +67,9 @@ stale = (
     "futures, stock, and prop-firm traders",
     "Dextopus Bridge",
     "Community & Customer support specialist",
+    "CGPA",
+    "Completed 2026",
+    "3.8/5",
 )
 
 checks = (("generated", GENERATED),) if GENERATED_ONLY else (("committed", COMMITTED), ("generated", GENERATED))
@@ -84,4 +87,4 @@ for label, path in checks:
 if not GENERATED_ONLY and COMMITTED.resolve() != GENERATED.resolve() and COMMITTED.read_bytes() != GENERATED.read_bytes():
     raise SystemExit("FAIL: committed Product Manager PDF differs from the canonical generated output. Regenerate and commit the PDF with tools/build-pm-resume.py.")
 
-print("PASS: " + ("generated " if GENERATED_ONLY else "committed and generated ") + "PM PDF(s) are two-page A4 with all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
+print("PASS: " + ("generated " if GENERATED_ONLY else "committed and generated ") + "PM PDF(s) are two-page A4 with all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and the degree, institution, and Second Class Upper classification verified.")

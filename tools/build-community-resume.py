@@ -179,7 +179,7 @@ story.append(p("Dorum  |  SolFutureNFT  |  ChainPeak Global  |  Debonk"))
 story.extend(section("Tools"))
 story.append(p("Zendesk  |  Discord  |  Telegram  |  X/Twitter  |  LinkedIn  |  Buffer  |  Canva  |  Claude  |  ChatGPT  |  Notion  |  Trello  |  Slack  |  Google Workspace"))
 story.extend(section("Education"))
-story.append(p("<b>B.Sc.Ed., Mathematics and Education</b>  |  University of Lagos  |  Completed 2026  |  Second Class Upper  |  CGPA: 3.8/5"))
+story.append(p("<b>B.Sc.Ed., Mathematics and Education</b>  |  University of Lagos  |  Second Class Upper"))
 
 doc.build(story, onFirstPage=footer, onLaterPages=footer)
 print(f"Wrote {OUT}")

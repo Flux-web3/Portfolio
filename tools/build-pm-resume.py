@@ -245,7 +245,7 @@ story.append(P(
     "ChatGPT, Claude, n8n, Zapier, GitHub, Supabase, Vercel, Discord, Telegram, Zendesk, Slack, Google Workspace.", "Skill"))
 
 story.extend(section("Education &amp; Professional Development"))
-story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria | Completed 2026 | Second Class Upper | CGPA: 3.8/5"))
+story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria | Second Class Upper"))
 story.append(P(
     "DataCamp: Introduction to SQL, Intermediate SQL, Data Manipulation in SQL, Joining Data in SQL, PostgreSQL Summary Statistics &amp; "
     "Window Functions, Introduction to Data, Introduction to Data Literacy, Communicating Data Insights.  |  "

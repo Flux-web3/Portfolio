@@ -144,8 +144,20 @@ if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 
 /* --- cross-file factual and résumé consistency --------------------------- */
-if (!html.includes("result:'Completed 2026 · Second Class Upper · CGPA: 3.8/5'"))
-  fail('Education must show the completed 2026 B.Sc.Ed., Second Class Upper, CGPA 3.8/5');
+if (!html.includes("degree:'B.Sc.Ed — Mathematics and Education'") ||
+    !html.includes("school:'University of Lagos'") ||
+    !html.includes("classification:'Second Class Upper'"))
+  fail('Education must retain the B.Sc.Ed. qualification, University of Lagos, and Second Class Upper');
+const pmEducationSource = fs.readFileSync(path.join(__dirname, 'build-pm-resume.py'), 'utf8');
+const cmEducationSource = fs.readFileSync(path.join(__dirname, 'build-community-resume.py'), 'utf8');
+const communityEducationSource = fs.readFileSync(communityPage, 'utf8');
+const publicEducationSources = [html, pmEducationSource, cmEducationSource, communityEducationSource].join('\n');
+if (/CGPA|Completed\s+20\d{2}/i.test(publicEducationSources))
+  fail('Public education content must not include a CGPA or graduation date');
+if (!communityEducationSource.includes('Second Class Upper') ||
+    !pmEducationSource.includes('Second Class Upper') ||
+    !cmEducationSource.includes('Second Class Upper'))
+  fail('Second Class Upper must be retained in both résumé PDF sources and the HTML fallback');
 if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy capstone'"))
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))

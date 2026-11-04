@@ -301,8 +301,8 @@ Growth Operations Lead role from Sep 2022 and the separate Community & Customer 
 from May 2022. Concurrent calendar time is counted once. The broader 7+ years spans product, operations,
 marketing, growth, community management, customer experience, and trading.
 
-Education is listed as completed: B.Sc.Ed. in Mathematics and Education, University of Lagos (2026),
-Second Class Upper, CGPA 3.8/5.
+The public education entry lists the B.Sc.Ed. in Mathematics and Education, University of Lagos,
+and Second Class Upper. It does not publish a graduation date or CGPA.
 
 ## Licence
 
