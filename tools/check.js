@@ -159,6 +159,9 @@ if (html.includes('value:\'Olanipekun Olamide\'')) fail('Stale reversed LinkedIn
 if (html.includes('id="printcv"')) fail('Résumé selector must not offer print-current-page as if it were a résumé download');
 if (!/The Product Manager résumé downloads as a PDF/.test(html))
   fail('Résumé selector must explain the difference between the Product Manager PDF and community print page');
+const homeBlock = html.slice(html.indexOf('const Home = () =>'), html.indexOf('const PageHead'));
+if (!/<a class="tlink" href="#\\/experience">All projects/.test(homeBlock))
+  fail('Homepage All projects link must route to Experience');
 if (!/4\+ years hands-on product\/project management within 7\+ years across product, operations, growth marketing, community management, customer support\/CX, and trading/i.test(html.slice(0, html.indexOf('</head>'))))
   fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
@@ -190,6 +193,7 @@ for (const [org, dates] of expectedExperience) {
 if (/org:'delabz'/i.test(html)) fail('delabz must not appear in the Experience timeline');
 if ((html.match(/org:'Dextopus'/g) || []).length !== 1) fail('Dextopus / Dextopus Bridge must be represented by one Experience entry');
 if (!/also:'Community & Customer support specialist · May 2022 – Dec 2023'/.test(html)) fail('Limitless community/support position is missing from Experience timeline');
+if (!/const CONCURRENCY = '[^']*Betboom\/Gotabit[^']*Gotabit\/Limitless community support[^']*two Limitless positions[^']*Deserialize\/YNX[^']*YNX\/Debonk Bot[^']*YNX\/Dextopus\/Debonk Bot/.test(html)) fail('Chronology must disclose all supplied overlapping engagements');
 if (!/resumeWhen:'May 2022 – Dec 2023'/.test(html)) fail('PM résumé must retain the full May 2022-Dec 2023 Limitless span');
 const pmResume = html.slice(html.indexOf('const Resume = () =>'), html.indexOf('const Contact = () =>'));
 if (!pmResume.includes('e.resumeWhen || e.when')) fail('PM résumé renderer must use its separate full employer date');
