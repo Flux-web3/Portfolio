@@ -162,16 +162,34 @@ if (!/4\+ years hands-on product\/project management within 7\+ years across pro
   fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
-  return /Limitless Prop Firm<\/h3><span class="date">2022 – 2023<\/span>/.test(page)
+  return /Limitless Prop Firm<\/h3><span class="date">May 2022 – Dec 2023<\/span>/.test(page)
     && /worked with a six-person community team/.test(page)
+    && /Community Manager · Gotabit<\/h3><span class="date">Feb 2021 – Oct 2022<\/span>/.test(page)
+    && /Community Management &amp; Growth Contributor · Betboom<\/h3><span class="date">Jan 2020 – Sep 2021<\/span>/.test(page)
+    && /5–7 minutes/.test(page)
     && /led a separate two-person website support team/.test(page)
     && !/Led a six-person team supporting/.test(page)
     && page.includes('window.print()');
 }
 
-/* --- date, impact attribution, and print safety ---------------------------- */
-if (!html.includes("when:'Jun 2025 – 2026'") || html.includes("when:'Apr 2025 – May 2026'"))
-  fail('YNX chronology must match the confirmed June 2025–2026 range');
+/* --- dates, role uniqueness, impact attribution, and print safety ----------- */
+const expectedExperience = [
+  ["YNX", "Apr 2025 – May 2026"],
+  ["Dextopus", "Aug 2025 – Feb 2026"],
+  ["Debonk Bot", "Jun 2025 – Jan 2026"],
+  ["Deserialize", "Apr 2024 – May 2025"],
+  ["Limitless Prop Firm", "May 2022 – Dec 2023"],
+  ["Gotabit", "Feb 2021 – Oct 2022"],
+  ["Betboom", "Jan 2020 – Sep 2021"]
+];
+for (const [org, dates] of expectedExperience) {
+  const re = new RegExp("org:'" + escapeRe(org) + "'[\\s\\S]{0,220}?when:'" + escapeRe(dates) + "'");
+  if (!re.test(html)) fail(org + " dates must match LinkedIn: " + dates);
+}
+if (/org:'delabz'/i.test(html)) fail('delabz must not appear in the Experience timeline');
+if ((html.match(/org:'Dextopus'/g) || []).length !== 1) fail('Dextopus / Dextopus Bridge must be represented by one Experience entry');
+if (!html.includes("when:'Apr 2025 – May 2026'") || html.includes("when:'Jun 2025 – 2026'"))
+  fail('YNX chronology must match the current LinkedIn Apr 2025–May 2026 range');
 if (!html.includes("l:'Deserialize swap volume in its first six months'"))
   fail('The $30M metric must be attributed to Deserialize, not an unspecified product');
 if (!html.includes("Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months."))
