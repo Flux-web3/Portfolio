@@ -165,7 +165,7 @@ if (!/4\+ years hands-on product\/project management within 7\+ years across pro
   fail('Social description must preserve the approved experience positioning');
 function communityHtmlSafe() {
   const page = fs.readFileSync(communityPage, 'utf8');
-  return /Product Manager &amp; Growth Lead · YNX<\/h3><span class="date">Apr 2025 – May 2026<\/span>/.test(page)
+  return /Product Manager | Growth Lead · YNX<\/h3><span class="date">Apr 2025 – May 2026<\/span>/.test(page)
     && /Built and owned the YNX community from scratch/.test(page)
     && /Sourced moderators to support community moderation, and sourced marketing talent and developers/.test(page)
     && /Product Manager &amp; Growth Operations Lead · Limitless Prop Firm<\/h3><span class="date">Sep 2022 – Dec 2023<\/span>/.test(page)
