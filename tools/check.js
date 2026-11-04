@@ -152,12 +152,21 @@ if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
 if (!communityHtmlSafe())
   fail('Community résumé must preserve the confirmed Limitless Prop Firm 2022–2023 dates and accurate team attribution');
+const communityPdfName = 'Olamide_Olanipekun_Community_Management_Resume.pdf';
+if (!fs.existsSync(path.join(__dirname, '..', communityPdfName)))
+  fail('Standalone Community Management PDF is missing from the site root');
+if (!html.includes("communityResumeFile:'" + communityPdfName + "'") || !html.includes('communityResumeReady:true'))
+  fail('Community résumé profile must point to the committed PDF and mark it ready');
+if (!html.includes('Download Community Management résumé (PDF)'))
+  fail('Résumé page must offer a direct Community Management PDF download');
+if (!html.includes('href="community-resume.html"'))
+  fail('Print-ready Community HTML fallback must remain available');
 if (!/linkedin:\s*\{ label:'LinkedIn',\s*value:'Olamide Olanipekun'/.test(html))
   fail('LinkedIn display name must match the portfolio owner name order');
 if (html.includes('value:\'Olanipekun Olamide\'')) fail('Stale reversed LinkedIn display name found');
 if (html.includes('id="printcv"')) fail('Résumé selector must not offer print-current-page as if it were a résumé download');
-if (!/The Product Manager résumé downloads as a PDF/.test(html))
-  fail('Résumé selector must explain the difference between the Product Manager PDF and community print page');
+if (!/Both résumé versions are available as PDF downloads/.test(html))
+  fail('Résumé selector must identify both résumé formats as PDF downloads');
 const homeBlock = html.slice(html.indexOf('const Home = () =>'), html.indexOf('const PageHead'));
 if (!homeBlock.includes('<a class="tlink" href="#/experience">All projects'))
   fail('Homepage All projects link must route to Experience');

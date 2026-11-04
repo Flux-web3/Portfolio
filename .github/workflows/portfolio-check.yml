@@ -36,5 +36,7 @@ jobs:
         run: python tools/build-pm-resume.py /tmp/product-manager-generated.pdf
       - name: Validate committed and generated PM PDFs
         run: python tools/check-pm-resume.py /tmp/product-manager-generated.pdf
+      - name: Validate Community Management résumé PDF
+        run: python tools/check-community-resume.py
       - name: Check whitespace errors
         run: git diff --check HEAD^ HEAD

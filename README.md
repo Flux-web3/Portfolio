@@ -32,12 +32,13 @@ Content is separated from presentation. To change what the site says, edit the `
 
 The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a two-page, ATS-readable PDF.
 It retains the full May 2022-Dec 2023 Limitless Prop Firm employer span and does not add the Community
-& Customer support specialist as a separate PM résumé role. The standalone Community Management
-résumé includes both current Limitless positions with their separate LinkedIn dates. It includes YNX, Dextopus,
-Debonk Bot, Deserialize, Limitless Prop Firm, Gotabit, and Betboom with the supplied dates, plus selected
-product-building work, skills, tools, education, and professional development. The Résumé page also
-offers a separate, print-ready Community Management résumé at `community-resume.html`, which includes
-its own **Print / Save as PDF** control. Keep the two documents distinct.
+& Customer support specialist as a separate PM résumé role.
+
+The standalone Community Management résumé is `Olamide_Olanipekun_Community_Management_Resume.pdf`,
+a two-page A4, ATS-readable PDF. It includes YNX, Deserialize, both concurrent Limitless positions with
+their separate LinkedIn dates, Gotabit, and Betboom, plus community skills, tools, selected Web3 projects,
+and education. The Résumé page links directly to this PDF; `community-resume.html` remains available
+as a browser-based, print-ready alternative. The two résumé documents are intentionally distinct.
 
 ## Editing the content
 
