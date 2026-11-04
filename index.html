@@ -2419,8 +2419,9 @@ const Resume = () => `
           </div>
           <div class="btns noprint" style="flex-direction:column;align-items:flex-start">
             ${PROFILE.resumeReady?`<a class="btn btn-p" href="${PROFILE.resumeFile}" download>Download Product Manager résumé${ICON.down()}</a>`:''}
-            <a class="btn btn-s" href="community-resume.html" target="_blank" rel="noopener noreferrer">Open Community Management résumé ↗</a>
-            <p class="sm mt-s" style="max-width:34ch">The Product Manager résumé downloads as a PDF. The Community Management résumé opens in a print-ready page with its own Print / Save as PDF control.</p>
+            <a class="btn btn-s" href="${PROFILE.communityResumeFile}" download>Download Community Management résumé (PDF)${ICON.down()}</a>
+            <a class="tlink" style="font-size:var(--fs-sm)" href="community-resume.html" target="_blank" rel="noopener noreferrer">View print-ready HTML version ↗</a>
+            <p class="sm mt-s" style="max-width:34ch">Both résumé versions are available as PDF downloads. The Community Management résumé also has a browser-based HTML version.</p>
           </div>
         </div>
       </div>
