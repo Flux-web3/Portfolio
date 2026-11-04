@@ -47,26 +47,26 @@ PALE = colors.HexColor("#F2F6F9")
 styles = getSampleStyleSheet()
 styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5,
                           textColor=NAVY, spaceAfter=2, alignment=TA_LEFT))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.3, leading=12.8,
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.6, leading=13.2,
                           textColor=BLUE, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.1, leading=10.4,
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.5, leading=10.9,
                           textColor=MUTED, spaceAfter=6))
-styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.2, leading=12.2,
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.6, leading=12.7,
                           textColor=NAVY, spaceBefore=7, spaceAfter=4, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=8.8, leading=12.0,
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.4, leading=12.6,
                           textColor=BODY, spaceAfter=4))
-styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=8.25, leading=11.1,
+styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=8.9, leading=11.8,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.25, leading=11.2,
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=9.7, leading=11.9,
                           textColor=NAVY))
-styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=7.8, leading=9.6,
+styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=8.3, leading=10.1,
                           textColor=MUTED, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=8.05, leading=10.4,
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=8.7, leading=11.2,
                           textColor=BODY, leftIndent=9, firstLineIndent=-6,
                           bulletIndent=0, spaceAfter=1.2))
-styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=8.25, leading=10.9,
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=8.8, leading=11.6,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=8.8, leading=10.7,
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.2, leading=11.2,
                           textColor=NAVY, spaceAfter=1))
 
 
@@ -258,7 +258,7 @@ story.append(P(
     "ChatGPT, Claude, n8n, Zapier, GitHub, Supabase, Vercel, Discord, Telegram, Zendesk, Slack, Google Workspace.", "Skill"))
 
 story.extend(section("Education &amp; Professional Development"))
-story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria"))
+story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria | Completed 2026 | Second Class Upper | CGPA: 3.8/5"))
 story.append(P(
     "DataCamp: Introduction to SQL, Intermediate SQL, Data Manipulation in SQL, Joining Data in SQL, PostgreSQL Summary Statistics &amp; "
     "Window Functions, Introduction to Data, Introduction to Data Literacy, Communicating Data Insights.  |  "
