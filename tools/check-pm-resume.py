@@ -48,7 +48,7 @@ required = [
     "$30M+", "40%", "30%",
     "YNX | Apr 2025 - May 2026",
     "Built and owned the YNX community from scratch",
-    "sourced moderators for ongoing community operations",
+    "sourced moderators",
     "Sourced marketing talent and developers",
     "Dextopus | Aug 2025 - Feb 2026",
     "Debonk Bot | Jun 2025 - Jan 2026",
