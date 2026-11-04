@@ -985,7 +985,7 @@ const EXPERIENCE = [
   {
     org:'FortaFlow', role:'Founder', when:'Jul 2026 – Present', current:true,
     engagement:'Part-time', mode:'Remote',
-    summary:'Building an AI-assisted trading research and strategy platform that helps traders analyse, test, and evolve their strategies — leading product discovery, UX, architecture, and MVP development.',
+    summary:'Founder leading product discovery, product direction, UX, architecture, requirements, and MVP planning for a trading-strategy research and validation product. Coding/build work is currently paused.',
     detail:[
       'There was no team to inherit, no spec to receive, and no existing product to maintain. The problem had to be found, framed, designed, architected, and built.',
       'I own product discovery, the UX, the system architecture, and the MVP build. That means making the trade-offs personally: what the first version refuses to do, which integrations earn their complexity, and where AI genuinely helps versus where it would just be decoration.'
@@ -1066,18 +1066,22 @@ const EXPERIENCE = [
 
        This is also the entry that makes the "4+ years" figure add up — see the
        arithmetic note under EXPERIENCE. */
-    org:'Limitless Prop Firm', role:'Product Manager & Growth Operations Lead', when:'May 2022 – Dec 2023',
+    org:'Limitless Prop Firm', role:'Product Manager & Growth Operations Lead', when:'Sep 2022 – Dec 2023',
+    also:'Community & Customer support specialist · May 2022 – Dec 2023',
+    resumeWhen:'May 2022 – Dec 2023',
     engagement:'Contract', mode:null,
-    summary:'Product, community and growth operations for a proprietary trading firm. Built Discord and Telegram communities from scratch and worked with a six-person community team to grow them beyond 5,000 members; separately led a two-person website support team and implemented Zendesk workflows supporting roughly 5–15-minute response times.',
+    summary:'Worked across product management, growth strategy, community infrastructure, and operational execution for a prop trading business, focusing on user engagement, activation, retention, and the overall customer experience.',
     detail:[
-      'Built the Discord and Telegram communities from scratch and worked with a six-person community team to grow them beyond 5,000 members, covering onboarding, moderation, announcements, engagement, and daily operations.',
-      'Worked with a six-person community team on campaigns, giveaways, educational activities, and community activations; separately led a two-person website support team.',
-      'Implemented Zendesk and structured ticket handling and escalation workflows, maintaining response times of roughly 5–15 minutes.',
-      'Configured Discord bots for gaming, security, ticketing, alerts, and other community needs; built personalised Telegram bots with automation and auto-responses.',
-      'Managed X/Twitter and LinkedIn publishing with the design team, using Canva, Claude, and ChatGPT to support content creation and Buffer to schedule posts.',
-      'Used member feedback and recurring support issues to inform product, operational, and growth priorities.'
+      'Managed growth-focused product initiatives, identifying opportunities to improve user journeys, engagement, and operational efficiency.',
+      'Translated user feedback, community insights, and operational challenges into product improvement opportunities.',
+      'Contributed to product and growth initiatives across onboarding, engagement, retention, and customer experience.',
+      'Built and managed Discord and Telegram communities from scratch, growing the community to over 5,000 members.',
+      'Developed community infrastructure, customised Telegram bots, Discord bots, engagement systems, and operational workflows.',
+      'Led a six-person Discord and Telegram team and coordinated a separate two-person website support team.',
+      'Improved customer support operations using Zendesk, maintaining response times within approximately 5–15 minutes.',
+      'Coordinated growth campaigns, partnerships, social media initiatives, and community engagement across X and LinkedIn.'
     ],
-    focus:['Community strategy','Discord & Telegram','Member onboarding','Moderation','Team leadership','Growth operations','Zendesk','Support SLAs','Bot automation','Social media','Product feedback','Trading']
+    focus:['Product management','Growth strategy','User journeys','Activation & retention','Community management','Customer support','Discord & Telegram','Zendesk','Support operations','Automation','Partnerships','Social media']
   },
   {
     org:'Gotabit', role:'Community Manager', when:'Feb 2021 – Oct 2022',
@@ -1107,20 +1111,14 @@ const EXPERIENCE = [
   },
 ];
 
-/* Concurrent roles are presented with their actual dates and engagement types.
-   From August 2025 through January 2026, three product roles overlapped:
-   YNX, Dextopus, and Debonk Bot. Overlap is disclosed rather than counted as
-   extra calendar years.
-
-   Based on the dated product roles in this timeline, product-management
-   experience runs from May 2022–December 2023, April 2024–May 2026, and
-   July 2026–present. Concurrent roles are counted only once. This is
-   approximately 4 years and 2 months of calendar experience as of November
-   2026; the broader 7+ years covers product, operations, growth, marketing,
-   community, customer experience, and trading.
-*/
-const CONCURRENCY = 'Some of these roles ran in parallel. From August 2025 through January 2026, YNX, Dextopus, and Debonk Bot overlapped. I count overlapping roles once when describing years of experience.';
-
+/* Supplied dates contain several genuine overlaps. Limitless has two concurrent
+   positions: Product Manager & Growth Operations Lead (Sep-Dec 2023) and
+   Community & Customer support specialist (May 2022-Dec 2023). Other supplied
+   overlaps include Betboom/Gotabit (Feb-Sep 2021), Gotabit/Limitless support
+   (May-Oct 2022), Deserialize/YNX (Apr-May 2025), YNX/Debonk Bot (Jun 2025-Jan
+   2026), and YNX/Dextopus/Debonk Bot (Aug 2025-Jan 2026). Calendar overlap is
+   counted once rather than added together in total experience. */
+const CONCURRENCY = 'Several engagements ran concurrently: Betboom/Gotabit (February-September 2021); Gotabit/Limitless community support (May-October 2022); the two Limitless positions (September-December 2023); Deserialize/YNX (April-May 2025); YNX/Debonk Bot (June 2025-January 2026); and YNX/Dextopus/Debonk Bot (August 2025-January 2026). Overlapping calendar time is counted once.';
 const TERSE_NOTE = 'Some entries above are deliberately short. Where I cannot yet describe the work publicly, or have not written it up properly, the entry stays terse rather than padded — I would rather walk through any of it in a conversation than fill space here.';
 
 /* Additional freelance, contract, and per-project engagements. Gotabit and
@@ -1144,17 +1142,17 @@ const PROJECTS = {
      owner's own earlier account of the contribution and were kept — the doc
      does not contradict them. `tagline` is not in the doc either; it predates it. */
   fortaflow:{
-    name:'FortaFlow', category:'AI × Trading strategy intelligence', flagship:true,
-    tagline:'Research. Test. Evolve.',
-    status:'In active development. The capabilities below describe product design and build work in progress — not a shipped, production-ready system.',
-    summary:'An AI-powered strategy intelligence platform that helps forex, crypto, futures, stock, and prop-firm traders move from subjective trading ideas to measurable, testable, and continuously improving trading systems.',
+    name:'FortaFlow', category:'Trading-strategy research & validation', flagship:true,
+    tagline:'Define. Test. Validate.',
+    status:'Build status: currently paused. Product scope, requirements, architecture, and MVP planning are documented; FortaFlow is not shipped or production-ready.',
+    summary:'A trading-strategy research and validation product scoped for intermediate retail crypto and forex traders. It helps users turn trading ideas into explicit, versioned rules, run reproducible historical backtests, review performance and risk, and compare manual/CSV-recorded execution. The MVP does not place, modify, or close live orders.',
     problem:[
       'Most traders have strategies. Very few have systems that can be measured, tested, and executed. Setups are described in words like "strong momentum" or "clean structure" that cannot be reliably tested, and a headline win rate can hide poor expectancy, deep drawdowns, long losing streaks, overfitting, and sensitivity to costs.',
       'Live trading then drifts from the backtest — slippage, missed entries, spreads, early exits, rule violations — and the workflow is split across charts, execution, journaling, analytics, backtesting, and alerts. Traders end up believing one thing creates their edge while the data says another.'
     ],
     product:[
-      'A trader describes their approach in plain language. FortaFlow turns it into a structured strategy, flags the ambiguities, and compiles machine-readable rules — then backtests them, stress-tests them, builds a Strategy DNA of the conditions where the edge actually exists, monitors live markets for those conditions, alerts on a match, and journals the execution.',
-      'The central object is the strategy, not the trade. The journal exists to check whether the strategy is being followed and whether it holds up under real execution. FortaFlow is deliberately not a signal service, a broker, copy trading, an autonomous bot, or another journal with AI added.'
+      'The MVP flow is: define a crypto or forex strategy, confirm its editable rule set, save an immutable version, run a reproducible historical backtest with declared data and execution assumptions, review performance and risk, then record trades manually or through CSV import. Results are historical evidence, not a promise of future returns.',
+      'The MVP supports manual decisions and manual/CSV journaling. Read-only integrations may be enabled only after end-to-end verification; no connector is advertised as supported before that gate. Live order placement, modification, and closure are excluded. Full Strategy DNA, continuous live monitoring, advanced AI Coach capabilities, and write-access execution belong to later or Conditional scope, not MVP.'
     ],
     thinking:[
       { h:'The unit of the product is a strategy, not a chart', p:'Once a strategy is a first-class object with conditions, history, statistics, and a journal attached, almost every feature becomes an operation on that object. That single decision shapes the data model, the navigation, and the roadmap.' },
@@ -1163,41 +1161,37 @@ const PROJECTS = {
       { h:'The journal verifies, it does not just record', p:'Manual journaling fails at exactly the moment it matters most. If the system already knows the strategy, the journal can score rule adherence and compare planned against actual execution instead of waiting to be filled in.' }
     ],
     architecture:[
-      { k:'Strategy layer', items:['AI Strategy Builder','Strategy Library','Rule compilation','Ambiguity detection'] },
-      { k:'Quant layer',    items:['Backtesting engine','Strategy stress testing','Strategy DNA','Market replay'] },
-      { k:'Live layer',     items:['Live condition detection','Smart alerts','Automatic trade capture'] },
-      { k:'Journal + analytics', items:['Trading journal','Execution analysis','AI Trading Coach','Strategy evolution'] },
-      { k:'Governance',     items:['Risk management','Prop firm mode','Account management','Broker integrations'] },
-      { k:'Platform',       items:['Supabase','Vercel','GitHub'] }
+      { k:'MVP · Strategy workflow', items:['Strategy authoring','Rule confirmation','Immutable version history'] },
+      { k:'MVP · Quant validation', items:['Reproducible historical backtesting','Performance and risk report','Bounded stress scenarios'] },
+      { k:'MVP · Journal', items:['Manual trade entry','CSV import','Version-specific comparison'] },
+      { k:'Later · Advanced analytics', items:['Condition-level Strategy DNA','Walk-forward and out-of-sample','Monte Carlo at scale'] },
+      { k:'Later · Monitoring and assistance', items:['Live condition monitoring','Advanced AI Coach','Market replay'] },
+      { k:'Conditional · Execution and ecosystem', items:['Write-access execution','MT4/MT5 EA export','Marketplace and copy trading'] }
     ],
-    loop:['Define','Structure','Test','Stress','Understand (DNA)','Monitor','Alert','Execute','Journal','Compare','Learn','Improve'],
+    loop:['Define','Confirm rules','Save version','Run backtest','Review risk','Journal / import','Compare execution','Improve'],
     mvp:[
-      { n:'Authentication', d:'Sign-up, login, onboarding' },
-      { n:'Strategy Builder', d:'Plain language → extraction → rule builder → versioning' },
-      { n:'Backtesting', d:'Manual and automated, with a performance report' },
-      { n:'Strategy DNA', d:'Core metrics and basic condition breakdowns' },
-      { n:'Stress testing', d:'Win-rate shock, spread, slippage, missed entries, R, volatility' },
-      { n:'Journal', d:'Manual trades, notes, screenshots, tags, strategy link' },
-      { n:'Broker import', d:'cTrader and MT4/MT5, read-only' },
-      { n:'AI Coach', d:'Questions over strategy, trades, and performance' },
-      { n:'Alerts', d:'Condition, price, and risk alerts' }
+      { n:'Strategy authoring', d:'Define a crypto or forex strategy and confirm its editable rule set' },
+      { n:'Immutable versions', d:'Save each rule change as a new version with traceable history' },
+      { n:'Reproducible backtesting', d:'Record data source, symbol, timeframe, period, timezone, cost/fill assumptions, and engine version' },
+      { n:'Performance and risk report', d:'Trade count, net P&L, win rate, expectancy, profit factor, drawdown, and equity curve' },
+      { n:'Bounded stress scenarios', d:'Named spread, slippage, missed-entry, timing, and risk assumptions' },
+      { n:'Manual / CSV journal', d:'Validate imports, deduplicate safely, and attribute trades to exact strategy versions' },
+      { n:'Preferences and security', d:'Persist user settings, enforce ownership isolation, and provide clear recovery/error states' }
     ],
     surfaces:[
-      { n:'Dashboard', d:'Portfolio and strategy overview' },
-      { n:'Strategy', d:'Definition and strategy workspace' },
-      { n:'Backtesting', d:'Historical testing and results' },
-      { n:'Alerts', d:'Live condition detection' },
-      { n:'Trade Journal', d:'Automated trade records' },
-      { n:'Onboarding', d:'First-run and setup' },
-      { n:'Authentication', d:'Access and accounts' }
+      { n:'Strategy workspace', d:'Define, edit, confirm, and version crypto/forex rules' },
+      { n:'Backtesting', d:'Run reproducible historical evaluations' },
+      { n:'Performance and risk', d:'Inspect metrics, equity curve, and bounded scenarios' },
+      { n:'Trade journal', d:'Record trades manually or import CSV' },
+      { n:'Onboarding and settings', d:'Save, edit, and recover user preferences' },
+      { n:'Account and data', d:'Authentication, ownership, source, and coverage states' }
     ],
     built:[
-      'Product architecture — the strategy object model and how the modules relate to one another.',
-      'Product and UX design across the platform surfaces: dashboard, strategy workspace, backtesting, alerts, trade journal, onboarding, and authentication.',
-      'Technical requirements and integration planning for broker and market data connectivity via MT4/MT5 and cTrader.',
-      'Implementation planning and sequencing — what an MVP has to contain for the loop to close, and what can wait.',
-      'The brand and visual identity system, including the mark and product design language.',
-      'Hands-on build work using AI-assisted development on a Supabase, Vercel, and GitHub stack.'
+      'Product discovery, problem framing, scope definition, and the MVP activation hypothesis.',
+      'PRD, user journeys, requirements, acceptance criteria, prioritised backlog, and product delivery planning.',
+      'Product architecture and UX design for strategy authoring, immutable versioning, historical backtesting, risk review, journaling, onboarding, and settings.',
+      'Integration research and requirements for licensed market data and potential read-only connectors; no connector is presented as supported until it passes end-to-end verification.',
+      'Brand and visual identity direction, product prototyping, and earlier hands-on build work using AI-assisted development. Current coding/build work is paused.'
     ],
     learned:[
       { h:'Scope discipline is the whole game', p:'Every capability in this product is individually defensible, which is exactly what makes it dangerous. The useful question was not what FortaFlow could include, but which subset makes the loop close at all.' },
@@ -1741,7 +1735,7 @@ const Home = () => `
         </div>
         <dl class="hero-meta">
           <div><dt>Based in</dt><dd>${PROFILE.location} · ${PROFILE.relocation.replace('Open','open')}</dd></div>
-          <div><dt>Currently</dt><dd>Founder — <a href="#/projects">FortaFlow</a> (part-time, in build)</dd></div>
+          <div><dt>Currently</dt><dd>Founder — <a href="#/projects">FortaFlow</a> (part-time, build paused)</dd></div>
           <div><dt>Open to</dt><dd>Product, community and growth roles · remote or hybrid</dd></div>
         </dl>
       </div>
@@ -1938,7 +1932,7 @@ const About = () => `
       <div class="col">
         ${SectionHeader({label:'The technical side',h:'I can move from an idea to a product structure, from a requirement to a prototype, and from a repetitive problem to an automated workflow.'})}
         <div class="measure mt-m">
-          <p class="body">This is the part of the job I would defend hardest. I have built product prototypes and automation workflows from scratch, and used AI-assisted development to take a product from ideation to MVP. FortaFlow is the current instance of that: I am designing and building it myself, which means the architecture, the integrations, and the trade-offs between them are mine to get wrong.</p>
+          <p class="body">This is the part of the job I would defend hardest. I have built product prototypes and automation workflows from scratch, and used AI-assisted development to make product ideas testable. FortaFlow is the current instance: I led its product discovery, requirements, UX, and architecture. Its build is currently paused, so I distinguish documented product design from functionality that has actually shipped.</p>
           <p class="body">In a team that shows up as being useful in the engineering conversation rather than waiting for its output — reading the system before writing the requirement, understanding what an API can and cannot return before promising it in a spec, and knowing which technical shortcut is worth taking this quarter and which one becomes next year's rewrite.</p>
         </div>
         <div class="panel-flat mt-l">
@@ -2157,7 +2151,7 @@ const Projects = () => {
     <div class="grid">
       ${Rail('03','architecture')}
       <div class="col">
-        ${SectionHeader({label:'Architecture',h:'How the system is laid out.',sub:'Modules grouped by the stage of the loop they serve. Product architecture as designed — integrations and platform choices are planned and in progress, not shipped infrastructure.'})}
+        ${SectionHeader({label:'Architecture',h:'How the system is laid out.',sub:'Modules grouped by delivery phase. This is documented product architecture, not evidence of implementation or release readiness; coding/build work is currently paused.'})}
         <div class="arch mt-ml">
           ${f.architecture.map(r=>`
             <div class="arch-row">
@@ -2180,7 +2174,7 @@ const Projects = () => {
     <div class="grid">
       ${Rail('04','experience')}
       <div class="col">
-        ${SectionHeader({label:'Product experience',h:'The surfaces I designed.',sub:'Seven product areas, designed as one connected workspace rather than separate tools.'})}
+        ${SectionHeader({label:'Product experience',h:'The surfaces I designed.',sub:'Six core MVP surfaces scoped as one connected workflow; each remains a design artefact until implementation and verification.'})}
         <div class="smap mt-ml">
           ${f.surfaces.map((s,i)=>`
             <div class="smap-i">
@@ -2190,11 +2184,11 @@ const Projects = () => {
             </div>`).join('')}
         </div>
         <div class="panel-flat" style="margin-top:20px">
-          <p class="mono" style="margin-bottom:14px">What v1 has to contain</p>
+          <p class="mono" style="margin-bottom:14px">Current MVP scope</p>
           <ul class="mvp-l">
             ${f.mvp.map(m=>`<li><span class="mvp-k">${m.n}</span><span class="xs">${m.d}</span></li>`).join('')}
           </ul>
-          <p class="sm mt-s" style="max-width:60ch">The MVP exists to test one hypothesis: that traders will adopt an end-to-end workflow that turns strategy ideas into validated, monitored systems.</p>
+          <p class="sm mt-s" style="max-width:60ch">The current activation hypothesis is: Create Strategy → Confirm Rules → Save Version → Run Backtest → View Result/Risk Report. Strategy DNA, continuous live monitoring, and write-access execution are not MVP activation requirements.</p>
         </div>
       </div>
     </div>
@@ -2474,11 +2468,11 @@ const Resume = () => `
                          oversight on a printed résumé; the placeholder reads as
                          a fact that was not supplied. */''}
                     ${e.when
-                      ? `<span class="tl-when">${e.when}</span>`
+                      ? `<span class="tl-when">${e.resumeWhen || e.when}</span>`
                       : `<span class="tl-when" title="No dates supplied for this engagement">dates not listed</span>`}
                   </div>
                   ${/* Meta before `also` — see the note in ExperienceTimeline. */''}
-                  <p class="tl-role mb-xs">${e.role}${[e.engagement,e.mode].filter(Boolean).length?`<span class="tl-meta">${[e.engagement,e.mode].filter(Boolean).join(' · ')}</span>`:''}${e.also?`<span class="tl-also">also ${e.also}</span>`:''}</p>
+                  <p class="tl-role mb-xs">${e.role}${[e.engagement,e.mode].filter(Boolean).length?`<span class="tl-meta">${[e.engagement,e.mode].filter(Boolean).join(' · ')}</span>`:''}</p>
                   <p class="body" style="font-size:var(--fs-sm)">${e.summary}</p>
                   ${/* These were <li class="cv-li"> — full accent-dashed bullets.
                        But `focus` holds one-to-three-word tags ("Retention",
@@ -2512,9 +2506,9 @@ const Resume = () => `
                      both places reads as pre-emptive apology and buries the
                      figure behind two words of qualifier. One caveat, kept below,
                      covers all three. */''}
-                <li class="cv-li">Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months.</li>
-                <li class="cv-li">40% improvement in onboarding and activation.</li>
-                <li class="cv-li">50% reduction in operational bottlenecks.</li>
+                <li class="cv-li">Deserialize, a Web3 swap aggregator, processed over $30M in transaction volume in its first six months (team outcome).</li>
+                <li class="cv-li">40% improvement in onboarding and activation (contributed-to outcome).</li>
+                <li class="cv-li">30% reduction in workflow bottlenecks at YNX.</li>
                 <li class="cv-li">Full product lifecycle: discovery, strategy, roadmapping, PRDs, prioritisation, execution, experimentation, analytics, launch, and iteration.</li>
               </ul>
               <p class="sm mt-s">Figures reflect outcomes contributed to as part of a team, not sole attribution.</p>
@@ -2530,9 +2524,9 @@ const Resume = () => `
                 <h2 class="h3">FortaFlow — ${PROJECTS.fortaflow.category}</h2>
                 <p class="body" style="font-size:var(--fs-sm);margin-top:6px">${PROJECTS.fortaflow.summary}</p>
                 <ul>
-                  <li class="cv-li">Product architecture, UX, strategy, technical requirements, integrations, and implementation planning.</li>
-                  <li class="cv-li">Designed seven product surfaces as one connected workspace; built with AI-assisted development on Supabase, Vercel, and GitHub.</li>
-                  <li class="cv-li">In active development — not a shipped production system.</li>
+                  <li class="cv-li">Product discovery, requirements, UX, architecture, and MVP planning for intermediate retail crypto and forex traders.</li>
+                  <li class="cv-li">Scoped strategy authoring, immutable versions, reproducible backtesting, performance/risk review, bounded stress scenarios, and manual/CSV journaling.</li>
+                  <li class="cv-li">Build currently paused; not a shipped production system. The MVP has no live-order write path.</li>
                 </ul>
               </div>
               <div class="cv-item">
