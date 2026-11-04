@@ -251,9 +251,6 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   community team, a separate two-person website-support team, Zendesk, and 5–15-minute support times.
 - **Gotabit and Betboom are separate experience entries.** Gotabit is Feb 2021 – Oct 2022.
   Betboom is Jan 2020 – Sep 2021. Do not list either again as a current freelance/client role.
-- **delabz is not included in the current Experience timeline** because it was not present in the
-  latest LinkedIn Experience list supplied for reconciliation. Add it back only if the owner confirms
-  it should appear on the current profile.
 - **Tourist (TS Academy capstone) is sourced from its Notion Document Hub and the
   `Flux-web3/Tourist-App` repo, nothing else.** It is a travel-planning concept with a working
   browser prototype; itinerary drafts use seeded templates rather than a live AI model. The survey
