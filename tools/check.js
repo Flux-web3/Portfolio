@@ -144,6 +144,8 @@ if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 
 /* --- cross-file factual and résumé consistency --------------------------- */
+if (!html.includes("result:'Completed 2026 · Second Class Upper · CGPA: 3.8/5'"))
+  fail('Education must show the completed 2026 B.Sc.Ed., Second Class Upper, CGPA 3.8/5');
 if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy capstone'"))
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
@@ -342,7 +344,10 @@ if (fs.existsSync(workflowPath)) {
       !permissionIs(publishJob, 'write') ||
       !publishJob.some(line => line.trim() === 'persist-credentials: true') ||
       !publishJob.some(line => line.includes('git push origin HEAD:main')) ||
-      !publishJob.some(line => line.includes('python tools/check-community-resume.py --generated-only')))
+      !publishJob.some(line => line.includes('python tools/check-community-resume.py --generated-only')) ||
+      !publishJob.some(line => line.includes('python tools/build-pm-resume.py /tmp/product-manager-generated.pdf')) ||
+      !publishJob.some(line => line.includes('python tools/check-pm-resume.py --generated-only /tmp/product-manager-generated.pdf')) ||
+      !publishJob.some(line => line.includes('git add Olamide-Olanipekun-Product-Manager.pdf Olamide_Olanipekun_Community_Management_Resume.pdf')))
     fail('PDF publishing must be limited to a post-validation job on trusted main pushes, with a regenerated and validated PDF');
   if (!workflow.includes('actions/checkout@v7') || !workflow.includes('actions/setup-node@v7') || !workflow.includes('actions/setup-python@v7'))
     fail('Portfolio validation workflow must use current Node 24-compatible official actions');
