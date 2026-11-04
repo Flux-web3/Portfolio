@@ -26,18 +26,18 @@ LINE = colors.HexColor("#D9DFE2")
 WASH = colors.HexColor("#FBF4E8")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5, textColor=INK, spaceAfter=3))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.5, leading=13, textColor=ACCENT, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.4, leading=10.8, textColor=MUTED, spaceAfter=5))
-styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.3, leading=12.3, textColor=ACCENT, spaceBefore=5, spaceAfter=2.5, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=10.0, leading=13.2, textColor=BODY, spaceAfter=3))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=10.0, leading=12.2, textColor=INK))
-styles.add(ParagraphStyle(name="Date", fontName="Helvetica", fontSize=8.5, leading=10.0, textColor=MUTED, alignment=TA_RIGHT))
-styles.add(ParagraphStyle(name="RoleText", fontName="Helvetica", fontSize=9.5, leading=12.4, textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=9.5, leading=12.0, textColor=BODY, leftIndent=9, firstLineIndent=-6, spaceAfter=1.0))
-styles.add(ParagraphStyle(name="SkillTitle", fontName="Helvetica-Bold", fontSize=9.4, leading=11.0, textColor=INK, spaceAfter=1))
-styles.add(ParagraphStyle(name="SkillText", fontName="Helvetica", fontSize=9.3, leading=11.7, textColor=BODY))
-styles.add(ParagraphStyle(name="Small", fontName="Helvetica", fontSize=9.3, leading=11.8, textColor=BODY, spaceAfter=2))
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=24, leading=27, textColor=INK, spaceAfter=3))
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=11.2, leading=14, textColor=ACCENT, spaceAfter=4))
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=9.0, leading=11.5, textColor=MUTED, spaceAfter=5))
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=11.0, leading=13.2, textColor=ACCENT, spaceBefore=4.5, spaceAfter=2.0, keepWithNext=True))
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=10.5, leading=13.8, textColor=BODY, spaceAfter=3))
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=10.7, leading=13.2, textColor=INK))
+styles.add(ParagraphStyle(name="Date", fontName="Helvetica", fontSize=9.0, leading=10.8, textColor=MUTED, alignment=TA_RIGHT))
+styles.add(ParagraphStyle(name="RoleText", fontName="Helvetica", fontSize=10.2, leading=13.4, textColor=BODY, spaceAfter=2))
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=10.2, leading=13.2, textColor=BODY, leftIndent=9, firstLineIndent=-6, spaceAfter=1.0))
+styles.add(ParagraphStyle(name="SkillTitle", fontName="Helvetica-Bold", fontSize=10.0, leading=12.0, textColor=INK, spaceAfter=1))
+styles.add(ParagraphStyle(name="SkillText", fontName="Helvetica", fontSize=10.0, leading=12.8, textColor=BODY))
+styles.add(ParagraphStyle(name="Small", fontName="Helvetica", fontSize=10.0, leading=12.8, textColor=BODY, spaceAfter=2))
 
 def p(text: str, style: str = "Small") -> Paragraph:
     return Paragraph(text, styles[style])
@@ -58,12 +58,13 @@ def role(title: str, org: str, dates: str, summary: str, items: list[str]):
         ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0),
         ("TOPPADDING", (0, 0), (-1, -1), 0), ("BOTTOMPADDING", (0, 0), (-1, -1), 1),
     ]))
-    block = [heading]
+    lead = [heading]
     if summary:
-        block.append(p(summary, "RoleText"))
+        lead.append(p(summary, "RoleText"))
+    block = [KeepTogether(lead)]
     block.extend(bullet(item) for item in items)
     block.append(Spacer(1, 3))
-    return KeepTogether(block)
+    return block
 
 def footer(canvas, doc):
     canvas.saveState()
@@ -85,7 +86,7 @@ def footer(canvas, doc):
 
 doc = SimpleDocTemplate(
     str(OUT), pagesize=A4, leftMargin=13 * mm, rightMargin=13 * mm,
-    topMargin=14 * mm, bottomMargin=16 * mm,
+    topMargin=14 * mm, bottomMargin=14 * mm,
     title="Olamide Olanipekun - Community Management Resume",
     author="Olamide Olanipekun",
     subject="Web3 Community Management, Growth, Customer Support and Operations",
@@ -129,7 +130,7 @@ skill_table.setStyle(TableStyle([
 story.append(skill_table)
 
 story.extend(section("Professional Experience"))
-story.append(role("Product Manager | Growth Lead", "YNX", "Apr 2025 – May 2026",
+story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 – May 2026",
     "Led product development and growth execution across digital products, taking initiatives from discovery and planning through development and launch. Built and owned the YNX community from scratch, then sourced moderators, marketing talent, and developers to support community operations, growth initiatives, and product delivery.", [
         "Built and launched an MVP and managed its product lifecycle, coordinating delivery with engineering and cross-functional teams.",
         "Built and owned the YNX community from scratch, establishing its structure and ongoing community operations.",

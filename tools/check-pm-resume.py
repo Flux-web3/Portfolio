@@ -16,12 +16,30 @@ def read_pdf(path: Path):
     reader = PdfReader(str(path))
     if len(reader.pages) != 2:
         raise SystemExit(f"FAIL: {path.name} must be two pages; got {len(reader.pages)}")
+    page_texts = []
     for page_number, page in enumerate(reader.pages, start=1):
         width, height = float(page.mediabox.width), float(page.mediabox.height)
         if abs(width - 595.276) > 1 or abs(height - 841.89) > 1:
             raise SystemExit(f"FAIL: {path.name} page {page_number} is not A4")
-    text = " ".join(" ".join((page.extract_text() or "").split()) for page in reader.pages)
-    return text
+        page_text = " ".join((page.extract_text() or "").split())
+        if not page_text:
+            raise SystemExit(f"FAIL: {path.name} page {page_number} has no extractable text")
+        samples = []
+        def collect(text, cm, tm, font_dict, font_size):
+            if text.strip():
+                try:
+                    samples.append((float(font_size), len(text.strip())))
+                except (TypeError, ValueError):
+                    pass
+        page.extract_text(visitor_text=collect)
+        total_chars = sum(count for _, count in samples)
+        readable_chars = sum(count for size, count in samples if size >= 10.0)
+        if not total_chars or readable_chars / total_chars < 0.65:
+            raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
+        page_texts.append(page_text)
+    if "gotabit" not in page_texts[0].casefold():
+        raise SystemExit(f"FAIL: {path.name} page 1 still leaves usable space before the Gotabit role; allow experience content to flow across the page boundary")
+    return " ".join(page_texts)
 
 required = [
     "Olamide Olanipekun",

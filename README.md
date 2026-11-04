@@ -37,10 +37,11 @@ It retains the full May 2022-Dec 2023 Limitless Prop Firm employer span and does
 The standalone Community Management résumé is `Olamide_Olanipekun_Community_Management_Resume.pdf`,
 a two-page A4, ATS-readable PDF. It includes YNX, Deserialize, both concurrent Limitless positions with
 their separate LinkedIn dates, Gotabit, and Betboom, plus community skills, tools, selected Web3 projects,
-and education. Its reproducible ReportLab source is `tools/build-community-resume.py`. Both résumé PDFs
-use natural pagination and larger body text (10 pt summary and approximately 9.2–9.5 pt principal body/bullet typography) while remaining exactly two A4 pages. GitHub Actions
-regenerates and validates both PDFs, then publishes changed binaries through a separate post-validation
-job on trusted pushes to `main`; pull-request validation remains read-only. The Résumé page links
+and education. Its reproducible ReportLab source is `tools/build-community-resume.py`. Both résumé PDFs use larger principal text (10.0 pt body and bullets, with summaries at 10.5 pt or above),
+flow role content naturally across page breaks, and remain exactly two A4 pages. The validators enforce
+page count, A4 dimensions, extractable text, minimum principal type size, and first-page content flow.
+GitHub Actions validates both generated PDFs, then publishes changed binaries through a separate
+post-validation job on trusted pushes to `main`; pull-request validation remains read-only. The Résumé page links
 directly to both PDFs; `community-resume.html` remains available as a browser-based, print-ready
 alternative. The two résumé documents are intentionally distinct.
 
@@ -275,8 +276,9 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   and manual/CSV journaling. Later and Conditional capabilities are not MVP commitments.
 - **The Product Manager PDF is two pages and follows the owner's explicit presentation rule for
   Limitless**: one Product Manager & Growth Operations Lead entry with the full May 2022-Dec 2023
-  employer span, and no separate community-only role. The Community Management résumé is a separate
-  HTML print view that shows both positions with their respective LinkedIn dates.
+  employer span, and no separate community-only role. The standalone Community Management PDF lists
+  both positions with their respective LinkedIn dates; `community-resume.html` remains the browser-based,
+  print-ready fallback.
 
 The site labels team outcomes as contributions rather than sole attribution. The Community Management
 résumé does not claim community ownership at Deserialize; it describes the verified product and ecosystem
@@ -285,9 +287,12 @@ employer and overlapping engagements; calendar time is counted once in experienc
 homepage's **All projects** link routes to Experience by design, while individual project cards route
 to their project detail page.
 
-The PDF validation workflow generates a temporary comparison file and checks it byte-for-byte against
-the committed PDF; it does not rewrite or push résumé files. GitHub Actions uses read-only repository
-permissions for validation. The Product Manager PDF uses revalidation caching because it has a fixed URL.
+The workflow has a read-only validation job that renders all eight SPA pages, checks route/link and asset
+integrity, validates site configuration, and generates both résumé PDFs for page, typography, and factual
+checks. A separate trusted-main publishing job uses write permission only on pushes to `main`; it commits
+updated PDF binaries only when their generated content changes, then validates committed and generated
+copies together. Pull-request validation remains read-only. The PDF URLs use revalidation caching because
+they have fixed paths.
 
 The 4+ years hands-on product/project management figure is the owner's stated professional positioning;
 it is not calculated by adding the durations of overlapping LinkedIn entries. The PM résumé retains

@@ -45,28 +45,28 @@ LINE = colors.HexColor("#D8E0E7")
 PALE = colors.HexColor("#F2F6F9")
 
 styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=23, leading=25.5,
+styles.add(ParagraphStyle(name="Name", fontName="Helvetica-Bold", fontSize=24, leading=27,
                           textColor=NAVY, spaceAfter=2, alignment=TA_LEFT))
-styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=10.8, leading=13.5,
+styles.add(ParagraphStyle(name="Headline", fontName="Helvetica-Bold", fontSize=11.3, leading=14.2,
                           textColor=BLUE, spaceAfter=4))
-styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=8.5, leading=10.9,
+styles.add(ParagraphStyle(name="Contact", fontName="Helvetica", fontSize=9.0, leading=11.5,
                           textColor=MUTED, spaceAfter=6))
-styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=10.6, leading=12.7,
-                          textColor=NAVY, spaceBefore=7, spaceAfter=4, keepWithNext=True))
-styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=9.8, leading=13.0,
+styles.add(ParagraphStyle(name="Section", fontName="Helvetica-Bold", fontSize=11.2, leading=13.2,
+                          textColor=NAVY, spaceBefore=5.5, spaceAfter=3.0, keepWithNext=True))
+styles.add(ParagraphStyle(name="Summary", fontName="Helvetica", fontSize=10.5, leading=14.0,
                           textColor=BODY, spaceAfter=4))
-styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=9.3, leading=12.2,
+styles.add(ParagraphStyle(name="BodySmall", fontName="Helvetica", fontSize=10.0, leading=13.2,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=10.0, leading=12.2,
+styles.add(ParagraphStyle(name="Role", fontName="Helvetica-Bold", fontSize=10.7, leading=13.0,
                           textColor=NAVY))
-styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=8.7, leading=10.5,
+styles.add(ParagraphStyle(name="RoleMeta", fontName="Helvetica", fontSize=9.0, leading=11.2,
                           textColor=MUTED, spaceAfter=2))
-styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=9.2, leading=11.8,
+styles.add(ParagraphStyle(name="ResumeBullet", fontName="Helvetica", fontSize=10.0, leading=13.0,
                           textColor=BODY, leftIndent=9, firstLineIndent=-6,
-                          bulletIndent=0, spaceAfter=1.2))
-styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=9.2, leading=12.0,
+                          bulletIndent=0, spaceAfter=0.8))
+styles.add(ParagraphStyle(name="Skill", fontName="Helvetica", fontSize=10.0, leading=13.0,
                           textColor=BODY, spaceAfter=2))
-styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=9.6, leading=11.8,
+styles.add(ParagraphStyle(name="ProjectTitle", fontName="Helvetica-Bold", fontSize=10.2, leading=12.5,
                           textColor=NAVY, spaceAfter=1))
 
 
@@ -90,7 +90,7 @@ def role(title, company, dates, location, summary, bullets):
     # ATS parsers encounter them in the same logical order as a human reader.
     heading = Paragraph(
         f"<b>{escape(title)} | {escape(company)}</b>  "
-        f"<font name='Helvetica' size='7.4' color='#667482'>| {escape(dates)}</font>",
+        f"<font name='Helvetica' size='8.4' color='#667482'>| {escape(dates)}</font>",
         styles["Role"]
     )
     # Keep the role heading with its location and summary, then allow bullets
@@ -128,7 +128,7 @@ def page_frame(canvas, doc):
 
 doc = SimpleDocTemplate(
     str(OUT), pagesize=A4, rightMargin=13*mm, leftMargin=13*mm,
-    topMargin=14*mm, bottomMargin=17*mm,
+    topMargin=14*mm, bottomMargin=15*mm,
     title="Olamide Olanipekun - Product Manager Resume",
     author="Olamide Olanipekun",
     subject="Technical Product Management, Growth, Web3 and Fintech",
@@ -210,13 +210,13 @@ story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
 story.extend(role("Product Manager & Growth Operations Lead", "Limitless Prop Firm", "May 2022 - Dec 2023", "",
     "Led product/growth operations informed by user and community feedback; improved onboarding, activation, retention, and delivery. Built <b>5,000+ member</b> Discord/Telegram communities, led a <b>six-person community team</b> and separate <b>two-person website support team</b>, and implemented Zendesk with <b>5–15-minute response times</b>.",
     []))
-story.append(KeepTogether(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
+story.extend(role("Community Manager", "Gotabit", "Feb 2021 - Oct 2022", "",
     "Managed community operations, customer support, content coordination, and engagement, acting as a communication link between users and the technical team.",
     [
         "Managed community communications, social content, onboarding, and member support.",
         "Programmed community bots, coordinated technical issues, hosted AMAs and events, and enforced community rules.",
         "Prepared weekly reports on activity, engagement, feedback, and outstanding issues."
-    ])))
+    ]))
 story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2020 - Sep 2021", "",
     "Created and supported Discord and Telegram communities from the ground up for a community of approximately <b>50,000 members</b>.",
     [

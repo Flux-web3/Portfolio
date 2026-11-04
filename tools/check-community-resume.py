@@ -40,7 +40,21 @@ def inspect(path: Path) -> None:
             raise SystemExit(f"FAIL: {path.name} page {page_number} has no extractable text")
         if any(ord(ch) < 32 and ch not in "\t\n\r" for ch in page_text):
             raise SystemExit(f"FAIL: {path.name} page {page_number} contains control characters")
+        samples = []
+        def collect(text, cm, tm, font_dict, font_size):
+            if text.strip():
+                try:
+                    samples.append((float(font_size), len(text.strip())))
+                except (TypeError, ValueError):
+                    pass
+        page.extract_text(visitor_text=collect)
+        total_chars = sum(count for _, count in samples)
+        readable_chars = sum(count for size, count in samples if size >= 10.0)
+        if not total_chars or readable_chars / total_chars < 0.65:
+            raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
         parts.append(page_text)
+    if "community & customer support specialist" not in parts[0].casefold():
+        raise SystemExit(f"FAIL: {path.name} page 1 still leaves the Limitless Community & Customer support role entirely on page 2; allow role content to flow across the page boundary")
     content = " ".join(parts)
     missing = [term for term in REQUIRED if term.casefold() not in content.casefold()]
     if missing:
