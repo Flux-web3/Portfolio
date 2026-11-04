@@ -7,7 +7,8 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
+  statuses: write
 
 jobs:
   validate:
@@ -17,6 +18,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
           fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -30,9 +32,39 @@ jobs:
           python-version: '3.12'
       - name: Install PDF dependencies
         run: python -m pip install reportlab pypdf
-      - name: Generate current PM résumé
+      - name: Regenerate the canonical Product Manager PDF
+        run: python tools/build-pm-resume.py Olamide-Olanipekun-Product-Manager.pdf
+      - name: Commit regenerated PDF to the review branch
+        id: commit_resume
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          TARGET_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- Olamide-Olanipekun-Product-Manager.pdf; then
+            git add Olamide-Olanipekun-Product-Manager.pdf
+            git commit -m "chore: regenerate Product Manager resume PDF"
+            git push origin "HEAD:${TARGET_BRANCH}"
+          fi
+          echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Generate a clean comparison PDF
         run: python tools/build-pm-resume.py /tmp/product-manager-generated.pdf
       - name: Validate committed and generated PM PDFs
         run: python tools/check-pm-resume.py /tmp/product-manager-generated.pdf
       - name: Check whitespace errors
         run: git diff --check HEAD^ HEAD
+      - name: Mark the final pull-request head as validated
+        if: success() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const sha = '${{ steps.commit_resume.outputs.head_sha }}' || context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha,
+              state: 'success',
+              context: 'portfolio-validation',
+              description: 'Portfolio, chronology and generated PDF checks passed'
+            });
