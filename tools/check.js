@@ -322,8 +322,19 @@ if (fs.existsSync(vjPath)) {
 const workflowPath = path.join(root, '.github', 'workflows', 'portfolio-check.yml');
 if (fs.existsSync(workflowPath)) {
   const workflow = fs.readFileSync(workflowPath, 'utf8');
-  if (workflow.includes('contents: write') || workflow.includes('persist-credentials: true') || workflow.includes('git push origin'))
-    fail('Portfolio validation workflow must not expose a write-capable token to checked-out project code');
+  const validateJob = workflow.slice(workflow.indexOf('  validate:'), workflow.indexOf('  publish-community-pdf:'));
+  const publishJob = workflow.slice(workflow.indexOf('  publish-community-pdf:'));
+  if (!/^permissions:\\n  contents: read/m.test(workflow))
+    fail('Workflow-wide permissions must remain read-only');
+  if (!validateJob || validateJob.includes('contents: write') || validateJob.includes('persist-credentials: true') || validateJob.includes('git push'))
+    fail('General validation job must not receive a write-capable token or push to the repository');
+  if (!publishJob.includes("if: github.event_name == 'push' && github.ref == 'refs/heads/main'") ||
+      !publishJob.includes('needs: validate') ||
+      !publishJob.includes('permissions:\\n      contents: write') ||
+      !publishJob.includes('persist-credentials: true') ||
+      !publishJob.includes('git push origin HEAD:main') ||
+      !publishJob.includes('python tools/check-community-resume.py --generated-only'))
+    fail('PDF publishing must be limited to a post-validation job on trusted main pushes, with a regenerated and validated PDF');
   if (!workflow.includes('actions/checkout@v7') || !workflow.includes('actions/setup-node@v7') || !workflow.includes('actions/setup-python@v7'))
     fail('Portfolio validation workflow must use current Node 24-compatible official actions');
 }
