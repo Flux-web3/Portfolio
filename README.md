@@ -30,8 +30,10 @@ Content is separated from presentation. To change what the site says, edit the `
 
 ## Résumé downloads
 
-The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a refreshed two-page,
-ATS-readable PDF aligned to the owner's current LinkedIn Experience history. It includes YNX, Dextopus,
+The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a two-page, ATS-readable PDF.
+It retains the full May 2022-Dec 2023 Limitless Prop Firm employer span and does not add the Community
+& Customer support specialist as a separate PM résumé role. The standalone Community Management
+résumé includes both current Limitless positions with their separate LinkedIn dates. It includes YNX, Dextopus,
 Debonk Bot, Deserialize, Limitless Prop Firm, Gotabit, and Betboom with the supplied dates, plus selected
 product-building work, skills, tools, education, and professional development. The Résumé page also
 offers a separate, print-ready Community Management résumé at `community-resume.html`, which includes
@@ -55,10 +57,11 @@ Entries with `url: null` are skipped everywhere rather than guessed. Set a `url`
 **Add a role** — push to `EXPERIENCE`. `when: null` renders a visible "dates not listed" pill on
 both the timeline and the résumé instead of inventing a date range.
 
-**Concurrent titles in one engagement** — use `also`. It renders on the same line in lower emphasis,
-so a reader sees every title held and can tell they ran at once rather than as promotions. Used by
-YNX and Limitless Prop. Deliberately *not* accent-coloured and not 600 weight: accent is what marks
-"this is the job title", so a second title in the same treatment reads as one long invented title.
+**Concurrent positions at one employer** — use `also` and include the secondary title's own date range.
+Limitless is the current example: Product Manager & Growth Operations Lead (Sep-Dec 2023) and
+Community & Customer support specialist (May 2022-Dec 2023). The Experience timeline shows both;
+the PM résumé suppresses the secondary community title and keeps the full May 2022-Dec 2023 employer
+span. The standalone Community Management résumé lists both positions.
 
 **Add a project** — push to `PROJECTS.others`. The flagship case study is `PROJECTS.fortaflow`.
 
@@ -237,7 +240,8 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
 
 - **Experience dates and titles follow the current LinkedIn record supplied by the owner.**
   YNX: Apr 2025 – May 2026; Dextopus: Aug 2025 – Feb 2026; Debonk Bot: Jun 2025 – Jan 2026;
-  Deserialize: Apr 2024 – May 2025; Limitless Prop Firm: May 2022 – Dec 2023;
+  Deserialize: Apr 2024 – May 2025; Limitless Prop Firm: Product Manager & Growth Operations Lead
+  (Sep 2022 – Dec 2023) and Community & Customer support specialist (May 2022 – Dec 2023);
   Gotabit: Feb 2021 – Oct 2022; Betboom: Jan 2020 – Sep 2021. Dextopus and Dextopus Bridge
   are the same engagement and must appear only once under Dextopus. Betboom's approximately
   50,000-member community and typical 5–7-minute response times are supplied by the owner.
@@ -245,11 +249,13 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   reduced beginner friction, demo trading, gamification, and work on the final mini-app design —
   are contributions, not measured outcomes. Do not attach percentages or unprovided metrics.
 - **YNX's current public title is Product Manager | Growth Lead.** Its dates are Apr 2025 – May 2026.
-  The 30% workflow-bottleneck reduction is the figure in the current LinkedIn description; do not
-  substitute the older 50% summary figure.
-- **Limitless Prop Firm's public title is Product Manager & Growth Operations Lead.** Its dates are
-  May 2022 – Dec 2023. Its description includes growth product work, community building, a six-person
-  community team, a separate two-person website-support team, Zendesk, and 5–15-minute support times.
+  The owner built and owned the community from scratch, sourced moderators for community operations,
+  and sourced marketing talent and developers for growth and product delivery. The 30% workflow-
+  bottleneck reduction is the current LinkedIn figure; do not substitute the older 50% summary figure.
+- **Limitless Prop Firm has two concurrent LinkedIn positions.** Product Manager & Growth Operations
+  Lead: Sep 2022 – Dec 2023. Community & Customer support specialist: May 2022 – Dec 2023. The
+  Experience timeline shows both; the PM résumé intentionally retains one PM entry with the full
+  May 2022 – Dec 2023 employer span, while the Community Management résumé lists both titles.
 - **Gotabit and Betboom are separate experience entries.** Gotabit is Feb 2021 – Oct 2022.
   Betboom is Jan 2020 – Sep 2021. Do not list either again as a current freelance/client role.
 - **Tourist (TS Academy capstone) is sourced from its Notion Document Hub and the
@@ -258,20 +264,27 @@ Nothing in this site is invented. Specifics worth knowing before you edit:
   numbers (19 usable of 20, 68%, 4.3/5, 4.1/5, 7.3/10) are the hub's. The prototype's itinerary drafts
   come from a seeded template bank, not a language model. The live URL is `tourist-app-blush.vercel.app`;
   the older `tourist-app-nu-six` alias 404s.
-- **FortaFlow is in active development**, not a shipped, production-ready system. Its positioning,
-  problem, module map, loop, v1 MVP set and north-star metric follow the FORTAFLOW Product Doc in Notion.
-- **The Product Manager PDF is a refreshed two-page document**, aligned to the corrected LinkedIn
-  experience history supplied on 2026-11-04. The Community Management résumé remains a separate HTML
-  print view and is not a substitute for the PM résumé.
+- **FortaFlow's coding/build work is currently paused**, and it is not a shipped or production-ready
+  system. The public MVP scope is intermediate retail crypto/forex strategy definition, immutable
+  versions, reproducible historical backtesting, performance/risk reporting, bounded stress scenarios,
+  and manual/CSV journaling. Later and Conditional capabilities are not MVP commitments.
+- **The Product Manager PDF is two pages and follows the owner's explicit presentation rule for
+  Limitless**: one Product Manager & Growth Operations Lead entry with the full May 2022-Dec 2023
+  employer span, and no separate community-only role. The Community Management résumé is a separate
+  HTML print view that shows both positions with their respective LinkedIn dates.
 
 The site labels team outcomes as contributions rather than sole attribution. FortaFlow is labelled
-as in active development. The chronology explains overlapping product roles; overlapping dates are
-not added together to inflate total years of experience.
+as build-paused, not production-ready. The chronology distinguishes concurrent positions at one
+employer and overlapping engagements; calendar time is counted once in experience totals. The
+homepage's **All projects** link routes to Experience by design, while individual project cards route
+to their project detail page.
 
-The 4+ years product-management figure is based on the dated product roles across Limitless Prop Firm
-(May 2022 – Dec 2023), Deserialize (Apr 2024 – May 2025), YNX (Apr 2025 – May 2026), and the independent
-FortaFlow product build (Jul 2026 – Present). Overlapping dates are counted once. The broader 7+ years
-covers product, operations, marketing, growth, community management, customer experience, and trading.
+The 4+ years hands-on product/project management figure is the owner's stated professional positioning;
+it is not calculated by adding the durations of overlapping LinkedIn entries. The PM résumé retains
+the requested full Limitless employer span, while the Experience timeline shows the Product Manager &
+Growth Operations Lead role from Sep 2022 and the separate Community & Customer support specialist role
+from May 2022. Concurrent calendar time is counted once. The broader 7+ years spans product, operations,
+marketing, growth, community management, customer experience, and trading.
 
 ## Licence
 
