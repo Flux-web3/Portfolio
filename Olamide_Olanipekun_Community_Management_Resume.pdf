@@ -7,7 +7,7 @@
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Font
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
 >>
 endobj
 3 0 obj
@@ -25,21 +25,21 @@ endobj
 5 0 obj
 <<
 /A <<
-/S/URI /Type /Action /URI (https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/)
+/S /URI /Type /Action /URI (https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/)
 >> /Border [ 0 0 0 ] /Rect [ 129.4077 744.1047 159.6477 753.7047 ] /Subtype /Link /Type /Annot
 >>
 endobj
 6 0 obj
 <<
 /A <<
-/S/URI /Type /Action /URI (https://portfolio-site-kappa-ashy.vercel.app/)
-~>> /Border [ 0 0 0 ] /Rect [ 166.1757 744.1047 195.5197 753.7047 ] /Subtype /Link /Type /Annot
+/S /URI /Type /Action /URI (https://portfolio-site-kappa-ashy.vercel.app/)
+>> /Border [ 0 0 0 ] /Rect [ 166.1757 744.1047 195.5197 753.7047 ] /Subtype /Link /Type /Annot
 >>
 endobj
 7 0 obj
 <<
 /Annots [ 4 0 R 5 0 R 6 0 R ] /Contents 12 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 11 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF ^ /Text /ImageB /ImageC /ImageI ]
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
 >> /Rotate 0 
   /Trans <<
 
@@ -49,10 +49,11 @@ endobj
 8 0 obj
 <<
 /Contents 13 0 R /MediaBox [ 0 0 595.2756 841.8898 ] /Parent 11 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF ^ /Text /ImageB /ImageC /Image ]
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
 >> /Rotate 0 /Trans <<
 
->> /Type /Page
+>> 
+  /Type /Page
 >>
 endobj
 9 0 obj
@@ -60,7 +61,6 @@ endobj
 /PageMode /UseNone /Pages 11 0 R /Type /Catalog
 >>
 endobj
-
 10 0 obj
 <<
 /Author (Olamide Olanipekun) /CreationDate (D:20000101000000+00'00') /Creator (\(unspecified\)) /Keywords () /ModDate (D:20000101000000+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
