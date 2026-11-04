@@ -30,12 +30,11 @@ Content is separated from presentation. To change what the site says, edit the `
 
 ## Résumé downloads
 
-The original Product Manager résumé remains at `Olamide-Olanipekun-Product-Manager.pdf`.
-The Résumé page offers two distinct options: the original Product Manager PDF and a separate,
-print-ready Community Management résumé at `community-resume.html`. The Product Manager option
-downloads the existing PDF; the Community Management option opens the web résumé, which includes
-its own **Print / Save as PDF** control. The selector explains this difference explicitly. Keep the
-files distinct; do not replace the original Product Manager PDF with the community résumé.
+The Product Manager résumé is `Olamide-Olanipekun-Product-Manager.pdf`, a two-page, ATS-readable PDF
+covering the current LinkedIn experience history, selected product-building projects, skills, tools,
+education, and professional development. The Résumé page also offers a separate, print-ready
+Community Management résumé at `community-resume.html`, which includes its own **Print / Save as PDF**
+control. Keep the two documents distinct; the PM PDF is not a copy of the community résumé.
 
 ## Editing the content
 
@@ -235,45 +234,45 @@ and everything referencing it disappears.
 
 Nothing in this site is invented. Specifics worth knowing before you edit:
 
-- **Debonk carries no dates, on purpose.** He asked for them to be left out, so it renders the
-  "dates not listed" placeholder. Its detail bullets — simplified onboarding, removed beginner
-  friction, the demo trading feature, gamification, sign-off on the final mini-app design — are
-  *contributions*, not measurements, because that is how they were supplied. Do not later attach a
-  percentage to any of them.
-- **YNX's `also` titles (VP Operations, Marketing Lead) came from him directly.** His public LinkedIn
-  lists that engagement as "Product Manager · Part-time" only, so a reader checking the profile will
-  not find them. Worth adding there if the profile is the reference anyone checks.
+- **Experience dates and titles follow the current LinkedIn record supplied by the owner.**
+  YNX: Apr 2025 – May 2026; Dextopus: Aug 2025 – Feb 2026; Debonk Bot: Jun 2025 – Jan 2026;
+  Deserialize: Apr 2024 – May 2025; Limitless Prop Firm: May 2022 – Dec 2023;
+  Gotabit: Feb 2021 – Oct 2022; Betboom: Jan 2020 – Sep 2021. Dextopus and Dextopus Bridge
+  are the same engagement and must appear only once under Dextopus. Betboom's approximately
+  50,000-member community and typical 5–7-minute response times are supplied by the owner.
+- **Debonk has confirmed dates** (Jun 2025 – Jan 2026). Its detail bullets — simplified onboarding,
+  reduced beginner friction, demo trading, gamification, and work on the final mini-app design —
+  are contributions, not measured outcomes. Do not attach percentages or unprovided metrics.
+- **YNX's current public title is Product Manager | Growth Lead.** Its dates are Apr 2025 – May 2026.
+  The 30% workflow-bottleneck reduction is the figure in the current LinkedIn description; do not
+  substitute the older 50% summary figure.
+- **Limitless Prop Firm's public title is Product Manager & Growth Operations Lead.** Its dates are
+  May 2022 – Dec 2023. Its description includes growth product work, community building, a six-person
+  community team, a separate two-person website-support team, Zendesk, and 5–15-minute support times.
+- **Gotabit and Betboom are separate experience entries.** Gotabit is Feb 2021 – Oct 2022.
+  Betboom is Jan 2020 – Sep 2021. Do not list either again as a current freelance/client role.
+- **delabz is not included in the current Experience timeline** because it was not present in the
+  latest LinkedIn Experience list supplied for reconciliation. Add it back only if the owner confirms
+  it should appear on the current profile.
 - **Tourist (TS Academy capstone) is sourced from its Notion Document Hub and the
   `Flux-web3/Tourist-App` repo, nothing else.** It is a travel-planning concept with a working
-  browser prototype; itinerary drafts use seeded templates rather than a live AI model. The survey numbers (19 usable of 20, 68%, 4.3/5,
-  4.1/5, 7.3/10) are the hub's. The prototype's itinerary drafts come from a seeded template
-  bank, not a language model, and the copy says so — change that only once a model is actually
-  wired in. The "My contribution" copy (independent, end to end — documentation, research,
-  scoping, and code) is the owner's own statement from 2026-09-29; the hub's Team and Owner fields
-  are unfilled placeholders, so do not cite the hub for it. The live URL is
-  `tourist-app-blush.vercel.app`; the older `tourist-app-nu-six` alias 404s.
-- **The résumé PDF is two sources stitched together.** Page 1 is the untouched Enhancv export.
-  Page 2 (Projects → Tourist) is generated from `tools/resume-page2.html` by
-  `python tools/build-resume-pdf.py`, which keeps only page 1 of the current PDF and appends a
-  fresh page 2, so it is safe to re-run. If the résumé is ever re-exported from Enhancv, run the
-  script again afterwards — or add Tourist in Enhancv and drop page 2.
-- **FortaFlow's positioning, problem, module map, loop, v1 MVP set and north-star metric follow
-  the FORTAFLOW Product Doc** in Notion (updated 2026-09-29).
-- **delabz, Dextopus, Deserialize, YNX and FortaFlow dates were verified** against screenshots of the
-  LinkedIn profile and match. Limitless Prop and Debonk were not visible in those captures.
+  browser prototype; itinerary drafts use seeded templates rather than a live AI model. The survey
+  numbers (19 usable of 20, 68%, 4.3/5, 4.1/5, 7.3/10) are the hub's. The prototype's itinerary drafts
+  come from a seeded template bank, not a language model. The live URL is `tourist-app-blush.vercel.app`;
+  the older `tourist-app-nu-six` alias 404s.
+- **FortaFlow is in active development**, not a shipped, production-ready system. Its positioning,
+  problem, module map, loop, v1 MVP set and north-star metric follow the FORTAFLOW Product Doc in Notion.
+- **The PM PDF is now a single, two-page document** built to match the current Experience history.
+  The community résumé remains a separate two-page HTML print view.
 
- Where a fact was not supplied it is either omitted or rendered as a
-visible placeholder, and the metrics carry an explicit note that they are outcomes contributed to as
-part of a team, not sole attribution. FortaFlow is labelled as in active development rather than
-shipped. Limitless Prop Firm's community-management résumé uses the confirmed `2022 – 2023` range. Keep that distinct from concurrent product/project work and do not invent start months where source records do not provide them.
+The site labels team outcomes as contributions rather than sole attribution. FortaFlow is labelled
+as in active development. The chronology explains overlapping product roles; overlapping dates are
+not added together to inflate total years of experience.
 
-Two claims are load-bearing and are worth re-checking whenever the timeline changes. The **7+ years**
-figure rests on contract work running back to 2019 (`CLIENTS.note`). The **4+ years** product figure
-is *not* derivable from the timeline alone: overlapping roles do not add calendar time, so the union
-of the product-titled ranges is only 2.3–3.5 years, and the balance comes from the contract product
-work. The arithmetic is written out in a comment above `CONCURRENCY` in `index.html`; do not raise
-either number without extending one of those date ranges. Debonk is a seventh product-titled role
-and adds nothing to the sum, because it has no dates.
+The 4+ years product-management figure is based on the dated product roles across Limitless Prop Firm
+(May 2022 – Dec 2023), Deserialize (Apr 2024 – May 2025), YNX (Apr 2025 – May 2026), and the independent
+FortaFlow product build (Jul 2026 – Present). Overlapping dates are counted once. The broader 7+ years
+covers product, operations, marketing, growth, community management, customer experience, and trading.
 
 ## Licence
 
