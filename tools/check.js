@@ -201,6 +201,7 @@ if (/Community & Customer support specialist/.test(pmResume)) fail('PM résumé 
 if (/50% reduction in operational bottlenecks/i.test(html)) fail('Stale 50% workflow bottleneck metric remains');
 if (!html.includes('30% reduction in workflow bottlenecks at YNX')) fail('Résumé preview must use the current 30% YNX metric');
 if (!/Build status: currently paused/.test(html) || !/intermediate retail crypto and forex traders/.test(html)) fail('FortaFlow audience or build status is stale');
+if (!/Built and owned the YNX community from scratch/.test(html) || !/sourced moderators, marketing talent, and developers/.test(html)) fail('YNX community ownership and talent sourcing must remain visible in Experience');
 if (!html.includes("when:'Apr 2025 – May 2026'") || html.includes("when:'Jun 2025 – 2026'"))
   fail('YNX chronology must match the current LinkedIn Apr 2025–May 2026 range');
 if (!html.includes("l:'Deserialize swap volume in its first six months'"))
