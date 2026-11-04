@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+"""Validate the committed PM PDF and the current generated build."""
+from pathlib import Path
+import sys
+from pypdf import PdfReader
+
+ROOT = Path(__file__).resolve().parent.parent
+COMMITTED = ROOT / "Olamide-Olanipekun-Product-Manager.pdf"
+GENERATED = Path(sys.argv[1]) if len(sys.argv) > 1 else COMMITTED
+
+def read_pdf(path: Path):
+    if not path.is_file():
+        raise SystemExit(f"FAIL: missing PDF: {path}")
+    reader = PdfReader(str(path))
+    if len(reader.pages) != 2:
+        raise SystemExit(f"FAIL: {path.name} must be two pages; got {len(reader.pages)}")
+    for page_number, page in enumerate(reader.pages, start=1):
+        width, height = float(page.mediabox.width), float(page.mediabox.height)
+        if abs(width - 595.276) > 1 or abs(height - 841.89) > 1:
+            raise SystemExit(f"FAIL: {path.name} page {page_number} is not A4")
+    text = " ".join(" ".join((page.extract_text() or "").split()) for page in reader.pages)
+    return text
+
+required = [
+    "Olamide Olanipekun",
+    "4+ years of hands-on product management experience",
+    "7+ years of broader experience",
+    "$30M+", "40%", "30%",
+    "YNX | Apr 2025 - May 2026",
+    "Built and owned the YNX community from scratch",
+    "Sourced moderator talent, marketing talent, and developers",
+    "Dextopus | Aug 2025 - Feb 2026",
+    "Debonk Bot | Jun 2025 - Jan 2026",
+    "Deserialize | Apr 2024 - May 2025",
+    "Limitless Prop Firm | May 2022 - Dec 2023",
+    "Gotabit | Feb 2021 - Oct 2022",
+    "Betboom | Jan 2020 - Sep 2021",
+    "intermediate retail crypto and forex traders",
+    "currently paused",
+    "manual/CSV journaling",
+    "B.Sc.Ed., Mathematics and Education",
+]
+stale = (
+    "50% reduction in operational bottlenecks",
+    "in active development",
+    "futures, stock, and prop-firm traders",
+    "Dextopus Bridge",
+    "Community & Customer support specialist",
+)
+
+for label, path in (("committed", COMMITTED), ("generated", GENERATED)):
+    text = read_pdf(path)
+    missing = [item for item in required if item.casefold() not in text.casefold()]
+    if missing:
+        raise SystemExit(f"FAIL: {label} PM PDF missing current facts: " + "; ".join(missing))
+    found_stale = [item for item in stale if item.casefold() in text.casefold()]
+    if found_stale:
+        raise SystemExit(f"FAIL: {label} PM PDF contains excluded/stale statements: " + "; ".join(found_stale))
+
+print("PASS: committed and generated PM PDFs are two-page A4; all seven role dates, YNX community ownership and sourcing, metrics, Limitless full-date exception, FortaFlow scope/status, and education verified.")
