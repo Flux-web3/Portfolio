@@ -179,7 +179,7 @@ function communityHtmlSafe() {
     && !page.includes('building and leading the project’s communities')
     && !page.includes('community presence across Discord, Telegram')
     && !page.includes('<span>Lagos, Nigeria · Remote / Hybrid</span>')
-    && page.includes('<link rel="canonical" href="https://portfolio-site-kappa-ashy.vercel.app/community">')
+    && page.includes('<link rel="canonical" href="https://portfolio-site-kappa-ashy.vercel.app/community-resume">')
     && page.includes('window.print()');
 }
 
@@ -277,7 +277,7 @@ else if (origins.size === 1)
 const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
 if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-  if (!sitemap.includes('<loc>https://portfolio-site-kappa-ashy.vercel.app/community</loc>'))
+  if (!sitemap.includes('<loc>https://portfolio-site-kappa-ashy.vercel.app/community-resume</loc>'))
     fail('Sitemap must publish the clean canonical Community résumé URL');
   if (sitemap.split('<lastmod>2026-11-04</lastmod>').length - 1 !== 2)
     fail('Both sitemap URLs must carry the current 2026-11-04 lastmod date');
