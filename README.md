@@ -200,7 +200,7 @@ well as in comments at each site.
 **Live at https://portfolio-site-kappa-ashy.vercel.app** (Vercel project `portfolio-site`, team
 `flux-build` — formerly `forta-flow`, which is why older deployment URLs still end in
 `-forta-flow.vercel.app`). `index.html`, `robots.txt` and `sitemap.xml` all carry that origin, so the canonical
-tag, `og:image`, `twitter:image` and the sitemap are correct as of 2026-09-08. It previously shipped
+tag, `og:image`, `twitter:image` and the sitemap were verified together on 2026-11-05. It previously shipped
 with a placeholder that resolved to nothing, which makes the `canonical` tag tell Google the real
 page lives at a URL that does not exist and leaves LinkedIn, X, Facebook and Slack unable to fetch
 the share image — the card renders blank.

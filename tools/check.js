@@ -302,8 +302,8 @@ if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
   if (!sitemap.includes('<loc>https://portfolio-site-kappa-ashy.vercel.app/community-resume</loc>'))
     fail('Sitemap must publish the clean canonical Community résumé URL');
-  if (sitemap.split('<lastmod>2026-11-04</lastmod>').length - 1 !== 2)
-    fail('Both sitemap URLs must carry the current 2026-11-04 lastmod date');
+  if (sitemap.split('<lastmod>2026-11-05</lastmod>').length - 1 !== 2)
+    fail('Both sitemap URLs must carry the current 2026-11-05 lastmod date');
 }
 
 /* --- vercel.json must be valid, with only keys Vercel accepts ------------- */
