@@ -175,6 +175,8 @@ if (!html.includes('Download Community Management résumé (PDF)'))
   fail('Résumé page must offer a direct Community Management PDF download');
 if (!html.includes('href="community-resume.html"'))
   fail('Print-ready Community HTML fallback must remain available');
+if (!html.includes("id:'bdc843d44dc16b9ae29a8349f3010284cab86ea2'"))
+  fail('Introduction to Data credential must retain its verified DataCamp identifier');
 if (!/linkedin:\s*\{ label:'LinkedIn',\s*value:'Olamide Olanipekun'/.test(html))
   fail('LinkedIn display name must match the portfolio owner name order');
 if (html.includes('value:\'Olanipekun Olamide\'')) fail('Stale reversed LinkedIn display name found');
