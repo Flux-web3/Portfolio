@@ -152,7 +152,7 @@ const pmEducationSource = fs.readFileSync(path.join(__dirname, 'build-pm-resume.
 const cmEducationSource = fs.readFileSync(path.join(__dirname, 'build-community-resume.py'), 'utf8');
 const communityEducationSource = fs.readFileSync(communityPage, 'utf8');
 const publicEducationSources = [html, pmEducationSource, cmEducationSource, communityEducationSource].join('\n');
-if (/CGPA|Completed\s+20\d{2}/i.test(publicEducationSources))
+if (/CGPA|Completed\s+20\d{2}|3\.8\/5/i.test(publicEducationSources))
   fail('Public education content must not include a CGPA or graduation date');
 if (!communityEducationSource.includes('Second Class Upper') ||
     !pmEducationSource.includes('Second Class Upper') ||
