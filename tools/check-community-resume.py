@@ -20,7 +20,8 @@ REQUIRED = [
     "5,000 members", "5–15 minutes", "Community Manager", "Gotabit",
     "Feb 2021", "Oct 2022", "Community Management & Growth Contributor",
     "Betboom", "Jan 2020", "Sep 2021", "50,000 members", "5–7 minutes",
-    "University of Lagos", "B.Sc.Ed., Mathematics and Education", "Second Class Upper"
+    "University of Lagos", "B.Sc.Ed., Mathematics and Education", "Second Class Upper",
+    "Community & support:", "Social & content:", "AI & productivity:", "Team collaboration:"
 ]
 EXCLUDED = ["50% reduction in operational bottlenecks", "community ownership at Deserialize", "CGPA", "Completed 2026", "3.8/5"]
 
