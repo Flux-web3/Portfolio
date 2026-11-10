@@ -56,11 +56,9 @@ def inspect(path: Path) -> None:
     if "community & customer support specialist" not in parts[1][:500].casefold():
         raise SystemExit(f"FAIL: {path.name} page 2 should begin with the complete Limitless Community & Customer support role. Page 2 starts: {parts[1][:260]}")
     expected_links = {
-        "mailto:flux.fx05@gmail.com",
         "https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/",
         "https://olamide-olanipekun.vercel.app/#/",
         "https://github.com/Flux-web3",
-        "https://x.com/King_flux_",
         "https://t.me/king_flux",
     }
     actual_links = {
@@ -68,9 +66,18 @@ def inspect(path: Path) -> None:
         for page in reader.pages for a in (page.get("/Annots") or [])
         if a.get_object().get("/A", {}).get("/URI")
     }
-    missing_links = expected_links - actual_links
-    if missing_links:
-        raise SystemExit(f"FAIL: {path.name} is missing clickable links: " + "; ".join(sorted(missing_links)))
+    if actual_links != expected_links:
+        missing_links = expected_links - actual_links
+        unexpected_links = actual_links - expected_links
+        details = []
+        if missing_links:
+            details.append("missing: " + "; ".join(sorted(missing_links)))
+        if unexpected_links:
+            details.append("unexpected: " + "; ".join(sorted(unexpected_links)))
+        raise SystemExit(f"FAIL: {path.name} clickable link audit failed: " + " | ".join(details))
+    extracted = " ".join(parts)
+    if "flux.fx05@gmail.com" not in extracted:
+        raise SystemExit(f"FAIL: {path.name} must show the email address as readable text")
     content = " ".join(parts)
     missing = [term for term in REQUIRED if term.casefold() not in content.casefold()]
     if missing:
