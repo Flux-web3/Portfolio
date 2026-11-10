@@ -102,13 +102,17 @@ for (const name of PAGES) {
 }
 
 /* --- homepage résumé CTA must open the résumé selection page --------------- */
-const homeResumeCta = rendered.Home?.match(/<a\\b[^>]*>\\s*Download Resume[\\s\\S]*?<\\/a>/i)?.[0];
-if (!homeResumeCta) {
+const homeCtaText = '>Download Resume';
+const homeCtaTextIndex = rendered.Home?.indexOf(homeCtaText) ?? -1;
+if (homeCtaTextIndex < 0) {
   fail('Home: missing Download Resume CTA');
 } else {
-  if (!/href="#\\/resume"/.test(homeResumeCta))
+  const anchorStart = rendered.Home.lastIndexOf('<a', homeCtaTextIndex);
+  const anchorEnd = rendered.Home.indexOf('</a>', homeCtaTextIndex);
+  const homeResumeCta = rendered.Home.slice(anchorStart, anchorEnd + 4);
+  if (!homeResumeCta.includes('href="#/resume"'))
     fail('Home: Download Resume must navigate to #/resume');
-  if (/\\sdownload(?:[\\s=>]|$)/i.test(homeResumeCta))
+  if (homeResumeCta.includes(' download') || homeResumeCta.includes('\\ndownload'))
     fail('Home: Download Resume must not directly download a PDF');
 }
 
