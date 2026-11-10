@@ -170,9 +170,9 @@ if (bindSource.includes("document.addEventListener('keydown'") || bindSource.inc
   fail('bind() must not register global listeners on every route render');
 if (!bindSource.includes('closeCurrentMobileSheet = (returnFocus = false)'))
   fail('bind() must refresh the current mobile-menu close handler on every route render');
-const renderStart = html.indexOf('function render(){');
-const bindStart = html.indexOf('function bind(path){');
-const renderSource = html.slice(renderStart, bindStart);
+const renderFunctionIndex = html.indexOf('function render(){');
+const bindFunctionIndex = html.indexOf('function bind(path){');
+const renderSource = html.slice(renderFunctionIndex, bindFunctionIndex);
 if (!renderSource.includes('closeCurrentMobileSheet?.(false);'))
   fail('render() must close the prior mobile sheet before replacing route DOM');
 if (!bindSource.includes('let sheetHideTimer = null;') ||
