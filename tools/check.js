@@ -157,6 +157,19 @@ else {
   if (!communityHtml.includes('href="/#/resume"') || communityHtml.includes('href="index.html#/resume"'))
     fail('community-resume.html must link back to the canonical résumé selector route');
 }
+const bindStart = html.indexOf('function bind(path){');
+const bootStart = html.indexOf('/* ======================  6. BOOT');
+const bindSource = html.slice(bindStart, bootStart);
+const documentKeydownCount = (html.match(/document\\.addEventListener\\('keydown'/g) || []).length;
+const desktopBreakpointCount = (html.match(/const desktopBreakpoint = window\\.matchMedia\\('\(min-width:981px\)'\\)/g) || []).length;
+if (documentKeydownCount !== 1)
+  fail('Mobile Escape handling must use one global document keydown listener');
+if (desktopBreakpointCount !== 1)
+  fail('Mobile menu desktop-breakpoint handling must use one global media-query listener');
+if (bindSource.includes("document.addEventListener('keydown'") || bindSource.includes("window.matchMedia('(min-width:981px)'"))
+  fail('bind() must not register global listeners on every route render');
+if (!bindSource.includes('closeCurrentMobileSheet = (returnFocus = false)'))
+  fail('bind() must refresh the current mobile-menu close handler on every route render');
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 

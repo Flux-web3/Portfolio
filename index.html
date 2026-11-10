@@ -2671,6 +2671,20 @@ const ROUTES = { '/':Home, '/about':About, '/experience':Experience, '/projects'
 const app = document.getElementById('app');
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* Route renders replace the page DOM. Keep global listeners registered once,
+   and let them act on the controls from the currently rendered route. */
+let closeCurrentMobileSheet = null;
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape') closeCurrentMobileSheet?.(true);
+});
+const desktopBreakpoint = window.matchMedia('(min-width:981px)');
+const closeMobileSheetOnDesktop = event => {
+  if (event.matches) closeCurrentMobileSheet?.(false);
+};
+desktopBreakpoint.addEventListener
+  ? desktopBreakpoint.addEventListener('change', closeMobileSheetOnDesktop)
+  : desktopBreakpoint.addListener(closeMobileSheetOnDesktop);
+
 function currentPath(){
   const raw = (location.hash || '#/').replace(/^#/,'');
   const path = raw.split('?')[0].replace(/\/$/,'') || '/';
@@ -2735,15 +2749,13 @@ function bind(path){
   };
   burger.addEventListener('click', () => setSheet(burger.getAttribute('aria-expanded') !== 'true'));
   sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setSheet(false)));
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setSheet(false); burger.focus(); }
-  });
-  /* Crossing to desktop width hides the burger via media query, which would strand
-     an open sheet and — worse — leave body{overflow:hidden} with no visible way to
-     undo it. Close on the way past the breakpoint. */
-  const wide = window.matchMedia('(min-width:981px)');
-  const onWide = e => { if (e.matches && burger.getAttribute('aria-expanded') === 'true') setSheet(false); };
-  wide.addEventListener ? wide.addEventListener('change', onWide) : wide.addListener(onWide);
+  /* The one global Escape / desktop-breakpoint pair calls this current-route
+     closure. Replacing it on each render prevents stale DOM references. */
+  closeCurrentMobileSheet = (returnFocus = false) => {
+    if (burger.getAttribute('aria-expanded') !== 'true') return;
+    setSheet(false);
+    if (returnFocus) burger.focus();
+  };
 
   /* --- reveal on scroll (only where it earns its place) ------------------ */
   const revealables = document.querySelectorAll('[data-reveal]');
