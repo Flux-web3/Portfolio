@@ -219,11 +219,12 @@ reads both and always prefers the alias.
 
 ```bash
 bash tools/set-site-url.sh https://your-real-domain   # the ALIAS, or a custom domain
-git commit -am "Point canonical, og:image and sitemap at the live domain" && git push
+git add index.html community-resume.html robots.txt sitemap.xml README.md
+git commit -m "Update canonical site origin" && git push
 # the push deploys it — Vercel's GitHub integration builds main automatically
 ```
 
-`deploy.sh` offers to do all of this for you. `tools/check.js` fails if the three files ever disagree.
+`tools/set-site-url.sh` reconciles the main page, standalone community résumé, robots file, sitemap, and README. It can be rerun safely after a domain change; `tools/check.js` verifies those references all use the same canonical origin.
 
 Afterwards, re-scrape the card so the platforms drop their cached copy:
 [LinkedIn](https://www.linkedin.com/post-inspector/) ·

@@ -243,8 +243,13 @@ function communityHtmlSafe() {
     && !page.includes('building and leading the project’s communities')
     && !page.includes('community presence across Discord, Telegram')
     && !page.includes('<span>Lagos, Nigeria · Remote / Hybrid</span>')
-    && page.includes('<link rel="canonical" href="https://olamide-olanipekun.vercel.app/community-resume">')
-    && page.includes('window.print()');
+    && (() => {
+      const siteOrigin = html.match(/<link rel="canonical" href="(https:\/\/[^/]+)\/">/)?.[1];
+      const communityOrigin = page.match(/<link rel="canonical" href="(https:\/\/[^/]+)\/community-resume">/)?.[1];
+      return Boolean(siteOrigin && communityOrigin === siteOrigin &&
+        page.includes('href="' + siteOrigin + '/#/"') &&
+        page.includes('window.print()'));
+    })();
 }
 
 /* --- dates, role uniqueness, impact attribution, and print safety ----------- */
@@ -314,39 +319,88 @@ for (const key of ['og:image', 'og:image:secure_url', 'twitter:image']) {
     fail(`${key} points at ${local}, which is not in the site root`);
 }
 
-/* --- one origin everywhere: canonical, og:url, images, robots, sitemap ---- */
+/* --- one origin everywhere: canonical, social cards, robots, sitemap,
+   standalone résumé, and the maintainer README ----------------------------- */
 const root = path.join(__dirname, '..');
-const origins = new Set();
-const collect = (text) => {
-  for (const m of text.matchAll(/https:\/\/[^"'\s<>]+/g)) {
-    const o = m[0].match(/^https:\/\/[^/]+/)[0];
-    // third-party origins are expected; only the site's own must agree
-    if (/vercel\.app|olamide|olanipekun/i.test(o)) origins.add(o);
+const head = html.slice(0, html.indexOf('</head>'));
+const canonicalOrigin = head.match(/<link rel="canonical" href="(https:\/\/[^/]+)\/">/)?.[1];
+if (!canonicalOrigin) {
+  fail('Main page is missing a valid https canonical origin');
+} else {
+  const metaContent = (key) => {
+    const match = head.match(new RegExp('<meta (?:property|name)="' + key + '" content="([^"]+)"'));
+    return match?.[1] || '';
+  };
+  if (metaContent('og:url') !== canonicalOrigin + '/')
+    fail('og:url must match the main page canonical origin');
+  for (const key of ['og:image', 'og:image:secure_url', 'twitter:image']) {
+    const value = metaContent(key);
+    if (!value.startsWith(canonicalOrigin + '/'))
+      fail(key + ' must use the same origin as the main page canonical');
   }
-};
-/* Only <head> carries the site's own origin (canonical, og:*, twitter:*,
-   JSON-LD); internal links in the body are all `#/` routes. The body is left
-   out on purpose: it links out to other projects' own *.vercel.app deploys
-   (the Tourist capstone prototype, for one), and those are not this site. */
-collect(html.slice(0, html.indexOf('</head>')));
-for (const f of ['robots.txt', 'sitemap.xml']) {
-  if (fs.existsSync(path.join(root, f))) collect(fs.readFileSync(path.join(root, f), 'utf8'));
-}
-if (origins.size > 1)
-  fail(`site origin disagrees across files: ${[...origins].join(' vs ')} — run tools/set-site-url.sh`);
-else if (origins.size === 1)
-  console.log(`\n  site origin: ${[...origins][0]}`);
 
-/* --- sitemap freshness and clean URL canonical --------------------------- */
-const sitemapPath = path.join(__dirname, '..', 'sitemap.xml');
+  const robotsPath = path.join(root, 'robots.txt');
+  if (fs.existsSync(robotsPath)) {
+    const robots = fs.readFileSync(robotsPath, 'utf8');
+    if (!robots.includes('Sitemap: ' + canonicalOrigin + '/sitemap.xml'))
+      fail('robots.txt Sitemap directive must use the main page canonical origin');
+  }
+
+  const communityPath = path.join(root, 'community-resume.html');
+  if (fs.existsSync(communityPath)) {
+    const community = fs.readFileSync(communityPath, 'utf8');
+    if (!community.includes('<link rel="canonical" href="' + canonicalOrigin + '/community-resume">'))
+      fail('Community résumé canonical must use the main page canonical origin');
+    if (!community.includes('href="' + canonicalOrigin + '/#/"'))
+      fail('Community résumé Portfolio links must use the main page canonical origin');
+  }
+
+  const readmePath = path.join(root, 'README.md');
+  if (fs.existsSync(readmePath)) {
+    const readme = fs.readFileSync(readmePath, 'utf8');
+    if (!readme.includes('Live: <' + canonicalOrigin + '/#/>'))
+      fail('README live URL must use the main page canonical origin');
+    if (!readme.includes('<' + canonicalOrigin + '>'))
+      fail('README production URL must use the main page canonical origin');
+  }
+
+  console.log('\n  site origin: ' + canonicalOrigin);
+}
+
+/* --- sitemap route and lastmod integrity --------------------------------- */
+const sitemapPath = path.join(root, 'sitemap.xml');
 if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
-  if (!sitemap.includes('<loc>https://olamide-olanipekun.vercel.app/community-resume</loc>'))
-    fail('Sitemap must publish the clean canonical Community résumé URL');
-  if (sitemap.split('<lastmod>2026-11-10</lastmod>').length - 1 !== 2)
-    fail('Both sitemap URLs must carry the current 2026-11-10 lastmod date');
+  if (canonicalOrigin && (
+      !sitemap.includes('<loc>' + canonicalOrigin + '/</loc>') ||
+      !sitemap.includes('<loc>' + canonicalOrigin + '/community-resume</loc>')
+    ))
+    fail('Sitemap must publish the main page and clean Community résumé URLs on the same canonical origin');
+  const lastmods = [...sitemap.matchAll(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/g)].map(m => m[1]);
+  if (lastmods.length !== 2)
+    fail('Sitemap must contain exactly two ISO-format lastmod values');
+  else {
+    if (lastmods[0] !== lastmods[1])
+      fail('Both sitemap URLs must have the same lastmod date');
+    for (const date of lastmods) {
+      const parsed = new Date(date + 'T00:00:00Z');
+      if (!Number.isFinite(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date)
+        fail('Sitemap lastmod must be a valid YYYY-MM-DD date');
+      else if (date > new Date().toISOString().slice(0, 10))
+        fail('Sitemap lastmod must not be in the future');
+    }
+  }
 }
 
+/* --- domain migration helper must keep all public URLs in sync ------------ */
+const setSiteUrlPath = path.join(__dirname, 'set-site-url.sh');
+if (fs.existsSync(setSiteUrlPath)) {
+  const setSiteUrl = fs.readFileSync(setSiteUrlPath, 'utf8');
+  if (!setSiteUrl.includes('community-resume.html') || !setSiteUrl.includes('README.md'))
+    fail('set-site-url.sh must update the standalone résumé and maintainer README as well as the main metadata files');
+  if (!setSiteUrl.includes('perl -0pi') || !setSiteUrl.includes('OLD_ORIGIN'))
+    fail('set-site-url.sh must replace origins literally, not as an unescaped regular expression');
+}
 /* --- vercel.json must be valid, with only keys Vercel accepts ------------- */
 const vjPath = path.join(root, 'vercel.json');
 if (fs.existsSync(vjPath)) {

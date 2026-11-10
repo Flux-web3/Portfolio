@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Rewrites the site's origin everywhere it appears: the canonical link, og:url,
-# og:image, twitter:image, robots.txt's Sitemap line, and sitemap.xml's <loc>.
+# Reconciles the site's public origin everywhere it appears: main-page metadata,
+# the standalone community résumé and its portfolio links, robots.txt, sitemap.xml,
+# and the maintainer README. Literal replacement avoids treating domain dots as regex.
 #
 # Run this once, right after the first Vercel deploy tells you the real domain:
 #   bash tools/set-site-url.sh https://olamide.vercel.app
@@ -21,24 +22,25 @@ fi
 cd "$(dirname "$0")/.."
 
 # Whatever origin is in the canonical tag right now is the one to replace.
-OLD="$(grep -oP '(?<=<link rel="canonical" href=")https://[^/"]+' index.html | head -1)"
+OLD="$(sed -nE 's#.*<link rel="canonical" href="(https://[^"/]+)".*#\1#p' index.html | head -1)"
 [[ -n "$OLD" ]] || { echo "error: could not read the current origin from index.html" >&2; exit 1; }
 
 if [[ "$OLD" == "$NEW" ]]; then
-  echo "Already set to $NEW — nothing to do."
-  exit 0
+  echo "Main canonical is already $NEW — reconciling every public reference."
 fi
 
-for f in index.html robots.txt sitemap.xml; do
+for f in index.html community-resume.html robots.txt sitemap.xml README.md; do
   [[ -f "$f" ]] || continue
-  before="$(grep -c -- "$OLD" "$f" || true)"
-  # Bare origin, not a regex: sed's delimiter is | because the URL contains /.
-  sed -i "s|${OLD}|${NEW}|g" "$f"
-  echo "  $f — ${before} occurrence(s) updated"
+  before="$(grep -F -o -- "$OLD" "$f" | wc -l | tr -d '[:space:]' || true)"
+  OLD_ORIGIN="$OLD" NEW_ORIGIN="$NEW" perl -0pi -e 's/\Q$ENV{OLD_ORIGIN}\E/$ENV{NEW_ORIGIN}/g' "$f"
+  echo "  $f — ${before:-0} occurrence(s) reconciled"
 done
 
-# sitemap lastmod should reflect the deploy, not the day the file was written.
-sed -i "s|<lastmod>[0-9-]*</lastmod>|<lastmod>$(date -u +%F)</lastmod>|" sitemap.xml
+# Sitemap lastmod reflects an actual origin migration, not an idempotent re-run.
+if [[ "$OLD" != "$NEW" ]]; then
+  LASTMOD="$(date -u +%F)"
+  LASTMOD="$LASTMOD" perl -pi -e 's#<lastmod>[0-9-]*</lastmod>#<lastmod>$ENV{LASTMOD}</lastmod>#g' sitemap.xml
+fi
 
 echo
 echo "Origin changed:  $OLD  ->  $NEW"
