@@ -184,7 +184,9 @@ story.append(P(
     "<b>Product definition:</b> PRDs, user stories, acceptance criteria, user journeys, MVP scope, RICE / MoSCoW and backlog management. "
     "<b>Delivery &amp; leadership:</b> Scrum, Kanban, Scrumban, sprint planning, stakeholder alignment, cross-functional delivery, UAT and release coordination. "
     "<b>Growth &amp; operations:</b> go-to-market, onboarding, activation, retention, lifecycle optimisation, product operations and workflow automation. "
-    "<b>Analytics &amp; technical:</b> SQL, Mixpanel, Amplitude, Dune, KPIs, funnel analysis, experimentation, APIs, integrations and AI-assisted prototyping.",
+    "<b>Analytics &amp; experimentation:</b> SQL, Mixpanel, Amplitude, Dune, KPI tracking, funnel analysis, performance reporting and experimentation. "
+    "<b>Technical product building:</b> product architecture, REST APIs, third-party integrations, UX prototyping and AI-assisted development. "
+    "<b>Customer, community &amp; CX:</b> customer support workflows, issue triage and escalation, community strategy, moderation, member engagement and feedback loops.",
     "Skill"))
 
 story.extend(section("Professional Experience"))
