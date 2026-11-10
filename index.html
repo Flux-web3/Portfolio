@@ -884,12 +884,10 @@ const resumeAttr  = () => '';
 const resumeLabel = () => 'Choose a résumé';
 const resumeIcon  = () => ICON.ar();
 
-/* On the homepage, the primary résumé CTA downloads the Product Manager PDF.
-   The résumé page remains available for visitors who need the community version. */
-const resumeButton = (isHome = false) =>
-  isHome && PROFILE.resumeReady
-    ? `<a class="btn btn-s" href="${PROFILE.resumeFile}" download>Download Resume${ICON.down()}</a>`
-    : `<a class="btn btn-s" href="${resumeHref()}"${resumeAttr()}>${resumeLabel()}${resumeIcon()}</a>`;
+/* Route every résumé CTA to the résumé selection page. Visitors can then
+   choose the Product Manager or Community Management PDF that fits the role. */
+const resumeButton = () =>
+  `<a class="btn btn-s" href="${resumeHref()}"${resumeAttr()}>Download Resume${resumeIcon()}</a>`;
 
 /* Centralised social config. `url:null` = not supplied yet; it is skipped in the
    UI rather than guessed. Add a URL here and it appears everywhere at once. */
@@ -1543,7 +1541,7 @@ const CTA = (path) => `
           <p class="body measure" style="margin-top:16px">Hiring for a product role, building something ambitious, or want to exchange ideas — either way, I'd like to hear about it.</p>
           <div class="btns mt-ml">
             <a class="btn btn-p" href="#/contact">Get in touch</a>
-            ${resumeButton(path === '/')}
+            ${resumeButton()}
           </div>
         </div>
       </div>
@@ -1726,7 +1724,7 @@ const Home = () => `
         <p class="lede hero-lede">I combine hands-on product/project management with Web3 community growth, customer support, growth marketing and operations. I turn user problems into clear delivery plans, strengthen the systems around a product, and use data and feedback to improve outcomes.</p>
         <div class="btns">
           <a class="btn btn-p" href="#/projects">View my work</a>
-          ${resumeButton(true)}
+          ${resumeButton()}
           <a class="btn btn-q" href="#/contact">Let's connect${ICON.ar()}</a>
         </div>
         <dl class="hero-meta">
