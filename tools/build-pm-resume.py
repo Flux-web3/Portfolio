@@ -139,11 +139,10 @@ story = []
 story.append(P("OLAMIDE OLANIPEKUN", "Name"))
 story.append(P("TECHNICAL PRODUCT MANAGER  |  PRODUCT STRATEGY, GROWTH &amp; OPERATIONS", "Headline"))
 story.append(P(
-    'Lagos, Nigeria  &nbsp;|&nbsp; <link href="mailto:flux.fx05@gmail.com" color="#1876B9">Email</link>  &nbsp;|&nbsp; '
+    'Lagos, Nigeria  &nbsp;|&nbsp; flux.fx05@gmail.com  &nbsp;|&nbsp; '
     '<link href="https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/" color="#1876B9">LinkedIn</link>  &nbsp;|&nbsp; '
     '<link href="https://olamide-olanipekun.vercel.app/#/" color="#1876B9">Portfolio</link>  &nbsp;|&nbsp; '
     '<link href="https://github.com/Flux-web3" color="#1876B9">GitHub</link>  &nbsp;|&nbsp; '
-    '<link href="https://x.com/King_flux_" color="#1876B9">X</link>  &nbsp;|&nbsp; '
     '<link href="https://t.me/king_flux" color="#1876B9">Telegram</link>', "Contact"))
 
 story.extend(section("Professional Summary"))
@@ -228,7 +227,7 @@ story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2
 
 story.extend(section("Selected Product-Building Work"))
 story.append(KeepTogether([
-    P("<link href='https://fancy-sunstone-a24.notion.site/FORTAFLOW-Product-Doc-090961b957d94586b3f8a5707b3e5af2' color='#1876B9'>FortaFlow | Independent Product Builder</link>", "ProjectTitle"),
+    P("FortaFlow | Independent Product Builder", "ProjectTitle"),
     P("A trading-strategy research and validation product scoped for intermediate retail crypto and forex traders. Led discovery, requirements, UX, architecture, prototyping, and MVP planning. <b>Build is paused; it is not shipped and has no live-order path.</b> MVP scope: explicit rules, immutable strategy versions, reproducible historical backtests, performance/risk reporting, bounded stress scenarios, and manual/CSV journaling."),
     P("Tools: Notion, ChatGPT, Claude, Google Stitch, Lovable, Claude Code, Supabase, GitHub, Vercel.", "RoleMeta"),
     Spacer(1,3)
