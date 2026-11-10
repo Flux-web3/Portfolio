@@ -22,7 +22,7 @@ fi
 cd "$(dirname "$0")/.."
 
 # Whatever origin is in the canonical tag right now is the one to replace.
-OLD="$(sed -nE 's#.*<link rel="canonical" href="(https://[^"/]+)".*#\1#p' index.html | head -1)"
+OLD="$(sed -nE 's#.*<link rel="canonical" href="(https://[^"/]+)[^"]*".*#\1#p' index.html | head -1)"
 [[ -n "$OLD" ]] || { echo "error: could not read the current origin from index.html" >&2; exit 1; }
 
 if [[ "$OLD" == "$NEW" ]]; then
