@@ -121,19 +121,25 @@ skills = [
     ("Web3 &amp; Crypto", "Web3 industry knowledge; blockchain and cryptocurrency communities; crypto product and trading ecosystem familiarity."),
 ]
 rows = []
+full_width_skill_row = None
 for i in range(0, len(skills), 2):
     left = skills[i]
     right = skills[i + 1] if i + 1 < len(skills) else ("", "")
     left_cell = [p(left[0], "SkillTitle"), p(left[1], "SkillText")]
     right_cell = [p(right[0], "SkillTitle"), p(right[1], "SkillText")] if right[0] else ""
     rows.append([left_cell, right_cell])
+    if not right[0]:
+        full_width_skill_row = len(rows) - 1
 skill_table = Table(rows, colWidths=[92 * mm, 92 * mm], hAlign="LEFT")
-skill_table.setStyle(TableStyle([
+skill_table_styles = [
     ("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, -1), WASH),
     ("BOX", (0, 0), (-1, -1), 0.45, LINE), ("INNERGRID", (0, 0), (-1, -1), 0.35, LINE),
     ("LEFTPADDING", (0, 0), (-1, -1), 6), ("RIGHTPADDING", (0, 0), (-1, -1), 6),
     ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-]))
+]
+if full_width_skill_row is not None:
+    skill_table_styles.append(("SPAN", (0, full_width_skill_row), (1, full_width_skill_row)))
+skill_table.setStyle(TableStyle(skill_table_styles))
 story.append(skill_table)
 
 story.extend(section("Professional Experience"))
