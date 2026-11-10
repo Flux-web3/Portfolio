@@ -102,11 +102,10 @@ story = []
 story.append(p("OLAMIDE OLANIPEKUN", "Name"))
 story.append(p("WEB3 COMMUNITY MANAGER  |  GROWTH, SUPPORT &amp; OPERATIONS", "Headline"))
 story.append(p(
-    '<link href="mailto:flux.fx05@gmail.com" color="#A96512">Email</link>  |  '
+    'flux.fx05@gmail.com  |  '
     '<link href="https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/" color="#A96512">LinkedIn</link>  |  '
     '<link href="https://olamide-olanipekun.vercel.app/#/" color="#A96512">Portfolio</link>  |  '
     '<link href="https://github.com/Flux-web3" color="#A96512">GitHub</link>  |  '
-    '<link href="https://x.com/King_flux_" color="#A96512">X</link>  |  '
     '<link href="https://t.me/king_flux" color="#A96512">Telegram</link>  |  Remote / Hybrid', "Contact"))
 
 story.extend(section("Professional Summary"))
