@@ -275,9 +275,9 @@ fi
 # ------------------------------------------------------------------- 5. URL --
 say "5/5  Point the canonical URL, share image and sitemap at the real domain"
 cat <<'NOTE'
-  index.html, robots.txt and sitemap.xml currently carry a PLACEHOLDER origin.
-  Until it matches the live domain, Google is told the real page lives at a URL
-  that does not exist, and LinkedIn/X/Facebook cannot fetch the share image.
+  index.html, community-resume.html, robots.txt, sitemap.xml and README.md carry
+  the site's canonical origin. Reconcile them with the stable production alias
+  returned by Vercel so page canonicals, share cards and public links stay aligned.
 NOTE
 
 if [[ -n "${CANON_URL:-}" ]]; then

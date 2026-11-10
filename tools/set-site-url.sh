@@ -43,7 +43,7 @@ if [[ "$OLD" != "$NEW" ]]; then
 fi
 
 echo
-echo "Origin changed:  $OLD  ->  $NEW"
+echo "Origin references reconciled:  $OLD  ->  $NEW"
 echo "Now commit and push:"
 echo "  git commit -am 'Point canonical, og:image and sitemap at the live domain' && git push"
 echo

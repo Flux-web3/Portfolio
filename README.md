@@ -199,11 +199,12 @@ well as in comments at each site.
 
 **Live at https://olamide-olanipekun.vercel.app/#/** (Vercel project `portfolio-site`, team
 `flux-build` — formerly `forta-flow`, which is why older deployment URLs still end in
-`-forta-flow.vercel.app`). `index.html`, `robots.txt` and `sitemap.xml` carry the current `olamide-olanipekun.vercel.app` alias, so the canonical
-tag, `og:image`, `twitter:image` and sitemap point to the same origin (verified 2026-11-10). It previously shipped
-with a placeholder that resolved to nothing, which makes the `canonical` tag tell Google the real
-page lives at a URL that does not exist and leaves LinkedIn, X, Facebook and Slack unable to fetch
-the share image — the card renders blank.
+`-forta-flow.vercel.app`). `index.html`, `community-resume.html`, `robots.txt`, `sitemap.xml` and this README carry the
+current `olamide-olanipekun.vercel.app` alias. The main-page canonical, standalone résumé canonical,
+social cards and sitemap therefore share one origin (verified 2026-11-10). It previously shipped
+with a placeholder that resolved to nothing, which made the `canonical` tag tell Google the real
+page lived at a URL that did not exist and left LinkedIn, X, Facebook and Slack unable to fetch
+the share image — the card rendered blank.
 
 **The trap, if you ever re-point it:** every deployment has two kinds of `https://…vercel.app` URL
 (`vercel --prod` prints both; `vercel inspect` lists them) and they are not interchangeable.

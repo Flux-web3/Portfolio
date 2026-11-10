@@ -28,6 +28,8 @@ jobs:
           package-manager-cache: false
       - name: Run portfolio validator
         run: node tools/check.js
+      - name: Test site URL migration helper
+        run: bash tools/test-set-site-url.sh
       - name: Set up Python for PDF validation
         uses: actions/setup-python@v7
         with:
