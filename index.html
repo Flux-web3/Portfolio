@@ -2755,6 +2755,9 @@ function bind(path){
       }, 200);
     }
     document.body.style.overflow = open ? 'hidden' : '';
+    /* The sheet overlays the page. Keep the obscured page out of keyboard
+       navigation and the accessibility tree until the sheet has closed. */
+    app.inert = open;
   };
   burger.addEventListener('click', () => setSheet(burger.getAttribute('aria-expanded') !== 'true'));
   sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setSheet(false)));

@@ -179,6 +179,10 @@ if (!bindSource.includes('let sheetHideTimer = null;') ||
     !bindSource.includes('clearTimeout(sheetHideTimer)') ||
     !bindSource.includes('sheetHideTimer = setTimeout'))
   fail('Mobile menu close animation must cancel a pending hide timer before reopening');
+if (!bindSource.includes('app.inert = open;'))
+  fail('Mobile navigation must make the obscured page inert while the overlay is open');
+if (!bindSource.includes("document.body.style.overflow = open ? 'hidden' : '';"))
+  fail('Mobile navigation must continue to lock background scrolling while open');
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 
@@ -424,9 +428,13 @@ if (fs.existsSync(vjPath)) {
   const pdfCache = (pdfRule?.headers || []).find(h => (h.key || '').toLowerCase() === 'cache-control')?.value;
   if (pdfCache !== 'public, max-age=0, must-revalidate')
     fail('Product Manager PDF must revalidate; do not cache the fixed résumé URL as immutable');
-  const immutableRule = (vjPolicy.headers || []).find(h => (h.source || '').includes('svg|png'));
-  if (!immutableRule || (immutableRule.source || '').includes('pdf'))
-    fail('Immutable asset cache rule must exclude PDF files');
+  const assetRule = (vjPolicy.headers || []).find(h => (h.source || '').includes('svg|png'));
+  const assetCache = (assetRule?.headers || []).find(h => (h.key || '').toLowerCase() === 'cache-control')?.value;
+  if (assetCache !== 'public, max-age=86400, stale-while-revalidate=604800')
+    fail('Stable-named public assets must use bounded caching, not a year-long immutable cache');
+  if ((vjPolicy.headers || []).some(h => (h.headers || []).some(x =>
+      (x.key || '').toLowerCase() === 'cache-control' && /immutable/i.test(x.value || ''))))
+    fail('No stable-named public asset may be cached as immutable');
 }
 const workflowPath = path.join(root, '.github', 'workflows', 'portfolio-check.yml');
 if (fs.existsSync(workflowPath)) {
