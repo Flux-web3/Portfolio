@@ -85,7 +85,7 @@ def bullet(text: str) -> Paragraph:
     return Paragraph("- " + text, styles["ResumeBullet"])
 
 
-def role(title, company, dates, location, summary, bullets):
+def role(title, company, dates, location, summary, bullets, keep_all=False):
     # Keep title, employer, and dates in one text object so text extraction and
     # ATS parsers encounter them in the same logical order as a human reader.
     heading = Paragraph(
@@ -101,9 +101,15 @@ def role(title, company, dates, location, summary, bullets):
         lead.append(P(escape(location), "RoleMeta"))
     if summary:
         lead.append(P(summary, "BodySmall"))
-    flow = [KeepTogether(lead)]
-    flow.extend(bullet(item) for item in bullets)
-    flow.append(Spacer(1, 1.5))
+    if keep_all:
+        # Keep this role intact when it falls near a page boundary. This avoids
+        # leaving its title/summary at the foot of one page and bullets at the
+        # top of the next.
+        flow = [KeepTogether(lead + [bullet(item) for item in bullets] + [Spacer(1, 1.5)])]
+    else:
+        flow = [KeepTogether(lead)]
+        flow.extend(bullet(item) for item in bullets)
+        flow.append(Spacer(1, 1.5))
     return flow
 
 
@@ -207,7 +213,7 @@ story.extend(role("Product Manager", "Deserialize", "Apr 2024 - May 2025", "Lago
     [
         "Coordinated discovery, requirements, prioritisation, and delivery with engineering and stakeholders.",
         "Used behavioural data and operational feedback to improve onboarding, activation, and retention."
-    ]))
+    ], keep_all=True))
 
 # Earlier experience, selected product work, tools, and education flow naturally
 # into the remaining first-page space before continuing onto page two.
