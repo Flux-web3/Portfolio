@@ -42,21 +42,33 @@ def read_pdf(path: Path):
     if "product manager & growth operations lead" not in page_texts[1][:500].casefold():
         raise SystemExit(f"FAIL: {path.name} page 2 should begin with the complete Limitless role. Page 2 starts: {page_texts[1][:260]}")
     expected_links = {
-        "mailto:flux.fx05@gmail.com",
         "https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/",
         "https://olamide-olanipekun.vercel.app/#/",
         "https://github.com/Flux-web3",
-        "https://x.com/King_flux_",
         "https://t.me/king_flux",
+        "https://www.datacamp.com/completed/statement-of-accomplishment/course/d2b403c9775c6f044933a0f0c04b995599f52745",
+        "https://www.datacamp.com/completed/statement-of-accomplishment/course/639e3d23f56331e4778550bfe3a969aad4971fcc",
+        "https://www.datacamp.com/completed/statement-of-accomplishment/course/65fee3ea851aa182dd6c8d6487c9c8d04182cf49",
     }
     actual_links = {
         str(a.get_object().get("/A", {}).get("/URI"))
         for page in reader.pages for a in (page.get("/Annots") or [])
         if a.get_object().get("/A", {}).get("/URI")
     }
-    missing_links = expected_links - actual_links
-    if missing_links:
-        raise SystemExit(f"FAIL: {path.name} is missing clickable links: " + "; ".join(sorted(missing_links)))
+    if actual_links != expected_links:
+        missing_links = expected_links - actual_links
+        unexpected_links = actual_links - expected_links
+        details = []
+        if missing_links:
+            details.append("missing: " + "; ".join(sorted(missing_links)))
+        if unexpected_links:
+            details.append("unexpected: " + "; ".join(sorted(unexpected_links)))
+        raise SystemExit(f"FAIL: {path.name} clickable link audit failed: " + " | ".join(details))
+    extracted = " ".join(page_texts)
+    if "flux.fx05@gmail.com" not in extracted:
+        raise SystemExit(f"FAIL: {path.name} must show the email address as readable text")
+    if "FortaFlow | Independent Product Builder" not in extracted:
+        raise SystemExit(f"FAIL: {path.name} must retain FortaFlow build experience as plain text")
     return " ".join(page_texts)
 
 required = [
@@ -74,6 +86,7 @@ required = [
     "Limitless Prop Firm | May 2022 - Dec 2023",
     "Gotabit | Feb 2021 - Oct 2022",
     "Betboom | Jan 2020 - Sep 2021",
+    "FortaFlow | Independent Product Builder",
     "intermediate retail crypto and forex traders",
     "Build is paused; it is not shipped",
     "manual/CSV journaling",
