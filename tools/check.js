@@ -160,8 +160,8 @@ else {
 const bindStart = html.indexOf('function bind(path){');
 const bootStart = html.indexOf('/* ======================  6. BOOT');
 const bindSource = html.slice(bindStart, bootStart);
-const documentKeydownCount = (html.match(/document\\.addEventListener\\('keydown'/g) || []).length;
-const desktopBreakpointCount = (html.match(/const desktopBreakpoint = window\\.matchMedia\\('\(min-width:981px\)'\\)/g) || []).length;
+const documentKeydownCount = html.split("document.addEventListener('keydown'").length - 1;
+const desktopBreakpointCount = html.split("const desktopBreakpoint = window.matchMedia('(min-width:981px)'").length - 1;
 if (documentKeydownCount !== 1)
   fail('Mobile Escape handling must use one global document keydown listener');
 if (desktopBreakpointCount !== 1)
