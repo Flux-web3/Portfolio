@@ -131,10 +131,10 @@ from code (Pillow only, no network).
 
 ## Deploy
 
-**Pushing `main` deploys to production.** The Vercel project `portfolio-site` (team `flux-build`) is
-connected to `Flux-web3/Portfolio`, so every push to `main` builds and goes live at
-<https://portfolio-site-kappa-ashy.vercel.app> within seconds. Verified 2026-09-29: commit `79cc01b`
-was built by Vercel from GitHub (source `git`, target `production`) with no CLI involved.
+**Pushing `main` deploys to production.** The Vercel project `portfolio-site` (team `flux-build`)
+is connected to `Flux-web3/Portfolio`; production is served on the stable
+<https://olamide-olanipekun.vercel.app> alias. Each deployment is built from the commit pushed
+to `main`; verify the deployment SHA and `READY` state in Vercel before announcing a release.
 
 ```bash
 node tools/check.js   # always, before pushing — a push is a production release

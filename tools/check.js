@@ -154,6 +154,8 @@ else {
     fail('community-resume.html must provide a Print / Save as PDF action');
   if (!/name="viewport"/.test(communityHtml))
     fail('community-resume.html must be responsive on mobile');
+  if (!communityHtml.includes('href="/#/resume"') || communityHtml.includes('href="index.html#/resume"'))
+    fail('community-resume.html must link back to the canonical résumé selector route');
 }
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
