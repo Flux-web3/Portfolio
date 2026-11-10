@@ -2757,7 +2757,13 @@ function bind(path){
     document.body.style.overflow = open ? 'hidden' : '';
     /* The sheet overlays the page. Keep the obscured page out of keyboard
        navigation and the accessibility tree until the sheet has closed. */
-    app.inert = open;
+    /* Keep the menu itself and its header toggle interactive. Only the
+       content obscured by the fixed sheet is removed from keyboard navigation
+       and the accessibility tree. */
+    const pageContent = document.getElementById('main');
+    const footerContent = document.querySelector('.foot');
+    if (pageContent) pageContent.inert = open;
+    if (footerContent) footerContent.inert = open;
   };
   burger.addEventListener('click', () => setSheet(burger.getAttribute('aria-expanded') !== 'true'));
   sheet.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setSheet(false)));

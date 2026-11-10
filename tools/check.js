@@ -179,8 +179,13 @@ if (!bindSource.includes('let sheetHideTimer = null;') ||
     !bindSource.includes('clearTimeout(sheetHideTimer)') ||
     !bindSource.includes('sheetHideTimer = setTimeout'))
   fail('Mobile menu close animation must cancel a pending hide timer before reopening');
-if (!bindSource.includes('app.inert = open;'))
-  fail('Mobile navigation must make the obscured page inert while the overlay is open');
+if (!bindSource.includes("document.getElementById('main')") ||
+    !bindSource.includes("document.querySelector('.foot')") ||
+    !bindSource.includes('pageContent.inert = open;') ||
+    !bindSource.includes('footerContent.inert = open;'))
+  fail('Mobile navigation must inert only the obscured main page and footer, not the sheet or header controls');
+if (bindSource.includes('app.inert = open;'))
+  fail('The mobile navigation sheet must never be placed inside an inert app ancestor');
 if (!bindSource.includes("document.body.style.overflow = open ? 'hidden' : '';"))
   fail('Mobile navigation must continue to lock background scrolling while open');
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
