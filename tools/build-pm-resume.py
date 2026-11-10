@@ -173,14 +173,13 @@ metrics.setStyle(TableStyle([
 story.append(metrics)
 
 story.extend(section("Core Product Competencies"))
-for item in [
-    "<b>Strategy &amp; discovery:</b> Problem framing, user research, opportunity validation, product strategy, roadmaps, competitive analysis and user-feedback synthesis.",
-    "<b>Product definition:</b> PRDs, user stories, acceptance criteria, user journeys, MVP scoping, RICE / MoSCoW prioritisation and backlog management.",
-    "<b>Delivery &amp; leadership:</b> Agile (Scrum, Kanban, Scrumban), sprint planning, stakeholder management, cross-functional execution, UAT and release coordination.",
-    "<b>Growth &amp; operations:</b> Go-to-market coordination, onboarding, activation, retention, lifecycle optimisation, product operations, process design and workflow automation.",
-    "<b>Analytics &amp; technical fluency:</b> SQL, Mixpanel, Amplitude, Dune, KPI tracking, funnel analysis, experimentation, product architecture, REST APIs, third-party integrations and AI-assisted prototyping."
-]:
-    story.append(P(item, "Skill"))
+story.append(P(
+    "<b>Discovery &amp; strategy:</b> user research, problem framing, opportunity validation, product strategy, roadmaps and competitor analysis. "
+    "<b>Product definition:</b> PRDs, user stories, acceptance criteria, user journeys, MVP scope, RICE / MoSCoW and backlog management. "
+    "<b>Delivery &amp; leadership:</b> Scrum, Kanban, Scrumban, sprint planning, stakeholder alignment, cross-functional delivery, UAT and release coordination. "
+    "<b>Growth &amp; operations:</b> go-to-market, onboarding, activation, retention, lifecycle optimisation, product operations and workflow automation. "
+    "<b>Analytics &amp; technical:</b> SQL, Mixpanel, Amplitude, Dune, KPIs, funnel analysis, experimentation, APIs, integrations and AI-assisted prototyping.",
+    "Skill"))
 
 story.extend(section("Professional Experience"))
 story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
