@@ -37,15 +37,21 @@ def read_pdf(path: Path):
         if not total_chars or readable_chars / total_chars < 0.65:
             raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
         page_texts.append(page_text)
-    page_two_start = page_texts[1][:650].casefold()
+    page_two_text = page_texts[1].casefold()
+    page_two_header = "olamide olanipekun | product manager résumé"
+    header_end = page_two_text.find(page_two_header)
+    page_two_content = (
+        page_two_text[header_end + len(page_two_header):].lstrip()
+        if header_end >= 0 else page_two_text.lstrip()
+    )
     valid_page_two_starts = (
         "product manager | deserialize",
         "product manager & growth operations lead | limitless prop firm",
     )
-    if not any(marker in page_two_start for marker in valid_page_two_starts):
+    if not page_two_content.startswith(valid_page_two_starts):
         raise SystemExit(
             f"FAIL: {path.name} page 2 must begin with a complete Deserialize or Limitless role. "
-            f"Page 2 starts: {page_texts[1][:260]}"
+            f"Page 2 starts: {page_two_content[:260]}"
         )
     expected_links = {
         "https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/",
