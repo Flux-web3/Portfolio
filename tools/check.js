@@ -101,6 +101,17 @@ for (const name of PAGES) {
   console.log(`  ${name.padEnd(11)} ${String(out.length).padStart(6)} chars  h1:${h1}  headings:${levels.length}`);
 }
 
+/* --- homepage résumé CTA must open the résumé selection page --------------- */
+const homeResumeCta = rendered.Home?.match(/<a\\b[^>]*>\\s*Download Resume[\\s\\S]*?<\\/a>/i)?.[0];
+if (!homeResumeCta) {
+  fail('Home: missing Download Resume CTA');
+} else {
+  if (!/href="#\\/resume"/.test(homeResumeCta))
+    fail('Home: Download Resume must navigate to #/resume');
+  if (/\\sdownload(?:[\\s=>]|$)/i.test(homeResumeCta))
+    fail('Home: Download Resume must not directly download a PDF');
+}
+
 /* --- internal hash links must resolve to a real route --------------------- */
 const validPaths = new Set(mod.NAV.map(n => n.path));
 const bad = new Set();
