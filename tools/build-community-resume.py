@@ -179,7 +179,10 @@ story.extend(role("Community Management & Growth Contributor", "Betboom", "Jan 2
 story.extend(section("Additional Web3 Projects"))
 story.append(p("Dorum  |  SolFutureNFT  |  ChainPeak Global  |  Debonk"))
 story.extend(section("Tools"))
-story.append(p("Zendesk  |  Discord  |  Telegram  |  X/Twitter  |  LinkedIn  |  Buffer  |  Canva  |  Claude  |  ChatGPT  |  Notion  |  Trello  |  Slack  |  Google Workspace"))
+story.append(p("<b>Community &amp; support:</b> Zendesk, Discord, Telegram, Telegram bots and Discord bots."))
+story.append(p("<b>Social &amp; content:</b> LinkedIn, X/Twitter, Buffer and Canva."))
+story.append(p("<b>AI &amp; productivity:</b> Claude, ChatGPT and Notion."))
+story.append(p("<b>Team collaboration:</b> Trello, Slack and Google Workspace."))
 story.extend(section("Education"))
 story.append(p("<b>B.Sc.Ed., Mathematics and Education</b>  |  University of Lagos  |  Second Class Upper"))
 
