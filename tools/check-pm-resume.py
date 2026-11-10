@@ -37,10 +37,16 @@ def read_pdf(path: Path):
         if not total_chars or readable_chars / total_chars < 0.65:
             raise SystemExit(f"FAIL: {path.name} page {page_number} does not use the required larger 10 pt principal typography")
         page_texts.append(page_text)
-    if "product manager & growth operations lead" in page_texts[0].casefold() and "product manager & growth operations lead" not in page_texts[1][:500].casefold():
-        raise SystemExit(f"FAIL: {path.name} has an orphaned Limitless heading across pages.")
-    if "product manager & growth operations lead" not in page_texts[1][:500].casefold():
-        raise SystemExit(f"FAIL: {path.name} page 2 should begin with the complete Limitless role. Page 2 starts: {page_texts[1][:260]}")
+    page_two_start = page_texts[1][:650].casefold()
+    valid_page_two_starts = (
+        "product manager | deserialize",
+        "product manager & growth operations lead | limitless prop firm",
+    )
+    if not any(marker in page_two_start for marker in valid_page_two_starts):
+        raise SystemExit(
+            f"FAIL: {path.name} page 2 must begin with a complete Deserialize or Limitless role. "
+            f"Page 2 starts: {page_texts[1][:260]}"
+        )
     expected_links = {
         "https://www.linkedin.com/in/olanipekun-olamide-flux-939a34235/",
         "https://olamide-olanipekun.vercel.app/#/",
