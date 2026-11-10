@@ -2697,6 +2697,7 @@ function setMeta(path){
 }
 
 function render(){
+  closeCurrentMobileSheet?.(false);
   const path = currentPath();
   setMeta(path);
   app.innerHTML = `
@@ -2729,7 +2730,12 @@ function bind(path){
   /* --- mobile sheet ----------------------------------------------------- */
   const burger = document.getElementById('burger');
   const sheet  = document.getElementById('sheet');
+  let sheetHideTimer = null;
   const setSheet = open => {
+    if (sheetHideTimer !== null) {
+      clearTimeout(sheetHideTimer);
+      sheetHideTimer = null;
+    }
     burger.setAttribute('aria-expanded', String(open));
     burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     burger.innerHTML = open ? ICON.close() : ICON.burger();
@@ -2743,7 +2749,10 @@ function bind(path){
       requestAnimationFrame(()=>requestAnimationFrame(()=>sheet.classList.add('on')));
     } else {
       sheet.classList.remove('on');
-      setTimeout(()=>{ sheet.hidden = true; }, 200);
+      sheetHideTimer = setTimeout(()=>{
+        sheet.hidden = true;
+        sheetHideTimer = null;
+      }, 200);
     }
     document.body.style.overflow = open ? 'hidden' : '';
   };

@@ -170,6 +170,15 @@ if (bindSource.includes("document.addEventListener('keydown'") || bindSource.inc
   fail('bind() must not register global listeners on every route render');
 if (!bindSource.includes('closeCurrentMobileSheet = (returnFocus = false)'))
   fail('bind() must refresh the current mobile-menu close handler on every route render');
+const renderStart = html.indexOf('function render(){');
+const bindStart = html.indexOf('function bind(path){');
+const renderSource = html.slice(renderStart, bindStart);
+if (!renderSource.includes('closeCurrentMobileSheet?.(false);'))
+  fail('render() must close the prior mobile sheet before replacing route DOM');
+if (!bindSource.includes('let sheetHideTimer = null;') ||
+    !bindSource.includes('clearTimeout(sheetHideTimer)') ||
+    !bindSource.includes('sheetHideTimer = setTimeout'))
+  fail('Mobile menu close animation must cancel a pending hide timer before reopening');
 if (!rendered.Resume || !rendered.Resume.includes('community-resume.html'))
   fail('Résumé page must link to the Community Management web résumé');
 
