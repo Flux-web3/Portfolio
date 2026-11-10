@@ -173,10 +173,14 @@ metrics.setStyle(TableStyle([
 story.append(metrics)
 
 story.extend(section("Core Product Competencies"))
-story.append(P(
-    "Discovery &amp; user research | Product strategy &amp; roadmaps | PRDs, user stories &amp; acceptance criteria | "
-    "RICE / MoSCoW | Agile delivery &amp; backlog | Stakeholder management | Onboarding, activation &amp; retention | "
-    "Product analytics, SQL &amp; Dune | AI-assisted prototyping | Workflow automation &amp; optimisation", "Skill"))
+for item in [
+    "<b>Strategy &amp; discovery:</b> Problem framing, user research, opportunity validation, product strategy, roadmaps, competitive analysis and user-feedback synthesis.",
+    "<b>Product definition:</b> PRDs, user stories, acceptance criteria, user journeys, MVP scoping, RICE / MoSCoW prioritisation and backlog management.",
+    "<b>Delivery &amp; leadership:</b> Agile (Scrum, Kanban, Scrumban), sprint planning, stakeholder management, cross-functional execution, UAT and release coordination.",
+    "<b>Growth &amp; operations:</b> Go-to-market coordination, onboarding, activation, retention, lifecycle optimisation, product operations, process design and workflow automation.",
+    "<b>Analytics &amp; technical fluency:</b> SQL, Mixpanel, Amplitude, Dune, KPI tracking, funnel analysis, experimentation, product architecture, REST APIs, third-party integrations and AI-assisted prototyping."
+]:
+    story.append(P(item, "Skill"))
 
 story.extend(section("Professional Experience"))
 story.extend(role("Product Manager | Growth Lead", "YNX", "Apr 2025 - May 2026", "United Kingdom · Remote",
@@ -243,9 +247,14 @@ story.append(KeepTogether([
 ]))
 
 story.extend(section("Tools &amp; Technologies"))
-story.append(P(
-    "Jira, Notion, Trello, ClickUp, Mixpanel, Amplitude, SQL, Dune, Figma, Google Stitch, Lovable, Claude Code, "
-    "ChatGPT, Claude, n8n, Zapier, GitHub, Supabase, Vercel, Discord, Telegram, Zendesk, Slack, Google Workspace.", "Skill"))
+for item in [
+    "<b>Product delivery &amp; collaboration:</b> Jira, Notion, Trello, ClickUp, Slack and Google Workspace.",
+    "<b>Product analytics &amp; data:</b> SQL, Mixpanel, Amplitude and Dune.",
+    "<b>Design &amp; prototyping:</b> Figma, Google Stitch and Lovable.",
+    "<b>AI-assisted building &amp; automation:</b> ChatGPT, Claude, Claude Code, n8n, Zapier, GitHub, Supabase and Vercel.",
+    "<b>Community &amp; customer operations:</b> Discord, Telegram and Zendesk."
+]:
+    story.append(P(item, "Skill"))
 
 story.extend(section("Education &amp; Professional Development"))
 story.append(P("<b>B.Sc.Ed., Mathematics and Education</b> | University of Lagos, Lagos, Nigeria | Second Class Upper"))
