@@ -93,16 +93,7 @@ required = [
     "Gotabit | Feb 2021 - Oct 2022",
     "Betboom | Jan 2020 - Sep 2021",
     "FortaFlow | Independent Product Builder",
-    "Discovery &amp; strategy:
-    "Product definition:",
-    "Delivery & leadership:",
-    "Growth & operations:",
-    "Analytics &amp; technical:
-    "Product delivery & collaboration:",
     "Product analytics & data:",
-    "Design & prototyping:",
-    "AI-assisted building & automation:",
-    "Community & customer operations:",
     "intermediate retail crypto and forex traders",
     "Build is paused; it is not shipped",
     "manual/CSV journaling",
