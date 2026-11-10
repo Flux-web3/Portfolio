@@ -205,6 +205,11 @@ if (!html.includes("name:'Tourist', category:'Travel planning · TS Academy caps
   fail('Tourist must be described as a travel-planning capstone, not an AI-powered shipped product');
 if (!html.includes('itinerary drafts use seeded templates rather than a live AI model'))
   fail('Tourist summary must disclose the current template-based itinerary implementation');
+if (!html.includes('The codebase includes a cross-layer Vitest suite covering components, pages, services, state, and domain logic.'))
+  fail('Tourist engineering summary must describe its verified cross-layer Vitest coverage');
+if (html.includes('37 test files'))
+  fail('Tourist portfolio copy must not retain the outdated test-file count');
+
 if (html.includes('"alternateName": "Flux"'))
   fail('Person structured data must not publish an unsupported alternate name');
 if (!communityHtmlSafe())
