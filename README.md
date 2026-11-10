@@ -2,7 +2,7 @@
 
 Personal portfolio site for **Olamide Olanipekun** — product/project management, Web3 community growth, customer support/CX, marketing, operations, analytics and AI-assisted product building.
 
-Live: <https://portfolio-site-kappa-ashy.vercel.app> · Repo: <https://github.com/Flux-web3/Portfolio>.
+Live: <https://olamide-olanipekun.vercel.app/#/> · Repo: <https://github.com/Flux-web3/Portfolio>.
 Pushing `main` publishes it — see [Deploy](#deploy).
 
 ## What this is
@@ -197,10 +197,10 @@ well as in comments at each site.
 
 ### ⚠ The origin: done, but here is the trap
 
-**Live at https://portfolio-site-kappa-ashy.vercel.app** (Vercel project `portfolio-site`, team
+**Live at https://olamide-olanipekun.vercel.app/#/** (Vercel project `portfolio-site`, team
 `flux-build` — formerly `forta-flow`, which is why older deployment URLs still end in
-`-forta-flow.vercel.app`). `index.html`, `robots.txt` and `sitemap.xml` all carry that origin, so the canonical
-tag, `og:image`, `twitter:image` and the sitemap were verified together on 2026-11-05. It previously shipped
+`-forta-flow.vercel.app`). `index.html`, `robots.txt` and `sitemap.xml` carry the current `olamide-olanipekun.vercel.app` alias, so the canonical
+tag, `og:image`, `twitter:image` and sitemap point to the same origin (verified 2026-11-10). It previously shipped
 with a placeholder that resolved to nothing, which makes the `canonical` tag tell Google the real
 page lives at a URL that does not exist and leaves LinkedIn, X, Facebook and Slack unable to fetch
 the share image — the card renders blank.
@@ -211,7 +211,7 @@ the share image — the card renders blank.
 | Vercel calls it | Example | Use it for |
 |---|---|---|
 | `Production` | `portfolio-site-hjwym4ui7-forta-flow.vercel.app` | nothing durable — the middle segment is regenerated on **every** deploy |
-| `Aliased` | `portfolio-site-kappa-ashy.vercel.app` | the canonical origin, sharing, your CV — it survives deploys |
+| `Aliased` | `olamide-olanipekun.vercel.app` | the canonical origin, sharing, your CV — it survives deploys |
 
 Canonicalising the `Production` URL is a slow-acting bug: correct on the day you ship, pointing at a
 dead build from then on, with the sitemap and both share images inheriting the rot. `deploy.sh` now
