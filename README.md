@@ -2,7 +2,7 @@
 
 Personal portfolio site for **Olamide Olanipekun** — product/project management, Web3 community growth, customer support/CX, marketing, operations, analytics and AI-assisted product building.
 
-Primary portfolio link: <https://portfolio-site-kappa-ashy.vercel.app> · Repo: <https://github.com/Flux-web3/Portfolio>.
+Primary portfolio link: <https://portfolio-site-kappa-ashy.vercel.app> · Repo: <https://github.com/Flux-web3/Portfolio>.\n\nLive: <https://olamide-olanipekun.vercel.app/#/> · Canonical production origin: <https://olamide-olanipekun.vercel.app>.
 Pushing `main` publishes it — see [Deploy](#deploy).
 
 ## What this is
