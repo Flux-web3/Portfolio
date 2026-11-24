@@ -197,7 +197,7 @@ well as in comments at each site.
 
 ### ⚠ The origin: done, but here is the trap
 
-**Live at https://olamide-olanipekun.vercel.app/#/** (Vercel project `portfolio-site`, team
+**Canonical deployment origin: https://olamide-olanipekun.vercel.app/** (Vercel project `portfolio-site`, team
 `flux-build` — formerly `forta-flow`, which is why older deployment URLs still end in
 `-forta-flow.vercel.app`). `index.html`, `community-resume.html`, `robots.txt`, `sitemap.xml` and this README carry the
 current `olamide-olanipekun.vercel.app` alias. The main-page canonical, standalone résumé canonical,
